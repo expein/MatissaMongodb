@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/fc79c38429.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../style/style.css">
+    <title>NodeJS</title>
+</head>
+<body class="body">
+    <div class="container-fluid header">
+        <div class="row text-center" style="background-color: #3cc3bd;">
+            <div class="col">
+                <a href="/" style="color: white;" class="navbar-brand"><h1 class="pt-2">Matissa</h1></a>
+            </div>
+            <% if (user) { %>
+            <a href="/profile" class="col-1" style="background-color: rgb(24, 24, 24);">
+                <div class="pt-3 pb-1">
+                    <i class="fa-solid fa-user fa-2xl" style="color: #ffffff;"></i><br>Perfil
+                </div>
+            </a>
+            <a href="/salir" class="col-1" style="background-color: rgb(24, 24, 24);">
+                <div class="pt-3 pb-1">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-2xl" style="color: #ffffff;"></i><br>Salir
+                </div>
+            </a>
+            <% }else { %>
+            <a href="/ingresar" class="col-1" style="background-color: rgb(24, 24, 24);">
+                <div class="pt-3 pb-1" >
+                    <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i><br>Ingresar
+                </div>
+            </a>
+            <a href="/registrar" class="col-1" style="background-color: rgb(24, 24, 24);">
+                <div class="pt-3 pb-1">
+                    <i class="fa-solid fa-clipboard-user fa-2xl" style="color: #ffffff;"></i><br>Registrar
+                </div>
+            </a>
+            
+            <% } %>
+        </div>
+    </div>
+    <% if(appMessage.length > 0) { %>
+
+        <div class="alert alert-danger"><%= appMessage %></div>
+    
+    <% } %>
+    <%- body %>
+</body>
+</html>

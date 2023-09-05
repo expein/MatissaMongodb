@@ -1,0 +1,72 @@
+<%- layout('./layouts/main.ejs') %>
+<!-- 
+<div class="card col-md-4 offset-md-4 mt-4">
+    <div class="card-header">
+        <h2>Ingreso</h2>
+    </div>
+    <div class="card-body">
+        <form action="/ingresar" method="post" class="row-g3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" name="user" id="nombre" class="form-control">
+            <br>
+            <label for="pass" class="form-label">Contraseña</label>
+            <input type="password" name="password" id="pass" class="form-control">
+            <br>
+            <button type="submit" class="btn btn-primary">
+                Ingresar
+            </button>
+        </form>
+    </div>
+</div>
+-->
+
+<div class="body">
+    <div class="container-fluid form">
+        <div class="row justify-content-center">
+            <div class="col-3 form-signin text-center" style="display: block;">
+                <a href="#"><b>Admistrador</b></a>|<a href="#">   Cliente</a>
+                <h1 class="mt-4 titulo-bienvenido">Bienvenido</h1>
+                <form action="/ingresar" method="post">
+                    <div class="row">
+                        <div class="col col-form mt-5">
+                            <input class="input-signin" type="text" name="user" id="usuario" placeholder="Usuario">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-form mt-5">
+                            <input class="input-signin" type="password" name="password" id="password" placeholder="Contraseña">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button style="width: 100px;" type="submit" class="button-signin rounded-pill mt-5">
+                                <b>Ingresar</b>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-2 mb-5 link-recuperar-contraseña">
+                            <a href="#">Recuperar contraseña</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-3 servicios lista">
+                <div class="img mb-2 mt-3">
+                    <img src="./images/logo.png" alt="">
+                </div>
+                <ul>
+                    <li><b>Manicure</b></li>
+                    <li><b>Uñas acrílicas</b></li>
+                    <li><b>Cepillado</b></li>
+                    <li><b>Corte</b></li>
+                    <li><b>Keratina</b></li>
+                    <li><b>Limpieza facial</b></li>
+                    <li><b>Peinados para niñas</b></li>
+                    <li><b>Depilación con cera</b></li>
+                    <li><b>Cejas de Bigen</b></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
