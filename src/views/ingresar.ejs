@@ -19,12 +19,12 @@
     </div>
 </div>
 -->
-
+<script src="./js/ingresar.js"></script>
 <div class="body">
     <div class="container-fluid form">
         <div class="row justify-content-center">
-            <div class="col-3 form-signin text-center" style="display: block;">
-                <a href="#"><b>Admistrador</b></a>|<a href="#">   Cliente</a>
+            <div class="col-3 form-signin text-center" id="signinAdministrador" style="display: block;">
+                <a href="#"><b>Admistrador</b></a>|<a href="#" onclick="mostrarCliente()">Cliente</a>
                 <h1 class="mt-4 titulo-bienvenido">Bienvenido</h1>
                 <form action="/ingresar" method="post">
                     <div class="row">
@@ -47,6 +47,39 @@
                     <div class="row">
                         <div class="col mt-2 mb-5 link-recuperar-contraseña">
                             <a href="#">Recuperar contraseña</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-3 form-signin text-center" id="signinCliente" style="display: none;">
+                <a href="#" onclick="mostrarAdministrador()">Admistrador</a>|<a href="#"><b>Cliente</b></a>
+                <h1 class="mt-4 titulo-bienvenido">Bienvenido</h1>
+                <form action="" method="">
+                    <div class="row">
+                        <div class="col col-form mt-3">
+                            <input class="input-signin" type="text" name="cedula" id="cedula" placeholder="Cedula">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-form mt-4">
+                            <input class="input-signin" type="text" name="nombre" id="nombre" placeholder="Usuario">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-form mt-4">
+                            <input class="input-signin" type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button style="width: 100px;" type="submit" class="button-signin rounded-pill mt-5">
+                                <b>Ingresar</b>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-2 mb-5 link-recuperar-contraseña">
+                            <a href="#">Registrarse</a>
                         </div>
                     </div>
                 </form>
