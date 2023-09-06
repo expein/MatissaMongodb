@@ -13,6 +13,8 @@ h1, h2 {
 }
 .header {
     height: 10vh;
+    display: fixed;
+    z-index: 1;
 }
 
 .footer {
@@ -128,67 +130,4 @@ h1, h2 {
 
 .container-paginado{
     margin-top: 2%;
-}
-
-.sidebar-matissa, .sidebar-matissa-desplegable{
-    background-color: #e2d4ff;
-    height: 100%;
-    top: 100px;
-}
-
-@media screen and (max-width: 600px) {
-    .sidebar-matissa-desplegable{
-        display: none;
-    }
-}
-
-.sidebar-matissa a, .sidebar-matissa-desplegable a{
-    text-decoration: none;
-    color: black;
-}
-
-.sidebar-p{
-    background-color: #a7e3e1;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 20px;
-    border-radius: 5px;
-    box-shadow: 3px 7px 10px black;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    margin-top: -12px;
-}
-
-.sidebar-p:hover{
-    color: white;
-    background-color: #3cc3bd;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 5px 0px 0px black;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    margin-top: -12px;
-}
-
-@media screen and (max-width:700px) {
-    .sidebar-p{
-        font-size: 15px;
-    }
-
-    .sidebar-p:hover{
-        font-size: 15px;
-    }
-}
-
-.menu{
-    font-family: "Merienda";
-    font-size: 35px;
-    text-shadow: 1px 2px 4px black;
-    padding: 5px;
-}
-
-img{
-    width: 25%;
 }
