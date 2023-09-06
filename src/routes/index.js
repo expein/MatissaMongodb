@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const User = require('../models/user');
+const Compras = require('../models/compra');
 
 const router = express.Router();
 
@@ -44,6 +45,19 @@ router.get("/profile", isAuthenticated, async (req, res, next) => {
     
 });
 
+router.get("/compras", isAuthenticated, async (req, res, next) => {
+    try {
+        const compras = await Compras.find({});
+        res.render('./compras/compras.ejs', { compras });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error de datos');
+    }
+});
+
+router.get("/create-compra", isAuthenticated, async (req, res, next) => {
+    res.render('./compras/create-compra.ejs');
+});
 // middleware
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated()){

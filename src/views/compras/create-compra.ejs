@@ -1,0 +1,58 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/compras.css">
+<script src="../js/validations.js"></script>
+<div class="container-fluid">
+    <div class="create-tittle container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Agregar nuevo usuario</h1>
+            </div>
+        </div>
+    </div>
+    <div class="create-body">
+        <form action="/createComp" method="post" onsubmit="return validarCompra();">
+            <div class="container-fluid">
+                <div class="text-center row mt-4 fields">
+                    <div class="col">
+                        <label for="" class="form-label">Código compra</label><br>
+                        <input type="text" class="input-bonito" id="IDCompra" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="" class="form-label">Fecha compra</label><br>
+                        <input type="date" id="fechaCompra" class="input-bonito">
+                    </div>
+                    <div class="col">
+                        <label for="" class="form-label">Costo Total</label><br>
+                        <input type="text" id="costoT" class="input-bonito">
+                    </div>
+                    <div class="col">
+                        <label for="" class="form-label">Descripción</label><br>
+                        <input type="text" id="desc" class="input-bonito">
+                    </div>
+                    <div class="col">
+                        <label for="" class="form-label ">Producto</label><br>
+                        <select name="" id="product" class="form-select">
+                            <option value="noSelect" selected> Seleccione</option>
+                            <option value="Shampoo">Shampoo</option>
+                            <option value="Acondicionador">Acondicionador</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row justify-content-center mt-5">
+                    <div class="col text-end">
+                        <button type="button" class="cancel-btn" onclick="backPage();">
+                            Cancelar
+                        </button>
+                    </div>
+                    <div class="col text-start">
+                        <button type="submit" class="acept-btn">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
