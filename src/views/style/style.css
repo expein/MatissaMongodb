@@ -6,12 +6,14 @@ a {
 }
 body {
     font-family: 'Quicksand', sans-serif;
+    
 }
 h1, h2 {
     font-family: 'Merienda', cursive;
 }
 .header {
-    position: fixed;
+    height: 10vh;
+    display: fixed;
     z-index: 1;
 }
 

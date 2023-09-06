@@ -1,53 +1,57 @@
 <%- layout('./layouts/main.ejs') %>
-<br><br><br>
 <div class="container-fluid">
     <div class="col-2 btn btn-dark">
         <a href="/compras">Compras</a>
     </div>
 </div>
 <div class="container-fluid">
-    <div class="card">
-        <div class="card-header">
-            <h1>Profile</h1>
-        </div>
-        <div class="card-body">
-            <div class="card-body">
-                <h3><%= user.name %></h3>
-                <p><strong>Email: </strong><%= user.email %></p>
-                <p><strong>Rol: </strong><%= user.rol %></p>
-                <p><strong>Password: </strong> <%= user.password %></p>
-                <p><strong>ID: </strong> <%= user._id %></p>
+    <div class="row justify-content-end mb-5">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Profile</h1>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <h3><%= user.name %></h3>
+                        <p><strong>Email: </strong><%= user.email %></p>
+                        <p><strong>Rol: </strong><%= user.rol %></p>
+                        <p><strong>Password: </strong> <%= user.password %></p>
+                        <p><strong>ID: </strong> <%= user._id %></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<br>
-<div class="container-fluid">
-    <h1>Lista de usuarios</h1>
-    <table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Rol</th>
+    <div class="row justify-content-end">
+        <div class="col">
+            <h1>Lista de usuarios</h1>
+        <table class="table table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <% id = 1; %>
+                <% users.forEach(obj => { %>
+                <tr>
+                <td><%= id %></td>
+                <td><%= obj.name %></td>
+                <td><%= obj.email %></td>
+                <td><%= obj.rol %></td>
+                </tr>
+                <% id++; %>
+                <% }); %>
                 
-            </tr>
-        </thead>
-        <tbody>
-            <% id = 1; %>
-            <% users.forEach(obj => { %>
-            <tr>
-            <td><%= id %></td>
-            <td><%= obj.name %></td>
-            <td><%= obj.email %></td>
-            <td><%= obj.rol %></td>
-            </tr>
-            <% id++; %>
-            <% }); %>
-            
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    
+        </div>
+    </div>
 </div>
-
     
