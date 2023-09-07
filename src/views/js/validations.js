@@ -24,13 +24,12 @@ function valid(){
 // Validar Compras
 
 function validarCompra(){
-    let id = document.getElementById("IDCompra").value;
-    let date = document.getElementById("fechaCompra").value;
-    let cost = document.getElementById("costoT").value;
-    let desc = document.getElementById("desc").value;
-    let prod = document-getElementById("product").value;
+    let id = document.getElementById("idC").value;
+    let date = document.getElementById("dateCompra").value;
+    let cost = document.getElementById("totalCost").value;
+    let prod = document.getElementById("prod").value;
 
-    if (id == "" || date == "" || cost == "" || desc == ""){
+    if (id == "" || date == "" || cost == ""){
         alert ("Faltan datos en la compra.");
         return false;
     }else if (prod == "noSelect"){

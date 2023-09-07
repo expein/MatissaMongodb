@@ -17,8 +17,8 @@
             </a>
         </div>
         <div class="col-4">
-            <a href="/create-compra" class="create-client">
-                <p class="rounded-pill" style="padding-left: 130px;">Crear compra<i class="fa-solid fa-circle-plus fa-2xl" style="color: #ffffff; padding-left: 120px"></i></p>
+            <a href="/create-compra" class="create-compra">
+                <p class="rounded-pill">Crear compra<i class="fa-solid fa-circle-plus fa-2xl" style="color: #ffffff; margin-left: 100px;"></i></p>
             </a>
         </div>
     </div>
@@ -37,8 +37,19 @@
         </thead>
         <tbody>
 
-            
-            
+            <% id = 1; %>
+            <% compras.forEach(obj => { %>
+            <tr>
+            <td><%= obj.idCompra %></td>
+            <td><%= obj.fechaCompra %></td>
+            <td><%= obj.product %></td>
+            <td><%= obj.costoTotal %></td>
+            <td><%= obj.descrip %></td>
+            <td>Nohay</td>
+            </tr>
+            <% id++; %>
+            <% }); %>
+
         </tbody>
     </table>
 </div>

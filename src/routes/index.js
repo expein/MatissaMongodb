@@ -58,6 +58,22 @@ router.get("/compras", isAuthenticated, async (req, res, next) => {
 router.get("/create-compra", isAuthenticated, async (req, res, next) => {
     res.render('./compras/create-compra.ejs');
 });
+
+router.post("/createComp", isAuthenticated, async (req, res, next) => {
+    const compra = new Compras({
+        idCompra: req.body.IDCompra,
+        fechaCompra: req.body.fechaCompra,
+        costoTotal: req.body.costoT,
+        product: req.body.product,
+        descrip: req.body.desc
+    });
+
+    compra.save().then(doc => {
+        console.log('Compra registrada', doc);
+        res.render('./compras/create-compra.ejs');
+    })
+});
+
 // middleware
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated()){

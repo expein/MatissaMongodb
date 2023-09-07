@@ -18,11 +18,12 @@
     box-shadow: 3px 7px 10px black;
 }
 
-.create-client p{
+.create-compra p{
     background-color: #444444;
     height: 100%;
     color: white;
     font-size: 17px;
+    text-align: center;
     padding-top: 15px;
     box-shadow: 3px 7px 10px black;
 }
