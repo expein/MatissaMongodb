@@ -33,7 +33,7 @@ function validarCompra(){
         alert ("Faltan datos en la compra.");
         return false;
     }else if (prod == "noSelect"){
-        alert("Seleccione rol");
+        alert("Seleccione producto");
         return false;
     }else {
         let confir = confirm("¿Desea registrar la compra?");
@@ -41,9 +41,19 @@ function validarCompra(){
     }
 }
 
+function validarEdit(){
+    let id = document.getElementById("idC").value;
+    let date = document.getElementById("dateCompra").value;
 
-
+    if (id == "" || date == "" ){
+        alert ("Faltan datos en la compra.");
+        return false;
+    }else {
+        let confir = confirm("¿Desea editar la compra?");
+        return confir;
+    }
+}
 
 function backPage(){
-    window.location="compras.ejs";
+    window.location="/compras";
 }

@@ -5,37 +5,28 @@
     <div class="create-tittle container-fluid">
         <div class="row">
             <div class="col-12">
-                <h1>Crear nueva compra</h1>
+                <h1>Editar compra</h1>
             </div>
         </div>
     </div>
     <div class="create-body">
-        <form action="/createComp" method="post" onsubmit="return validarCompra();">
+        <form action="/editCompra" method="post" onsubmit="return validarEdit();">
             <div class="container-fluid">
                 <div class="text-center row mt-4 fields">
+                    <div style="display: none;">
+                        <input type="text" name="IDMongo" value="<%= compra._id %>">
+                    </div>
                     <div class="col">
                         <label for="idC" class="form-label">Código compra</label><br>
-                        <input type="text" class="input-bonito" id="idC" name="IDCompra">
+                        <input type="text" class="input-bonito" id="idC" name="IDCompra" value="<%= compra.idCompra %>" readonly>
                     </div>
                     <div class="col">
                         <label for="dateCompra" class="form-label">Fecha compra</label><br>
-                        <input type="date" id="dateCompra" class="input-bonito" name="fechaCompra">
-                    </div>
-                    <div class="col">
-                        <label for="totalCost" class="form-label">Costo Total</label><br>
-                        <input type="text" id="totalCost" class="input-bonito" name="costoT">
+                        <input type="date" id="dateCompra" class="input-bonito" name="fechaCompra" value="<%= compra.fechaCompra %>">
                     </div>
                     <div class="col">
                         <label for="desc" class="form-label">Descripción</label><br>
-                        <input type="text" id="desc" class="input-bonito" name="desc">
-                    </div>
-                    <div class="col">
-                        <label for="prod" class="form-label ">Producto</label><br>
-                        <select id="prod" class="form-select" name="product">
-                            <option value="noSelect" selected> Seleccione</option>
-                            <option value="Shampoo">Shampoo</option>
-                            <option value="Acondicionador">Acondicionador</option>
-                        </select>
+                        <input type="text" id="desc" class="input-bonito" name="desc" value="<%= compra.descrip %>">
                     </div>
                 </div>
             </div>

@@ -68,10 +68,57 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
         descrip: req.body.desc
     });
 
-    compra.save().then(doc => {
+    compra.save()
+    .then(doc => {
         console.log('Compra registrada', doc);
         res.render('./compras/create-compra.ejs');
-    })
+    }).catch(err => {
+        console.log("Error al registrar: ",err.message);
+    });
+});
+
+router.get("/edit-compra/:id", isAuthenticated, async (req, res, next) => {
+    const id = req.params.id;
+
+    const compra = await Compras.findOne({idCompra: id});
+
+    res.render("./compras/edit-compra.ejs", { compra });
+});
+
+router.post("/editCompra", isAuthenticated, async (req, res, next) => {
+    try {
+        const id = req.body.IDMongo;
+        const fechaCompra = req.body.fechaCompra;
+        const desc = req.body.desc;
+
+        console.log(fechaCompra);
+
+        await Compras.findByIdAndUpdate(id, {
+            fechaCompra: fechaCompra,
+            descrip: desc
+        });
+        
+        const compras = await Compras.find({});
+        res.render('./compras/compras.ejs', { compras });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error de edición');
+    }
+});
+
+router.get("/delete-compra/:id", isAuthenticated, async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        await Compras.findByIdAndDelete(id);
+
+        const compras = await Compras.find({});
+        res.render('./compras/compras.ejs', { compras });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al eliminar');
+    }
+    
 });
 
 // middleware
