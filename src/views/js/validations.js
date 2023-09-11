@@ -52,6 +52,7 @@ function validarEdit(){
         let confir = confirm("¿Desea editar la compra?");
         return confir;
     }
+<<<<<<< HEAD
 }
 
 function validarPedido(){
@@ -79,4 +80,6 @@ function validarPedido(){
 
 function backPage(){
     window.location="/compras";
+=======
+>>>>>>> 301aada5d8e72537f96f5a097c1e86acc701bed3
 }

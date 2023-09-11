@@ -4,29 +4,36 @@
     color: white;
     padding: 10px 0px;
 }
+
+.form-agregar-compra{
+    background-color: white;
+    padding-bottom: 2vh;
+    border-bottom: 1px solid black;
+}
+
 .reporte-crear{
-    text-decoration: none;
-}
-
-.reporte-crear p{
+    width: 100%;
     background-color: #444444;
     height: 100%;
     color: white;
-    font-size: 17px;
-    padding-top: 15px;
-    text-align: center;
-    box-shadow: 3px 7px 10px black;
-}
-
-.create-compra p{
-    background-color: #444444;
-    height: 100%;
-    color: white;
-    font-size: 17px;
+    font-size: 20px;
     text-align: center;
     padding-top: 15px;
     box-shadow: 3px 7px 10px black;
 }
+
+.icon-agregar-proveedor{
+    font-size: 35px;
+    margin-left: 15vh;
+    margin-right: 1vh;
+}
+
+.icon-generar-reporte{
+    font-size: 25px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
 
 /* Paginado */
 
@@ -119,6 +126,18 @@
 	border-radius: 20px 20px 20px 20px;
 	font-weight: bold;
 	text-align: center;
+}
+
+.table{
+    border: 1px solid black;
+}
+
+.table td{
+    border: 1px solid black;
+}
+
+.table th{
+    border: 1px solid black;
 }
 
 /* The switch - the box around the slider */

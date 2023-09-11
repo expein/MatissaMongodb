@@ -1,25 +1,100 @@
 <%- layout('./layouts/main.ejs') %>
+<script src="./js/compras.js"></script>
 <link rel="stylesheet" href="../style/compras.css">
-<div class="container-fluid compraHead">
+<link rel="stylesheet" href="../style/compras.css">
+<script src="../js/validations.js"></script>
+<div class="container-fluid" id="formRegistrarCompra" style="display: none;">
+    <div class="row create-tittle">
+        <div class="col-12">
+            <h1>Crear nueva compra</h1>
+        </div>
+    </div>
+    <div class="row form-agregar-compra">
+        <form action="/createComp" method="post" onsubmit="return validarCompra();">
+            <div class="text-center row mt-4 fields">
+                <div class="col">
+                    <label for="idC" class="form-label">Código compra</label><br>
+                    <input type="text" class="input-bonito" id="idC" name="IDCompra">
+                </div>
+                <div class="col">
+                    <label for="dateCompra" class="form-label">Fecha compra</label><br>
+                    <input type="date" id="dateCompra" class="input-bonito" name="fechaCompra">
+                </div>
+                <div class="col">
+                    <label for="desc" class="form-label">Descripción</label><br>
+                    <input type="text" id="desc" class="input-bonito" name="desc">
+                </div>
+                <div class="col">
+                    <label for="totalCost" class="form-label">Factura</label><br>
+                    <input type="text" id="factu" class="input-bonito" name="factura">
+                </div>
+            </div>
+            <div class="text-center row mt-4 fields">
+                <div class="col">
+                    <label for="codigoDetalle" class="form-label">Codigo detalle de compra</label><br>
+                    <input type="text" name="codigoDetalle" class="input-bonito" id="codigoDetalle" readonly>
+                </div>
+                <div class="col">
+                    <label for="proveedor" class="form-label">Proveedor</label><br>
+                    <input type="text" name="proveedor" class="input-bonito" id="proveedor">
+                </div>
+                <div class="col">
+                    <label for="prod" class="form-label ">Producto</label><br>
+                    <select id="prod" class="input-bonito rounded-pill" name="product">
+                        <option value="noSelect" selected> Seleccione</option>
+                        <option value="Shampoo">Shampoo</option>
+                        <option value="Acondicionador">Acondicionador</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="precio" class="form-label">Precio</label><br>
+                    <input type="text" name="precio" class="input-bonito" id="precio">
+                </div>
+                <div class="col">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="text" name="cantidad" class="input-bonito" id="cantidad">
+                </div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col text-end">
+                    <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrarCompra()">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col text-start">
+                    <button type="submit" class="acept-btn">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container-fluid compraHead" id="tituloCompra" style="display: block;">
     <h1>Compras</h1>
 </div>
 <div class="container-fluid">
     <div class="row mt-5">
-        <div class="col-4">
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
             <div class="form-floating search">
                 <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="" >
                 <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar compra</label>
             </div>
         </div>
-        <div class="col-4">
-            <a href="" class="reporte-crear">
-                <p class="rounded-pill"><i class="fa-solid fa-download fa-2xl"></i>  Generar reporte de compras</p>
-            </a>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+            <button class="reporte-crear rounded-pill text-start">
+              <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i>  Generar reporte de las compras</p>
+            </button>        
         </div>
-        <div class="col-4">
-            <a href="/create-compra" class="create-compra">
-                <p class="rounded-pill">Crear compra<i class="fa-solid fa-circle-plus fa-2xl" style="color: #ffffff; margin-left: 100px;"></i></p>
-            </a>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+            <button class="create-compra reporte-crear d-flex flex-row-reverse rounded-pill" type="button" onclick="opcion('mostrar'), registrarCompra()">
+                <div class="icono-mas">
+                  <i class="fa-solid fa-circle-plus icon-agregar-proveedor text-end"></i>
+                </div>
+                <div>
+                  <p>Registrar compra</p>
+                </div>
+              </button>
         </div>
     </div>
 </div>
@@ -29,9 +104,8 @@
             <tr class="table-secondary">
                 <th class="p-3">Código Compra</th>
                 <th class="p-3">Fecha Compra</th>
-                <th class="p-3">Producto</th>
-                <th class="p-3">Costo Total</th>
                 <th class="p-3">Descripción</th>
+                <th class="p-3">Factura</th>
                 <th class="p-3">Opciones</th>
             </tr>
         </thead>
@@ -42,10 +116,27 @@
             <tr>
             <td><%= obj.idCompra %></td>
             <td><%= obj.fechaCompra %></td>
-            <td><%= obj.product %></td>
-            <td><%= obj.costoTotal %></td>
             <td><%= obj.descrip %></td>
-            <td><div class="d-flex justify-content-between"><div class=""><a href="/edit-compra/<%= obj.idCompra %>"><i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i></a></div><div><a href="/delete-compra/<%= obj._id %>"><i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i></a></div><div><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label></div></div></td>
+            <td><%= obj.factura %></td>
+            <td>
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <a href="/edit-compra/<%= obj.idCompra %>">
+                            <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/delete-compra/<%= obj._id %>">
+                            <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <label class="switch"><input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </td>
             </tr>
             <% id++; %>
             <% }); %>
