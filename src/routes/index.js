@@ -55,23 +55,19 @@ router.get("/compras", isAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get("/create-compra", isAuthenticated, async (req, res, next) => {
-    res.render('./compras/create-compra.ejs');
-});
-
 router.post("/createComp", isAuthenticated, async (req, res, next) => {
     const compra = new Compras({
         idCompra: req.body.IDCompra,
         fechaCompra: req.body.fechaCompra,
-        costoTotal: req.body.costoT,
-        product: req.body.product,
-        descrip: req.body.desc
+        descrip: req.body.desc,
+        factura: req.body.factura
     });
 
     compra.save()
-    .then(doc => {
+    .then(async doc => {
+        const compras = await Compras.find({});
         console.log('Compra registrada', doc);
-        res.render('./compras/create-compra.ejs');
+        res.render('./compras/compras.ejs', {compras});
     }).catch(err => {
         console.log("Error al registrar: ",err.message);
     });

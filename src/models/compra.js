@@ -4,9 +4,8 @@ const { Schema } = mongoose;
 const compraSchema = new Schema({
     idCompra: Number,
     fechaCompra: Date,
-    costoTotal: Number,
-    product: String,
-    descrip: String
+    descrip: String,
+    factura: String
 });
 
 module.exports = mongoose.model('compra', compraSchema);

@@ -53,7 +53,3 @@ function validarEdit(){
         return confir;
     }
 }
-
-function backPage(){
-    window.location="/compras";
-}
