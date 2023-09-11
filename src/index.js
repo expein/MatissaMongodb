@@ -44,5 +44,3 @@ app.use('/', require('./routes/index'));
 app.listen(app.get('port'), () => {
     console.log("Server listening on Port", app.get('port'));
 });
-
-// HPTA

@@ -54,6 +54,29 @@ function validarEdit(){
     }
 }
 
+function validarPedido(){
+    let idPedido = document.getElementById("idPedido").value;
+    let datePedido = document.getElementById("datePedido").value;
+    let precio = document.getElementById("precio").value;
+    let cant = document.getElementById("cant").value;
+    let prod = document.getElementById("prod").value;
+    let client = document.getElementById("client").value;
+
+    if(idPedido == "" || datePedido == "" || precio == "" || cant == ""){
+        alert('Falta completar los campos');
+        return false;
+    }else if (prod == "noSelect"){
+        alert("No se ha seleccionado producto");
+        return false;
+    }else if (client == "noSelect"){
+        alert ('No se ha seleccionado cliente');
+        return false;
+    }else {
+        confir = confirm("¿Desea crear el pedido?");
+        return confir;
+    }
+}
+
 function backPage(){
     window.location="/compras";
 }
