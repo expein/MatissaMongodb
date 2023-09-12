@@ -52,34 +52,53 @@ function validarEdit(){
         let confir = confirm("¿Desea editar la compra?");
         return confir;
     }
-<<<<<<< HEAD
 }
 
-function validarPedido(){
-    let idPedido = document.getElementById("idPedido").value;
-    let datePedido = document.getElementById("datePedido").value;
-    let precio = document.getElementById("precio").value;
-    let cant = document.getElementById("cant").value;
-    let prod = document.getElementById("prod").value;
-    let client = document.getElementById("client").value;
+function validarServicio(){
+    let idServicio = document.getElementById("IDServicio").value;
+    let idEmpleado = document.getElementById("IDEmpleado").value;
+    let idCita = document.getElementById("IDCita").value;
+    let nombreServicio = document.getElementById("nombreServicio").value;
+    let precioServicio = document.getElementById("precioServicio").value;
+    let nombreEmpleado = document.getElementById("nombreEmpleado").value;
+    let duracionServicio = document.getElementById("duracionServicio").value;
+    let estadoCita = document.getElementById("estadoCita").value;
+    let fechaCita = document.getElementById("fechaCita").value;
 
-    if(idPedido == "" || datePedido == "" || precio == "" || cant == ""){
+    if(idCita == "" || nombreServicio == "" || precioServicio == "" || nombreEmpleado == "" || duracionServicio == "" || estadoCita == "" || fechaCita == ""){
         alert('Falta completar los campos');
         return false;
-    }else if (prod == "noSelect"){
-        alert("No se ha seleccionado producto");
+    }else if (idEmpleado == "noSelect"){
+        alert("No se ha seleccionado empleado");
         return false;
-    }else if (client == "noSelect"){
-        alert ('No se ha seleccionado cliente');
+    }else if (idServicio == "noSelect"){
+        alert ('No se ha seleccionado servicio');
         return false;
     }else {
-        confir = confirm("¿Desea crear el pedido?");
+        confir = confirm("¿Desea crear el servicio?");
         return confir;
+    }
+}
+
+function proof(){
+    let confir = confirm("Quiere un msj?");
+    if (confir){
+        alert("Mensaje enviado correctamente");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function delteCompra(){
+    let confir = confirm("¿Desea eliminar la compra?");
+    if (confir){
+        return true;
+    }else{
+        return false;
     }
 }
 
 function backPage(){
     window.location="/compras";
-=======
->>>>>>> 301aada5d8e72537f96f5a097c1e86acc701bed3
 }

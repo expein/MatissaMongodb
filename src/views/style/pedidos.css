@@ -1,4 +1,4 @@
-.pedidoHead {
+.servicioHead {
     background-color: #3cc3bd;
     text-align: center;
     color: white;
@@ -18,7 +18,7 @@
     box-shadow: 3px 7px 10px black;
 }
 
-.create-pedido p{
+.create-servicio p{
     background-color: #444444;
     height: 100%;
     color: white;

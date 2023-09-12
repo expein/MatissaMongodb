@@ -66,10 +66,10 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
         descrip: req.body.desc,
         factura: req.body.factura
     });
-    const compras = await Compras.find({});
     compra.save()
     .then(async doc => {
         const compras = await Compras.find({});
+        res.render("./compras/compras.ejs", { compras });
         console.log('Compra registrada', doc);
     }).catch(err => {
         console.log("Error al registrar: ",err.message);
@@ -120,39 +120,49 @@ router.get("/delete-compra/:id", isAuthenticated, async (req, res, next) => {
     
 });
 
-// PEDIDOS
-const Pedidos = require('../models/pedido');
+// SERVICIOS
+const Servicios = require('../models/servicio');
 
-router.get("/pedidos", isAuthenticated, async (req, res, next) => {
+router.get("/servicios", isAuthenticated, async (req, res, next) => {
     try {
-        const pedidos = await Pedidos.find({});
-        res.render('./pedidos/pedidos.ejs', { pedidos });
+        const servicios = await Servicios.find({});
+        res.render('./servicios/servicios.ejs', { servicios });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error de datos');
     }
 });
 
-router.get("/create-pedido", isAuthenticated, async (req, res, next) => {
-    res.render("./pedidos/create-pedido.ejs");
+router.get("/create-servicio", isAuthenticated, async (req, res, next) => {
+    try {
+        const servicios = Servicios.find().sort({idCita: -1}).limit(1);
+        res.render("./servicios/create-servicio.ejs", { servicio: servicios[0] });
+    } catch (error) {
+        console.log("Error al consultar DB", error);
+        res.status(500).send("Error de datos")
+    }
 });
 
-router.post("/createPed", isAuthenticated, async (req, res, next) => {
-    const pedido = new Pedidos({
-        idPedido: req.body.IDPedido,
-        fechaPedido: req.body.fechaPedido,
-        costoTotal: req.body.precio,
-        product: req.body.product,
-        cant: req.body.cantidad,
-        client: req.body.client
+router.post("/createSer", isAuthenticated, async (req, res, next) => {
+    const servicio = new Servicios({
+        idServicio: req.body.IDServicio,
+        idEmpleado: req.body.IDEmpleado,
+        idCita: req.body.IDCita,
+        nombreServicio: req.body.nombreServicio,
+        precioServicio: req.body.precioServicio,
+        nombreEmpleado: req.body.nombreEmpleado,
+        cedulaEmpleado: req.body.cedulaEmpleado,
+        duracionServicio: req.body.duracionServicio,
+        estadoCita: req.body.estadoCita,
+        fechaCita: req.body.fechaCita    
     });
-    const pedidos = await Pedidos.find({});
-    pedido.save()
-    .then(doc => {
-        console.log('Pedido registrado', doc);
-        res.render('./pedidos/pedido.ejs', { pedidos });
+    servicio.save()
+    .then(async doc => {
+        const servicios = await Servicios.find({});
+        console.log('Servicio registrado', doc);
+        res.render('./servicios/servicios.ejs', { servicios });
     }).catch(err => {
-        console.log("Error al registrar: ",err.message);
+        console.log("Error al registrar: ", err.message);
     });
 });
 
