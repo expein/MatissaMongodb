@@ -64,7 +64,15 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
         idCompra: req.body.IDCompra,
         fechaCompra: req.body.fechaCompra,
         descrip: req.body.desc,
-        factura: req.body.factura
+        factura: req.body.factura,
+        detalleCompra:[{
+            CodigoDetalleCompra: req.body.codigoDetalleCompra,
+            proveedor: req.body.proveedor,
+            product: req.body.product,
+            precio: req.body.precio,
+            cantidad: req.body.cantidad
+        }]
+        
     });
     compra.save()
     .then(async doc => {

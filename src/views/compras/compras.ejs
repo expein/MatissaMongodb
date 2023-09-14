@@ -1,5 +1,4 @@
 <%- layout('./layouts/main.ejs') %>
-<script src="./js/compras.js"></script>
 <link rel="stylesheet" href="../style/compras.css">
 <link rel="stylesheet" href="../style/compras.css">
 <script src="../js/validations.js"></script>
@@ -29,39 +28,49 @@
                     <input type="text" id="factu" class="input-bonito" name="factura">
                 </div>
             </div>
-            <div class="text-center row mt-4 fields">
-                <div class="col">
-                    <label for="codigoDetalle" class="form-label">Codigo detalle de compra</label><br>
-                    <input type="text" name="codigoDetalle" class="input-bonito" id="codigoDetalle" readonly>
-                </div>
-                <div class="col">
-                    <label for="proveedor" class="form-label">Proveedor</label><br>
-                    <input type="text" name="proveedor" class="input-bonito" id="proveedor">
-                </div>
-                <div class="col">
-                    <label for="prod" class="form-label ">Producto</label><br>
-                    <select id="prod" class="input-bonito rounded-pill" name="product">
-                        <option value="noSelect" selected> Seleccione</option>
-                        <option value="Shampoo">Shampoo</option>
-                        <option value="Acondicionador">Acondicionador</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="precio" class="form-label">Precio</label><br>
-                    <input type="text" name="precio" class="input-bonito" id="precio">
-                </div>
-                <div class="col">
-                    <label for="cantidad">Cantidad</label>
-                    <input type="text" name="cantidad" class="input-bonito" id="cantidad">
+            <div id="detallesCompra">
+                <div class="text-center row mt-4 fields" id="formDetalleCompra">
+                    <div class="col">
+                        <label for="codigoDetalle" class="form-label">Codigo detalle de compra</label><br>
+                        <input type="text" name="codigoDetalle" class="input-bonito codigo-detalle-compra" value="1" id="codigoDetalle" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="proveedor" class="form-label">Proveedor</label><br>
+                        <select name="proveedor" id="proveedor" class="input-bonito rounded-pill">
+                            <option value="noSelect">Seleccione</option>
+                            <option value="Avon">Avon</option>
+                            <option value="Sofia">Sofia</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="prod" class="form-label ">Producto</label><br>
+                        <select id="prod" class="input-bonito rounded-pill" name="product">
+                            <option value="noSelect" selected> Seleccione</option>
+                            <option value="Shampoo">Shampoo</option>
+                            <option value="Acondicionador">Acondicionador</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="precio" class="form-label">Precio</label><br>
+                        <input type="text" name="precio" class="input-bonito" id="precio">
+                    </div>
+                    <div class="col">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="text" name="cantidad" class="input-bonito" id="cantidad">
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center mt-5">
                 <div class="col text-end">
+                    <button type="button" class="boton-agregar-detalle-compra rounded-pill" onclick="AgregarDetalleCompra()">
+                      Agregar detalle
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
+                  </div>
+                <div class="col text-start">
                     <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrarCompra()">
                         Cancelar
                     </button>
-                </div>
-                <div class="col text-start">
                     <button type="submit" class="acept-btn">
                         Aceptar
                     </button>

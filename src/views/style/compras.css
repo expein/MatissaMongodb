@@ -11,6 +11,10 @@
     border-bottom: 1px solid black;
 }
 
+.codigo-detalle-compra{
+    background-color: rgb(206, 204, 204);
+}
+
 .reporte-crear{
     width: 100%;
     background-color: #444444;
