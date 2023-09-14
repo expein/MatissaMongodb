@@ -1,5 +1,4 @@
 // Validar Usuario
-
 function valid(){
     let user = document.getElementById("usuario").value;
     let email = document.getElementById("correo").value;
@@ -54,6 +53,8 @@ function validarEdit(){
     }
 }
 
+// validar Servicio
+
 function validarServicio(){
     let idServicio = document.getElementById("IDServicio").value;
     let idEmpleado = document.getElementById("IDEmpleado").value;
@@ -76,6 +77,58 @@ function validarServicio(){
         return false;
     }else {
         confir = confirm("¿Desea crear el servicio?");
+        return confir;
+    }
+}
+// validar Venta
+
+function validarVentaServicio(){
+    let idVentaServicio = document.getElementById("idVentaServicio").value;
+    let idCliente = document.getElementById("idCliente").value;
+    let idCita = document.getElementById("idCita").value;
+    let costoTotalCita = document.getElementById("costoTotalCita").value;
+    let fechaVentaServicio = document.getElementById("fechaVentaServicio").value;
+    let formaPagoServicio = document.getElementById("formaPagoServicio").value;
+    let estadoVentaServicio = document.getElementById("estadoVentaServicio").value;
+
+    if (idVentaServicio == "" || idCliente == "" || idCita == "" || fechaRegistro == "" || costoTotalCita == "" || fechaVentaServicio == "") {
+        alert("Hay campos sin completar");
+        return false;
+    }else if (formaPagoServicio == "noSelect"){
+        alert("Elegir forma de pago");
+        return false;
+    }else if (estadoVentaServicio == "noSelect"){
+        alert("Elegir estado de la venta");
+        return false;
+    }else {
+        let confir = confirm("¿Desea registrar la venta?");
+        return confir;
+    }
+}
+
+function validarVentaPedido(){
+    let idVentaPedido = document.getElementById("idVentaPedido").value;
+    let idPedido = document.getElementById("idPedido").value;
+    let fechaPedido = document.getElementById("fechaPedido").value;
+    let idDetallePedido = document.getElementById("idDetallePedido").value;
+    let cantidadProducto = document.getElementById("cantidadProducto").value;
+    let precioUnitario = document.getElementById("precioUnitario").value;
+    let idProducto = document.getElementById("idProducto").value;
+    let fechaVentaPedido = document.getElementById("fechaVentaPedido").value;
+    let formaPagoPedido = document.getElementById("formaPagoPedido").value;
+    let estadoVentaPedido = document.getElementById("estadoVentaPedido").value;
+
+    if (idVentaPedido == "" || idPedido == "" || fechaPedido == "" || idDetallePedido == "" || cantidadProducto == "" || precioUnitario == "" || idProducto == "" || fechaVentaPedido == "" ) {
+        alert("Hay campos sin completar");
+        return false;
+    }else if (formaPagoPedido == "noSelect"){
+        alert("Seleccione forma de pago");
+        return false;
+    }else if (estadoVentaPedido == "noSelect"){
+        alert("Seleccione estado de la venta");
+        return false;
+    }else {
+        let confir = confirm("¿Desea registrar la venta?");
         return confir;
     }
 }

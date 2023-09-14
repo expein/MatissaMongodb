@@ -168,6 +168,58 @@ router.post("/createSer", isAuthenticated, async (req, res, next) => {
 
 router.get("");
 
+// VENTAS
+
+const Ventas = require("../models/venta");
+
+router.get("/ventas", isAuthenticated, async (req, res, next) => {
+    try {
+        const ventas = await Ventas.find({});
+        res.render("./ventas/ventas.ejs", { ventas })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+});
+
+router.get("/create-venta-servicio", isAuthenticated, async (req, res, next) => {
+    try {
+        const ventas = Ventas.find().sort({idVenta: -1}).limit(1);
+        res.render("./ventas/create-venta-servicio.ejs", { venta: ventas[0] });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+});
+
+router.get("/create-venta-pedido", isAuthenticated, async (req, res, next) => {
+    try {
+        const ventas = Ventas.find().sort({idVenta: -1}).limit(1);
+        res.render("./ventas/create-venta-pedido.ejs", { venta: ventas[0] });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+});
+
+router.get("/createVentaSer", isAuthenticated, async (req, res, next) => {
+    try {
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+});
+
+router.get("/createVentaPed", isAuthenticated, async (req, res, next) => {
+    try {
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+});
+
 // middleware
 function isAuthenticated(req, res, next){
     if(req.isAuthenticated()){
