@@ -1,5 +1,5 @@
 <%- layout('./layouts/main.ejs') %>
-<link rel="stylesheet" href="../style/compras.css">
+<link rel="stylesheet" href="../style/servicios.css">
 <script src="../js/validations.js"></script>
 <div class="container-fluid">
     <div class="create-tittle container-fluid">
@@ -101,6 +101,7 @@
                             <option value="3">Finalizado</option>
                         </select>
                     </div>
+
                 </div>
                 <div class="text-center row mt-4 fields">
                     <div class="col">
@@ -119,9 +120,7 @@
                         <label for="precioServicio" class="form-label">Precio servicio</label><br>
                         <input type="text" id="precioServicio" class="input-bonito" name="precioServicio">
                     </div>
-                    <div class="col">
-                        <input type="button" class="input-bonito" value="Agregar servicio..." onclick="agregarServicio();">
-                    </div>
+                    
                 </div>
             </div>
             <div id="addServicio">
@@ -129,55 +128,89 @@
             </div>
 
             <script>
-                function agregarServicio(){
-                    let fields = "";
 
+                function addArray(){
+                    let servicioArray = [];
+                }
+
+
+                let contadorCampos = 0;
+
+                function agregarServicio() {
                     let divServicio = document.getElementById("addServicio");
 
-                    fields = '<div class="row text-center mt-4 fields">'+
-                        '<div class="col">'+
-                            '<label for="IDEmpleado" class="form-label ">Seleccione el Empleado</label><br>'+
-                            '<select id="IDEmpleado" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado(this)">'+
-                                '<option value="noSelect" selected disabled>Empleado...</option>'+
-                                '<option value="1">1. Juan</option>'+
-                                '<option value="2">2. Diego</option>'+
-                                '<option value="3">3. Johan</option>'+
-                                '<option value="4">4. Santiago</option>'+
-                            '</select>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="client" class="form-label ">Seleccione el Servicio</label><br>'+
-                            '<select id="client" class="form-select" name="client" onchange="valueInputServicio(this)">'+
-                                '<option value="noSelect" selected disabled>Servicio...</option>'+
-                                '<option value="1">1. Corte de cabello</option>'+
-                                '<option value="2">2. Uñas acrílicas</option>'+
-                                '<option value="3">3. Tinturado</option>'+
-                                '<option value="4">4. Alizado</option>'+
-                            '</select>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="duracionServicio" class="form-label">Duración Servicio</label><br>'+
-                            '<input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio" readonly>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row text-center mt-4 fields">'+
-                        '<div class="col">'+
-                            '<label for="nombreEmpleado" class="form-label">Nombre empleado</label><br>'+
-                            '<input type="text" id="nombreEmpleado" class="input-bonito" value="" name="nombreEmpleado" readonly>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="nombreServicio" class="form-label">Nombre servicio</label><br>'+
-                            '<input type="text" id="nombreServicio" class="input-bonito" value="" name="nombreServicio" readonly>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="precioServicio" class="form-label">Precio servicio</label><br>'+
-                            '<input type="text" id="precioServicio" class="input-bonito" name="precioServicio">'+
-                        '</div>'+
-                    '</div>';
+                    let nuevoCampoSet = document.createElement("div");
+                    nuevoCampoSet.id = contadorCampos;
+
+                    // HTML de los nuevos campos
+                    let nuevoCampoHTML = `
+                    <hr style="border: solid 1px black">
+                        <div class="row text-center mt-4 fields">
+                            <div class="col">
+                                <label for="IDEmpleado_${contadorCampos}" class="form-label ">Seleccione el Empleado</label><br>
+                                <select id="IDEmpleado_${contadorCampos}" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado(this)">
+                                    <option value="noSelect" selected disabled>Empleado...</option>
+                                    <option value="1">1. Juan</option>
+                                    <option value="2">2. Diego</option>
+                                    <option value="3">3. Johan</option>
+                                    <option value="4">4. Santiago</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="IDServicio_${contadorCampos}" class="form-label ">Seleccione el Servicio</label><br>
+                                <select id="IDServicio_${contadorCampos}" class="form-select" name="IDServicio" onchange="valueInputServicio(this)">
+                                    <option value="noSelect" selected disabled>Servicio...</option>
+                                    <option value="1">1. Corte de cabello</option>
+                                    <option value="2">2. Uñas acrílicas</option>
+                                    <option value="3">3. Tinturado</option>
+                                    <option value="4">4. Alizado</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="duracionServicio_${contadorCampos}" class="form-label">Duración Servicio</label><br>
+                                <input type="text" class="input-bonito" id="duracionServicio_${contadorCampos}" name="duracionServicio" readonly>
+                            </div>
+                        </div>
+                        <div class="row text-center mt-4 fields">
+                            <div class="col">
+                                <label for="nombreEmpleado_${contadorCampos}" class="form-label">Nombre empleado</label><br>
+                                <input type="text" id="nombreEmpleado_${contadorCampos}" class="input-bonito" value="" name="nombreEmpleado" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="nombreServicio_${contadorCampos}" class="form-label">Nombre servicio</label><br>
+                                <input type="text" id="nombreServicio_${contadorCampos}" class="input-bonito" value="" name="nombreServicio" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="precioServicio_${contadorCampos}" class="form-label">Precio servicio</label><br>
+                                <input type="text" id="precioServicio_${contadorCampos}" class="input-bonito" name="precioServicio">
+                            </div>
+                        </div>
+                        <div class="row text-center mt-4 fields">
+                            <div class="col">
+                                <label class="form-label"></label><br>
+                                <input type="button" style="background: #ff6565" class="input-bonito" value="Eliminar" onclick="eliminarCampo(${contadorCampos})">
+                            </div>
+                        </div>
                     
-                    divServicio.innerHTML = fields;
+                    `;
+
+                    // Incrementar el contador de campos
+                    contadorCampos++;
+
+                    // Agregar los nuevos campos al elemento contenedor
+                    nuevoCampoSet.innerHTML = nuevoCampoHTML;
+                    divServicio.appendChild(nuevoCampoSet);
                 }
+
+                function eliminarCampo(idCampo) {
+                    var campoAEliminar = document.getElementById(idCampo);
+                    if (campoAEliminar) {
+                        campoAEliminar.parentNode.removeChild(campoAEliminar);
+                    }
+                }
+
             </script>
+            <div style="background-color: #ff6565;"></div>
             <div class="container-fluid">
                 <div class="row justify-content-center mt-5">
                     <div class="col text-end">
@@ -189,6 +222,9 @@
                         <button type="submit" class="acept-btn">
                             Aceptar
                         </button>
+                    </div>
+                    <div class="col fields">
+                        <input type="button" class="input-bonito" value="Agregar servicio..." onclick="agregarServicio();">
                     </div>
                 </div>
             </div>

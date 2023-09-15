@@ -153,5 +153,5 @@ function delteCompra(){
 }
 
 function backPage(){
-    window.location="/compras";
+    window.location="/profile";
 }
