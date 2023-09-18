@@ -60,20 +60,20 @@ router.get("/compras", isAuthenticated, async (req, res, next) => {
 });
 
 router.post("/createComp", isAuthenticated, async (req, res, next) => {
-
-    const {IDCompra, fechaCompra, desc, factura, detalleCompra} = req.body
-
-    if (!Array.isArray(detalleCompra)) {
-        return res.status(400).json({ message: 'El campo detallesCompra debe ser un array de objetos.' });
-    }
-
     const compra = new Compras({
-        idCompra: IDCompra,
-        fechaCompra,
-        descrip: desc,
-        factura,
-        detalleCompra: detallesCompra,
+        idCompra: req.body.IDCompra,
+        fechaCompra: req.body.fechaCompra,
+        descrip: req.body.desc,
+        factura: req.body.factura,
+        DetallesCompra:[{
+            codigoDetalleCompra: req.body.codigoDetalleCompra,
+            proveedor: req.body.proveedor,
+            product: req.body.product,
+            precio: req.body.precio,
+            cantidad: req.body.cantidad
+        }]
     });
+
     compra.save()
     .then(async doc => {
         const compras = await Compras.find({});
