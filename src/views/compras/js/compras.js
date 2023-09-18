@@ -24,8 +24,11 @@ let codigoDetalleSum = 1
 const AgregarDetalleCompra = ()=>{
     let formDetalleCompra = document.getElementById('formDetalleCompra')
     let detallesCompra = document.getElementById('detallesCompra')
+    let cantidadDetalles = document.getElementById("cantidadDetalles");
 
     codigoDetalleSum += 1
+
+    cantidadDetalles.value = codigoDetalleSum;
 
     console.log(formDetalleCompra)
 

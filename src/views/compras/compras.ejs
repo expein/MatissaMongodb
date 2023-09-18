@@ -1,7 +1,7 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/compras.css">
 <link rel="stylesheet" href="../style/compras.css">
-<script src="../js/validations.js"></script>
+<!--<script src="../js/validations.js"></script>-->
 <div class="container-fluid" id="formRegistrarCompra" style="display: none;">
     <div class="row create-tittle">
         <div class="col-12">
@@ -28,6 +28,7 @@
                     <input type="text" id="factu" class="input-bonito" name="factura">
                 </div>
             </div>
+            <input type="text" name="cantidadDetalles" id="cantidadDetalles" value="1" style="display: none;">
             <div id="detallesCompra">
                 <div class="text-center row mt-4 fields" id="formDetalleCompra">
                     <div class="col">
