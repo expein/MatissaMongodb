@@ -62,19 +62,44 @@ router.get("/compras", isAuthenticated, async (req, res, next) => {
 router.post("/createComp", isAuthenticated, async (req, res, next) => {
      const cantidadDetalles = req.body.codigoDetalleCompra;
 
-    const compra = new Compras({
+    const compraData = {
       idCompra: req.body.IDCompra,
       fechaCompra: req.body.fechaCompra,
       descrip: req.body.desc,
       factura: req.body.factura,
-      DetallesCompra: cantidadDetalles.map((detalle, index) => ({
-        codigoDetalleCompra: Array.isArray(req.body.codigoDetalleCompra) ? req.body.codigoDetalleCompra[index] : req.body.proveedor,
-        proveedor: Array.isArray(req.body.proveedor) ? req.body.proveedor[index] : req.body.proveedor,
-        product: Array.isArray(req.body.product) ? req.body.product[index] : req.body.product,
-        precio: Array.isArray(req.body.precio) ? req.body.precio[index] : req.body.precio,
-        cantidad: Array.isArray(req.body.cantidad) ? req.body.cantidad[index] : req.body.cantidad,
-      })),
-    });
+    };
+
+    if (Array.isArray(cantidadDetalles)) {
+      compraData.DetallesCompra = cantidadDetalles.map((detalle, index) => ({
+        codigoDetalleCompra: Array.isArray(req.body.codigoDetalleCompra)
+          ? req.body.codigoDetalleCompra[index]
+          : req.body.codigoDetalleCompra,
+        proveedor: Array.isArray(req.body.proveedor)
+          ? req.body.proveedor[index]
+          : req.body.proveedor,
+        product: Array.isArray(req.body.product)
+          ? req.body.product[index]
+          : req.body.product,
+        precio: Array.isArray(req.body.precio)
+          ? req.body.precio[index]
+          : req.body.precio,
+        cantidad: Array.isArray(req.body.cantidad)
+          ? req.body.cantidad[index]
+          : req.body.cantidad,
+      }));
+    } else {
+      compraData.DetallesCompra = [
+        {
+          codigoDetalleCompra: req.body.codigoDetalleCompra,
+          proveedor: req.body.proveedor,
+          product: req.body.product,
+          precio: req.body.precio,
+          cantidad: req.body.cantidad,
+        },
+      ];
+    }
+
+    const compra = new Compras(compraData);
 
     compra.save()
     .then(async doc => {
