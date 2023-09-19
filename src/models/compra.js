@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 detallesCompra = new Schema({
-  codigoDetalleCompra: Number,
+  detalleCompra: Number,
   proveedor: String,
   product: String,
   precio: Number,
@@ -11,7 +11,6 @@ detallesCompra = new Schema({
 });
 
 const compraSchema = new Schema({
-  idCompra: Number,
   fechaCompra: {
     type: Date,
     get: function (val) {

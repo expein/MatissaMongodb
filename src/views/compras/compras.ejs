@@ -12,10 +12,6 @@
         <form action="/createComp" method="post" onsubmit="return validarCompra();">
             <div class="text-center row mt-4 fields">
                 <div class="col">
-                    <label for="idC" class="form-label">Código compra</label><br>
-                    <input type="text" class="input-bonito" id="idC" name="IDCompra">
-                </div>
-                <div class="col">
                     <label for="dateCompra" class="form-label">Fecha compra</label><br>
                     <input type="date" id="dateCompra" class="input-bonito" name="fechaCompra">
                 </div>
@@ -32,8 +28,8 @@
             <div id="detallesCompra">
                 <div class="text-center row mt-4 fields" id="formDetalleCompra">
                     <div class="col">
-                        <label for="codigoDetalle" class="form-label">Codigo detalle de compra</label><br>
-                        <input type="text" name="codigoDetalleCompra" class="input-bonito codigo-detalle-compra" value="1" id="codigoDetalle" readonly>
+                        <label for="codigoDetalle" class="form-label">Detalle de compra</label><br>
+                        <input type="text" name="detalleCompra" class="input-bonito codigo-detalle-compra" value="1" id="codigoDetalle" readonly>
                     </div>
                     <div class="col">
                         <label for="proveedor" class="form-label">Proveedor</label><br>
@@ -112,10 +108,10 @@
     <table class="table table-hover table-borderless mt-3 text-center table-sm">
         <thead>
             <tr class="table-secondary">
-                <th class="p-3">Código Compra</th>
                 <th class="p-3">Fecha Compra</th>
                 <th class="p-3">Descripción</th>
                 <th class="p-3">Factura</th>
+                <th class="p-3">Costoo total</th>
                 <th class="p-3">Opciones</th>
             </tr>
         </thead>
@@ -124,7 +120,6 @@
             <% id = 1; %>
             <% compras.forEach(obj => { %>
             <tr>
-            <td><%= obj.idCompra %></td>
             <td><%= obj.fechaCompra %></td>
             <td><%= obj.descrip %></td>
             <td><%= obj.factura %></td>

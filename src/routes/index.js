@@ -172,8 +172,7 @@ router.post("/createUser", isAuthenticated, async (req, res, next) => {
                         
                         compras: [
                             "registrarCompra",
-                            "consultarCompra",
-                            "modificarCompra"
+                            "consultarCompra"
                         ],
                         ventas: [
                             "registrarVenta",
@@ -323,7 +322,7 @@ router.get('/detallesCompra', isAuthenticated, async (req, res, next) =>{
 })
 
 router.post("/createComp", isAuthenticated, async (req, res, next) => {
-     const cantidadDetalles = req.body.codigoDetalleCompra;
+     const cantidadDetalles = req.body.detalleCompra;
 
     let compraData = {
       idCompra: req.body.IDCompra,
@@ -336,8 +335,8 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
     if (Array.isArray(cantidadDetalles)) {
       compraData.DetallesCompra = cantidadDetalles.map((detalle, index) => ({
         codigoDetalleCompra: Array.isArray(req.body.codigoDetalleCompra)
-          ? req.body.codigoDetalleCompra[index]
-          : req.body.codigoDetalleCompra,
+          ? req.body.detalleCompra[index]
+          : req.body.detalleCompra,
         proveedor: Array.isArray(req.body.proveedor)
           ? req.body.proveedor[index]
           : req.body.proveedor,
@@ -350,17 +349,17 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
         cantidad: Array.isArray(req.body.cantidad)
           ? req.body.cantidad[index]
           : req.body.cantidad,
-        costoTotalUnitario: req.body.cantidad[index] * req.body.precio[index]
+        costoTotalUnitario: req.body.cantidad[index] * req.body.precio[index],
       }));
     } else {
       compraData.DetallesCompra = [
         {
-          codigoDetalleCompra: req.body.codigoDetalleCompra,
+          detalleCompra: req.body.detalleCompra,
           proveedor: req.body.proveedor,
           product: req.body.product,
           precio: req.body.precio,
           cantidad: req.body.cantidad,
-          costoTotalUnitario: creq.body.cantidad[index] * req.body.precio[index]
+          costoTotalUnitario: req.body.cantidad * req.body.precio,
         },
       ];
     }
