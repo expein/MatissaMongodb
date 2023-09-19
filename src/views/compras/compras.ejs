@@ -128,22 +128,18 @@
             <td><%= obj.fechaCompra %></td>
             <td><%= obj.descrip %></td>
             <td><%= obj.factura %></td>
+            <td><%= obj.costoTotalCompra %></td>
             <td>
-                <div class="d-flex justify-content-between">
-                    <div class="">
-                        <a href="/edit-compra/<%= obj.idCompra %>">
-                            <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                <div class="row">
+                    <div class="col text-center">
+                        <a href="">
+                            <i class="fa-solid fa-circle-xmark" style="color: #929292;"></i>
                         </a>
                     </div>
-                    <div>
-                        <a href="/delete-compra/<%= obj._id %>">
-                            <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                    <div class="col text-center">
+                        <a href="#" onclick="verDetallesCompra()">
+                            <i class="fa-solid fa-eye" style="color: #3cc3bd;"></i>
                         </a>
-                    </div>
-                    <div>
-                        <label class="switch"><input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
                     </div>
                 </div>
             </td>

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@700&family=Quicksand:wght@700&display=swap');
+
+.body{
+    background-color: #e2d4ff;
+}
+
+.titulo-detalles-compra{
+    padding: 20px;
+    background-color: #3cc3bd;
+    color: white;
+    font-family: 'Merienda';
+}

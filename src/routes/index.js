@@ -59,14 +59,25 @@ router.get("/compras", isAuthenticated, async (req, res, next) => {
     }
 });
 
+router.get('/detallesCompra', isAuthenticated, async (req, res, next) =>{
+    try{
+        const compras = await Compras.find({});
+        res.render('./compras/detallesCompra.ejs', {compras})
+    }catch (error){
+        console.error(error);
+        res.status(500).send('Error de datos')
+    }
+})
+
 router.post("/createComp", isAuthenticated, async (req, res, next) => {
      const cantidadDetalles = req.body.codigoDetalleCompra;
 
-    const compraData = {
+    let compraData = {
       idCompra: req.body.IDCompra,
       fechaCompra: req.body.fechaCompra,
       descrip: req.body.desc,
       factura: req.body.factura,
+      costoTotalCompra: 0
     };
 
     if (Array.isArray(cantidadDetalles)) {
@@ -86,6 +97,7 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
         cantidad: Array.isArray(req.body.cantidad)
           ? req.body.cantidad[index]
           : req.body.cantidad,
+        costoTotalUnitario: req.body.cantidad[index] * req.body.precio[index]
       }));
     } else {
       compraData.DetallesCompra = [
@@ -95,9 +107,18 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
           product: req.body.product,
           precio: req.body.precio,
           cantidad: req.body.cantidad,
+          costoTotalUnitario: creq.body.cantidad[index] * req.body.precio[index]
         },
       ];
     }
+
+    let compraTotal = 0;
+
+    compraData.DetallesCompra.forEach(costoCompraTotal => {
+        compraTotal += costoCompraTotal.costoTotalUnitario
+    });
+
+    compraData.costoTotalCompra = compraTotal;
 
     const compra = new Compras(compraData);
 
