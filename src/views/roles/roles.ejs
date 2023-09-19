@@ -1,0 +1,67 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/roles.css">
+    <div class="container-fluid titulo-roles">
+        <div class="row">
+            <div class="col-12">
+                <h1>Listado de roles</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+            <div class="form-floating">
+                <input type="text" class="form-control rounded-pill buscar-rol" id="floatingInputInvalid" placeholder="" >
+                <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar rol</label>
+            </div>
+            </div>
+            <div class="col-6">
+                <a href="/create-rol" class="crear-rol">
+                <p class="rounded-pill" style="padding-top: 8px;">Crear rol<i class="fa-regular fa-square-plus" style="font-size: 30px; margin-left:10%; margin-top:5px; "></i></p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
+            <thead>
+                <tr>
+                    <th>ID Rol</th>
+                    <th>Rol</th>
+                    <th>Permisos del rol</th>
+                    <th>Opciones</th>
+                </tr>       
+            </thead>
+            <tbody>
+                <% id = 1; %>
+                <% users.forEach(obj => { %>
+                <tr>
+                <td><%= id %></td>
+                <td><%= obj.estado.nombreRol %></td>
+                <td><%= obj.name %></td>
+                <td><%= obj.email %></td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <a href="/edit-user/<%= obj._id %>">
+                                <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/delete-user/<%= obj._id %>">
+                                <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <label class="switch"><input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                </tr>
+                <% id++; %>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>

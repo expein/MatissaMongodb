@@ -46,6 +46,259 @@ router.get("/profile", isAuthenticated, async (req, res, next) => {
     
 });
 
+router.get("/usuarios", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('./usuarios/usuarios.ejs', { users });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.get("/create-user", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('./usuarios/create-usuario.ejs', { users });
+
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.post("/createUser", isAuthenticated, async (req, res, next) => {
+    try {
+        if (req.body.rol == "Admin"){
+            const user = new User({
+                idUser: req.body.idUser,
+                name: req.body.user,
+                email: req.body.email,
+                password: req.body.password,
+                estado: {
+                    estadoUsuario: 1,
+                    nombreRol: req.body.rol,
+                    estadoRol: 1,
+                    nombrePermiso: {
+                        configuracion: [ 
+                            "registrarUsuario", 
+                            "consultarUsuario", 
+                            "modificarUsuario" 
+                        ],
+                        roles: [
+                            "registrarRol",
+                            "consultarRol",
+                            "modificarRol",
+                            "eliminarRol"
+                        ],
+                        compras: [
+                            "registrarCompra",
+                            "consultarCompra",
+                            "modificarCompra"
+                        ],
+                        ventas: [
+                            "registrarVenta",
+                            "consultarVenta",
+                            "modificarVenta"
+                        ],
+                        servicios: [
+                            "registrarServicio",
+                            "consultarServicio",
+                            "modificarServicio",
+                            "eliminarServicio"
+                        ],
+                        citas: [
+                            "registrarCita",
+                            "consultarCita",
+                            "modificarCita",
+                            "eliminarCita"
+                        ],
+                        pedidos: [
+                            "registrarPedido",
+                            "consultarPedido",
+                            "modificarPedido",
+                            "eliminarPedido"
+                        ],
+                        empleados: [
+                            "registrarEmpleado",
+                            "consultarEmpleado",
+                            "modificarEmpleado",
+                            "eliminarEmpleado"
+                        ],
+                        clientes: [
+                            "registrarCliente",
+                            "consultarCliente",
+                            "modificarCliente",
+                            "eliminarCliente"
+                        ],
+                        productos: [
+                            "registrarProducto",
+                            "consultarProducto",
+                            "modificarProducto",
+                            "eliminarProducto"
+                        ],
+                        proveedores: [
+                            "registrarProveedor",
+                            "consultarProveedor",
+                            "modificarProveedor",
+                            "eliminarProveedor"
+                        ],
+                        servicio: [
+                            "registrarServicio",
+                            "consultarServicio",
+                            "modificarServicio"
+                        ]
+                    }
+                }
+            });
+            user.password = user.encryptPass(req.body.password);
+            user.save();
+        }else if (req.body.rol == "Empleado"){
+            const user = new User({
+                idUser: req.body.idUser,
+                name: req.body.user,
+                email: req.body.email,
+                password: req.body.password,
+                estado: {
+                    estadoUsuario: 1,
+                    nombreRol: req.body.rol,
+                    estadoRol: 1,
+                    nombrePermiso: {
+                        configuracion: [ 
+                            "registrarUsuario", 
+                            "consultarUsuario", 
+                            "modificarUsuario" 
+                        ],
+                        
+                        compras: [
+                            "registrarCompra",
+                            "consultarCompra",
+                            "modificarCompra"
+                        ],
+                        ventas: [
+                            "registrarVenta",
+                            "consultarVenta",
+                            "modificarVenta"
+                        ],
+                        servicios: [
+                            "registrarServicio",
+                            "consultarServicio",
+                            "modificarServicio",
+                            "eliminarServicio"
+                        ],
+                        citas: [
+                            "registrarCita",
+                            "consultarCita",
+                            "modificarCita",
+                            "eliminarCita"
+                        ],
+                        pedidos: [
+                            "registrarPedido",
+                            "consultarPedido",
+                            "modificarPedido",
+                            "eliminarPedido"
+                        ],
+                        
+                        clientes: [
+                            "registrarCliente",
+                            "consultarCliente",
+                            "modificarCliente",
+                            "eliminarCliente"
+                        ],
+                        productos: [
+                            "registrarProducto",
+                            "consultarProducto",
+                            "modificarProducto",
+                            "eliminarProducto"
+                        ]
+                    }
+                }
+            });
+            user.password = user.encryptPass(req.body.password);
+            user.save();
+        }else if (req.body.rol == "Cliente") {
+            const user = new User({
+                idUser: req.body.idUser,
+                name: req.body.user,
+                email: req.body.email,
+                password: req.body.password,
+                estado: {
+                    estadoUsuario: 1,
+                    nombreRol: req.body.rol,
+                    estadoRol: 1,
+                    nombrePermiso: {
+                        citas: [
+                            "registrarCita",
+                            "consultarCita",
+                            "modificarCita",
+                            "eliminarCita"
+                        ],
+                        pedidos: [
+                            "registrarPedido",
+                            "consultarPedido",
+                            "modificarPedido",
+                            "eliminarPedido"
+                        ]
+                    }
+                }
+            });
+            user.password = user.encryptPass(req.body.password);
+            user.save();
+        }
+        const users = await User.find({});
+        res.render('./usuarios/usuarios.ejs', { users });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.get("/edit-user/:id", isAuthenticated, async (req, res, next) => {
+    const id = req.params.id;
+
+    const user = await User.findOne({_id: id});
+
+    res.render("./usuarios/edit-user.ejs", { user });
+});
+
+router.post("/editUser", isAuthenticated, async (req, res, next) => {
+    try {
+        const id = req.body.IDMongo;
+        const email = req.body.email;
+
+        await User.findByIdAndUpdate(id, {
+            email: email
+        });
+        
+        const users = await User.find({});
+        res.render('./usuarios/usuarios.ejs', { users });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error de edición');
+    }
+});
+
+// ROLES
+
+router.get("/roles", isAuthenticated, async (req, res, next) => {
+    const users = await User.find({});
+    res.render('./roles/roles.ejs', { users });
+});
+
+router.get("/create-rol", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('./roles/create-rol.ejs', { users });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.post("/createRol", isAuthenticated, async (req, res, next) => {
+    // nothing
+});
+
 // COMPRAS
 const Compras = require('../models/compra');
 
