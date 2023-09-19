@@ -29,13 +29,17 @@ function valid(){
 function validarCompra(){
     let id = document.getElementById("idC").value;
     let date = document.getElementById("dateCompra").value;
-    let cost = document.getElementById("totalCost").value;
-    let prod = document.getElementById("prod").value;
+    let factu = document.getElementById('factu').value;
+    let proveedor = document.getElementById('proveedor').value;
+    let product = document.getElementById("prod").value;
+    let precio = document.getElementById('precio').value;
+    let cantidad = document.getElementById('cantidad').value;
 
-    if (id == "" || date == "" || cost == ""){
+
+    if (id == "" || date == "" || cost == "" || factu == "" || precio == '' || cantidad == ''){
         alert ("Faltan datos en la compra.");
         return false;
-    }else if (prod == "noSelect"){
+    }else if (product == "noSelect" || proveedor == 'noSelect'){
         alert("Seleccione producto");
         return false;
     }else {
