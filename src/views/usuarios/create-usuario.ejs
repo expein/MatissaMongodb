@@ -1,0 +1,130 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/usuarios.css">
+<script src="../js/validations.js"></script>
+<div class="container-fluid create-tittle">
+    <div class="row">
+        <div class="col-12">
+            <h1>Agregar nuevo usuario</h1>
+        </div>
+    </div>
+</div>
+<div class="create-body">
+    <form action="/createUser" method="post" onsubmit="return valid();">
+        <div class="container-fluid">
+            <div class="text-center row mt-4 fields">
+                <div class="col">
+                    <label for="" class="form-label">ID</label><br>
+                    <input type="text" name="idUser" class="input-bonito" id="idUser">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Nombre de usuario</label><br>
+                    <input type="text" name="user" id="usuario" class="input-bonito">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Correo</label><br>
+                    <input type="email" name="email" id="correo" class="input-bonito">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Contraseña</label><br>
+                    <input type="text" name="password" id="password" class="input-bonito">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label ">Rol</label><br>
+                    <select name="rol" id="role" class="form-select">
+                        <option value="noSelect" disabled>Seleccione</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Empleado">Empleado</option>
+                        <option value="Cliente">Cliente</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center mt-5">
+                <div class="col text-end">
+                    <button type="button" class="cancel-btn" onclick="backPage();">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col text-start">
+                    <button type="submit" class="acept-btn">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<div class="user-list-header row justify-content-around">
+    <div class="col m-4">
+        <h1>Lista de usuarios</h1>
+    </div>
+    <div class="col">
+        <div class="form-floating search">
+            <input type="text" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="" >
+            <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar usuario</label>
+        </div>
+    </div>
+</div>
+<div class="user-list-body" style="margin: 10px;">
+    <table class="table table-hover table-borderless mt-3 text-center">
+        <thead>
+            <tr class="table-secondary">
+                <th class="p-3">ID Usuario</th>
+                <th class="p-3">Rol</th>
+                <th class="p-3">Nombre Usuario</th>
+                <th class="p-3">Correo</th>
+                <th class="p-3">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% id = 1; %>
+            <% users.forEach(obj => { %>
+            <tr>
+            <td><%= id %></td>
+            <td><%= obj.estado.nombreRol %></td>
+            <td><%= obj.name %></td>
+            <td><%= obj.email %></td>
+            
+            <td>
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <a href="/edit-user/<%= obj._id %>">
+                            <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/delete-user/<%= obj._id %>">
+                            <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <label class="switch"><input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </td>
+            </tr>
+            <% id++; %>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid container-paginado">
+    <div>
+        <div class="row">
+            <div class="col d-flex paginado">
+                <a href="">
+                    <i class="fa-solid fa-caret-left"></i>
+                </a>
+                <p>1</p>
+                <a href="">
+                    <i class="fa-solid fa-caret-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

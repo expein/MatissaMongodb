@@ -22,9 +22,11 @@ passport.use('local-registrar', new localStrategy({
     if(nameResult){
         return(done(null, false, req.flash('appMessage', 'El nombre ya existe.')))
     }else{
+        const id = req.body.idUser;
         const email = req.body.email;
         const rol = req.body.rol;
         const theUser = new User();
+        theUser.idUser = id;
         theUser.name = name;
         theUser.email = email;
         theUser.rol = rol;

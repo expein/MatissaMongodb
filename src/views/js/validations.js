@@ -1,12 +1,16 @@
 // Validar Usuario
 function valid(){
+    let id = document.getElementById("idUser").value;
     let user = document.getElementById("usuario").value;
     let email = document.getElementById("correo").value;
     let rol = document.getElementById("role").value;
     let pass = document.getElementById("password").value;
     let expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (user == "" || email == "" || pass == "" ) {
+    if (id == "" || user == "" || email == "" || pass == "" ) {
         alert("Campos vacíos");
+        return false;
+    }else if (isNaN(id)){
+        alert("El ID debe ser numérico.");
         return false;
     }else if (rol == "noSelect") {
         alert("Seleccione Rol");
