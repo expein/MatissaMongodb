@@ -67,7 +67,7 @@ router.get("/create-user", isAuthenticated, async (req, res, next) => {
     }
 });
 
-router.post("/createUser/:nombreRol", isAuthenticated, async (req, res, next) => {
+router.post("/createUser", isAuthenticated, async (req, res, next) => {
     try {
         if (req.body.rol == "Admin"){
             const user = new User({
@@ -273,6 +273,21 @@ router.post("/editUser", isAuthenticated, async (req, res, next) => {
         console.log(err);
         res.status(500).send('Error de edición');
     }
+});
+
+router.get("/delete-user/:id", isAuthenticated, async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        await User.findByIdAndDelete(id);
+
+        const users = await User.find({});
+    res.render("./usuarios/usuarios.ejs", { users });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+    
 });
 
 // ROLES
