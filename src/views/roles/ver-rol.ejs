@@ -1,5 +1,6 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/roles.css">
+<script src="../js/validations.js"></script>
     <div class="container-fluid titulo-roles">
         <div class="row">
             <div class="col-12">
@@ -7,7 +8,15 @@
             </div>
         </div>
     </div>
-    <div class="">
+    <div class="row">
+        <div class="col text-center">
+            <a class="cancel-btn btn btn-dark" onclick="backPage();">
+                Volver
+            </a>
+        </div>
+    </div>
+    
+    <div class="mt-4">
         <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
             <thead>
                 <tr>

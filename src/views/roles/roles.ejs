@@ -1,5 +1,6 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/roles.css">
+<script src="../js/validations.js"></script>
     <div class="container-fluid titulo-roles">
         <div class="row">
             <div class="col-12">
@@ -10,15 +11,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-            <div class="form-floating">
-                <input type="text" class="form-control rounded-pill buscar-rol" id="floatingInputInvalid" placeholder="" >
-                <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar rol</label>
-            </div>
+                <form action="/buscarRol" method="post">
+                    <div class="form-floating">
+                        <input type="text" name="busca" class="form-control rounded-pill buscar-rol" id="floatingInputInvalid" placeholder="" >
+                        <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar rol</label>
+                    </div>
+                </form>
             </div>
             <div class="col">
-                <button class="reporte-crear rounded-pill text-start">
-                  <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i>  Generar reporte de roles</p>
-                </button>        
+                <a href="/create-reporte-roles">
+                    <button class="reporte-crear rounded-pill text-start">
+                        <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i>  Generar reporte de roles</p>
+                      </button>        
+                </a>
+                
             </div>
             <div class="col">
                 <a href="/create-rol" class="crear-rol">
@@ -54,7 +60,7 @@
                         </div>
                         <div>
                             <a href="/delete-rol/<%= obj._id %>">
-                                <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                                <i class="fa-solid fa-trash fa-xl" onclick="return eliminarRol();" style="color: #929292;"></i>
                             </a>
                         </div>
                         <div>

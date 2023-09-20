@@ -154,6 +154,16 @@ function validarRol(){
     }
 }
 
+function eliminarUser(){
+    let confir = confirm("¿Desea eliminar el usuario?");
+    return confir;
+}
+
+function eliminarRol(){
+    let confir = confirm("¿Desea eliminar el rol?");
+    return confir;
+}
+
 function proof(){
     let confir = confirm("Quiere un msj?");
     if (confir){

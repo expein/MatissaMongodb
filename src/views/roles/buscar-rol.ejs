@@ -1,0 +1,65 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/roles.css">
+<script src="../js/validations.js"></script>
+    <div class="container-fluid titulo-roles">
+        <div class="row">
+            <div class="col-12">
+                <h1>Roles</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <form action="/buscarRol" method="post">
+                    <div class="form-floating">
+                        <input type="text" name="busca" class="form-control rounded-pill buscar-rol" id="floatingInputInvalid" placeholder="" >
+                        <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar rol</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="">
+        <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Opciones</th>
+                </tr>       
+            </thead>
+            <tbody>
+                <% id = 1; %>
+                <% rols.forEach(obj => { %>
+                <tr>
+                <td><%= id %></td>
+                <td><%= obj.nombreRol %></td>
+                <td><%= obj.estadoRol %></td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <a href="/view-rol/<%= obj._id %>">
+                                <i class="fa-solid fa-eye fa-xl" style="color: #3cc3bd;"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/delete-rol/<%= obj._id %>">
+                                <i class="fa-solid fa-trash fa-xl" onclick="return eliminarRol();" style="color: #929292;"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <label class="switch"><input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+                </tr>
+                <% id++; %>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>

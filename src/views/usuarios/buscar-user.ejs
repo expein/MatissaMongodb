@@ -1,0 +1,102 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/usuarios.css">
+<script src="../js/validations.js"></script>
+<div class="col-10 mx-auto">
+    <form action="/buscarUser" method="post">
+        <div class="form-floating search">
+            <input type="text" name="busca" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="" >
+            <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar usuario</label>
+        </div>
+    </form>
+
+</div>
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col ">
+            <h1>Usuario</h1>
+        </div>
+    </div>
+</div>
+<div class="user-list-body" style="margin: 10px;">
+    <table class="table table-hover table-borderless mt-3 text-center">
+        <thead>
+            <tr class="table-secondary">
+                <th class="p-3">ID Usuario</th>
+                <th class="p-3">Rol</th>
+                <th class="p-3">Nombre Usuario</th>
+                <th class="p-3">Correo</th>
+                <th class="p-3">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% id = 1; %>
+            <% user.forEach(obj => { %>
+            <tr>
+            <td><%= id %></td>
+            <td><%= obj.estado.nombreRol %></td>
+            <td><%= obj.name %></td>
+            <td><%= obj.email %></td>
+            <td>
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <a href="/edit-user/<%= obj._id %>">
+                            <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/delete-user/<%= obj._id %>">
+                            <i class="fa-solid fa-trash fa-xl" onclick="return eliminarUser();" style="color: #929292;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <label class="switch"><input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </td>
+            </tr>
+            <% id++; %>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid container-paginado">
+    <div>
+        <div class="row">
+            <div class="col d-flex paginado">
+                <a href="">
+                    <i class="fa-solid fa-caret-left"></i>
+                </a>
+                <p>1</p>
+                <a href="">
+                    <i class="fa-solid fa-caret-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

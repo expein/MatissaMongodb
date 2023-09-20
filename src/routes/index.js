@@ -243,7 +243,7 @@ router.post("/createUser", isAuthenticated, async (req, res, next) => {
             user.save();
         }
         const users = await User.find({});
-        res.render('./usuarios/usuarios.ejs', { users });
+        res.render("./usuarios/usuarios.ejs", { users });
     } catch (error){
         console.error(error);
         res.status(500).send('Error datos');
@@ -288,6 +288,17 @@ router.get("/delete-user/:id", isAuthenticated, async (req, res) => {
         res.status(500).send(error);
     }
     
+});
+
+router.post("/buscarUser", isAuthenticated, async (req, res, next) => {
+    const busca = req.body.busca;
+
+    try {
+        const user = await User.find({ $or: [ { name: busca }, { email: busca } ]});
+        res.render("./usuarios/buscar-user.ejs", { user });
+    } catch (error) {
+        
+    }
 });
 
 // ROLES
@@ -491,12 +502,57 @@ router.post("/createRol", isAuthenticated, async (req, res, next) => {
     }
 });
 
+router.get("/delete-rol/:id", isAuthenticated, async (req, res, next) => {
+    try {
+        const id = req.params.id;
+    
+        await Roles.findByIdAndDelete(id);
+
+        const rols = await Roles.find({});
+        res.render("./roles/roles.ejs", { rols });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+    
+    
+
+    
+});
+
 router.get("/view-rol/:id", isAuthenticated, async (req, res, next) => {
     const id = req.params.id;
 
     const rol = await Roles.findOne({ _id: id });
 
     res.render("./roles/ver-rol.ejs", { rol });
+});
+
+router.post("/buscarRol", isAuthenticated, async (req, res, next) => {
+    const busca = req.body.busca;
+    try {
+        if (!isNaN(busca)){
+            const rols = await Roles.find({ estadoRol: busca });
+            res.render("./roles/buscar-rol.ejs", { rols });
+        }else{
+            const rols = await Roles.find({ nombreRol: busca });
+            res.render("./roles/buscar-rol.ejs", { rols });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de busca");
+    }
+});
+
+const PDF = require('pdfkit');
+
+router.get("/create-reporte-roles", isAuthenticated, async (req, res, next) => {
+    try {
+        const roles = await Roles.find({});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
 });
 
 // COMPRAS
