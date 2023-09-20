@@ -67,6 +67,73 @@ const validarCompra = (date, factu, proveedor, product, precio, cantidad) =>{
         return validate
 }
 
+// validar Producto
+
+function validacionProducto() {
+  let nombreProducto = document.getElementById("nombreProducto").value;
+  let desc = document.getElementById("desc").value;
+  let precioVenta = document.getElementById("precioVenta").value;
+
+  let verificar = validarProducto(nombreProducto, desc, precioVenta);
+
+  if (verificar === true) {
+    let op = confirm("¿Estas seguro de hacer esta acción?");
+    return op;
+  } else {
+    return false;
+  }
+}
+
+const validarProducto = (nombreProducto, desc, precioVenta) => {
+  let validate = true;
+
+  if (nombreProducto == "" || desc == "" || precioVenta == "") {
+    alert("Faltan datos en la compra.");
+    validate = false;
+  } else if (isNaN(precioVenta)) {
+    alert("El precio no es numerico");
+    validate = false;
+  }
+
+  return validate;
+};
+
+// validar Proveedor
+
+function validacionProveedor() {
+  let tipoProveedor = document.getElementById("tipoProveedor").value;
+  let nombreProveedor = document.getElementById("nombreProveedor").value;
+  let contacto = document.getElementById("contacto").value;
+  let direccion = document.getElementById("direccion").value;
+  let telefono = document.getElementById("telefono").value;
+
+  let verificar = validarProveedor(tipoProveedor, nombreProveedor, contacto, direccion, telefono);
+
+  if (verificar === true) {
+    let op = confirm("¿Estas seguro de hacer esta acción?");
+    return op;
+  } else {
+    return false;
+  }
+}
+
+const validarProveedor = (tipoProveedor, nombreProveedor, contacto, direccion, telefono) => {
+  let validate = true;
+
+  if (nombreProveedor == "" || contacto == "" || direccion == "" || telefono == "") {
+    alert("Faltan datos");
+    validate = false;
+  }else if (tipoProveedor == "noSelect") {
+    alert("Seleccione el tipo de proveedor");
+    validate = false;
+  } else if (isNaN(telefono)) {
+    alert("El telefono debe ser numerico");
+    validate = false;
+  }
+
+  return validate;
+};
+
 // validar Servicio
 
 function validarServicio(){

@@ -5,23 +5,37 @@
     <div class="container-fluid" id="formRegistrarCompra" style="display: none;">
         <div class="row create-tittle">
             <div class="col-12">
-                <h1>Crear nuevo producto</h1>
+                <h1>Crear nuevo proveedor</h1>
             </div>
         </div>
         <div class="row form-agregar-compra">
-            <form action="/createProd" method="post" onsubmit="return validacionProducto()">
+            <form action="/createProveedor" method="post" onsubmit="return validacionProveedor()">
                 <div class="text-center row mt-4 fields">
                     <div class="col">
+                        <label for="dateCompra" class="form-label">Tipo proveedor</label><br>
+                        <select name="tipoProveedor" id="tipoProveedor"  class="input-bonito rounded-pill">
+                            <option value="noSelect">Seleccione</option>
+                            <option value="Empresa">Empresa</option>
+                            <option value="Persona">Persona</option>
+                        </select>
+                    </div>
+                    <div class="col">
                         <label for="dateCompra" class="form-label">Nombre</label><br>
-                        <input type="text" id="nombreProducto" class="input-bonito" name="nombreProducto">
+                        <input type="text" id="nombreProveedor" class="input-bonito" name="nombreProveedor">
                     </div>
                     <div class="col">
-                        <label for="desc" class="form-label">Descripción</label><br>
-                        <input type="text" id="desc" class="input-bonito" name="desc">
+                        <label for="desc" class="form-label">Contacto</label><br>
+                        <input type="text" id="contacto" class="input-bonito" name="contacto">
+                    </div>
+                </div>
+                <div class="text-center row mt-4 fields">
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Dirección</label><br>
+                        <input type="text" id="direccion" class="input-bonito" name="direccion">
                     </div>
                     <div class="col">
-                        <label for="totalCost" class="form-label">Precio venta</label><br>
-                        <input type="text" id="precioVenta" class="input-bonito" name="precioVenta">
+                        <label for="totalCost" class="form-label">Telefono</label><br>
+                        <input type="text" id="telefono" class="input-bonito" name="telefono">
                     </div>
                 </div>
                 <div class="row justify-content-center mt-5">
@@ -38,7 +52,7 @@
         </div>
     </div>
     <div class="container-fluid compraHead" id="tituloCompra" style="display: block;">
-        <h1>Productos</h1>
+        <h1>Proveedores</h1>
     </div>
     <div class="container-fluid">
         <div class="row mt-5">
@@ -46,13 +60,13 @@
                 <div class="form-floating search">
                     <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="">
                     <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
-                        Buscar producto</label>
+                        Buscar proveedor</label>
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
                 <button class="reporte-crear rounded-pill text-start">
                     <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de
-                        los productos</p>
+                        los proveedores</p>
                 </button>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
@@ -62,7 +76,7 @@
                         <i class="fa-solid fa-circle-plus icon-agregar-proveedor text-end"></i>
                     </div>
                     <div>
-                        <p>Registrar producto</p>
+                        <p>Registrar proveedor</p>
                     </div>
                 </button>
             </div>
@@ -72,41 +86,45 @@
         <table class="table table-hover table-borderless mt-3 text-center table-sm">
             <thead>
                 <tr class="table-secondary">
+                    <th class="p-3">Tipo proveedor</th>
                     <th class="p-3">Nombre</th>
-                    <th class="p-3">Descripción</th>
-                    <th class="p-3">Precio venta</th>
-                    <th class="p-3">Inventario</th>
+                    <th class="p-3">Contacto</th>
+                    <th class="p-3">Dirección</th>
+                    <th class="p-3">Telefono</th>
                     <th class="p-3">Estado</th>
                     <th class="p-3">Opciones</th>
                 </tr>
             </thead>
             <tbody>
-                <% productos.forEach(obj=> { %>
+                <% proveedores.forEach(obj=> { %>
                     <tr>
+                        <td>
+                            <%= obj.tipoProveedor %>
+                        </td>
                         <td>
                             <%= obj.nombre %>
                         </td>
                         <td>
-                            <%= obj.descripcion %>
+                            <%= obj.contacto %>
                         </td>
                         <td>
-                            <%= obj.precioVenta %>
+                            <%= obj.direccion %>
                         </td>
                         <td>
-                            <%= obj.saldoInventario %>
+                            <%= obj.telefono %>
                         </td>
                         <td>
-                            <%=  obj.estado %>
+                            <%= obj.estado %>
                         </td>
                         <td>
                             <div class="row">
                                 <div class="col">
-                                    <a href="/editProduct/<%= obj._id %>">
+                                    <a href="/editProveedor/<%= obj._id %>">
                                         <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
                                     </a>
                                 </div>
                                 <div class="col">
-                                    <a href="/deleteProduct/<%= obj._id %>">
+                                    <a href="/deleteProveedor/<%= obj._id %>">
                                         <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
                                     </a>
                                 </div>

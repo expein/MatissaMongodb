@@ -1,6 +1,5 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/compras.css">
-<link rel="stylesheet" href="../style/compras.css">
 <script src="../js/validations.js"></script>
 <script></script>
 <div class="container-fluid" id="formRegistrarCompra" style="display: none;">
@@ -36,16 +35,18 @@
                         <label for="proveedor" class="form-label">Proveedor</label><br>
                         <select name="proveedor" id="proveedor" class="input-bonito rounded-pill">
                             <option value="noSelect">Seleccione</option>
-                            <option value="Avon">Avon</option>
-                            <option value="Sofia">Sofia</option>
+                            <% proveedores.forEach(obj => { %>
+                                <option value="<%= obj.nombre %>"> <%= obj.nombre %> </option>
+                            <% }) %>
                         </select>
                     </div>
                     <div class="col">
                         <label for="prod" class="form-label ">Producto</label><br>
                         <select id="prod" class="input-bonito rounded-pill" name="product">
                             <option value="noSelect" selected> Seleccione</option>
-                            <option value="Shampoo">Shampoo</option>
-                            <option value="Acondicionador">Acondicionador</option>
+                            <% productos.forEach(obj => { %>
+                                <option value="<%= obj.nombre %>"> <%= obj.nombre %> </option>
+                            <% }) %>
                         </select>
                     </div>
                     <div class="col">
@@ -84,7 +85,7 @@
     <div class="row mt-5">
         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
             <div class="form-floating search">
-                <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="" >
+                <input type="text" class="form-control rounded-pill" id="buscarCompra" placeholder="" oninput="return buscarCompra()">
                 <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar compra</label>
             </div>
         </div>
@@ -106,7 +107,7 @@
     </div>
 </div>
 <div class="container-fluid">
-    <table class="table table-hover table-borderless mt-3 text-center table-sm">
+    <table class="table table-hover table-borderless mt-3 text-center table-sm" id="tabla">
         <thead>
             <tr class="table-secondary">
                 <th class="p-3">Fecha Compra</th>

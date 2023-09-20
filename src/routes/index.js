@@ -300,11 +300,15 @@ router.post("/createRol", isAuthenticated, async (req, res, next) => {
 
 // COMPRAS
 const Compras = require('../models/compra');
+const Productos = require("../models/producto");
+const Proveedores = require("../models/proveedor");
 
 router.get("/compras", isAuthenticated, async (req, res, next) => {
     try {
         const compras = await Compras.find({});
-        res.render('./compras/compras.ejs', { compras });
+        const productos = await Productos.find({})
+        const proveedores = await Proveedores.find({})
+        res.render('./compras/compras.ejs', { compras, productos, proveedores });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error de datos');
@@ -377,7 +381,9 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
     compra.save()
     .then(async doc => {
         const compras = await Compras.find({});
-        res.render("./compras/compras.ejs", { compras });
+        const productos = await Productos.find({});
+        const proveedores = await Proveedores.find({});
+        res.render("./compras/compras.ejs", {compras, productos, proveedores});
         console.log('Compra registrada', doc);
     }).catch(err => {
         console.log("Error al registrar: ",err.message);
@@ -385,8 +391,6 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
 });
 
 //PRODUCTOS
-
-const Productos = require("../models/producto");
 
 router.get('/productos', isAuthenticated, async (req, res, next) => {
     try{
@@ -459,6 +463,86 @@ router.get('/deleteProduct/:id', isAuthenticated, async (req, res, next) => {
         res.status(500).send('Error al eliminar producto')
     }
 })
+
+//PROVEEDOR
+
+router.get("/proveedores", isAuthenticated, async (req, res, next) => {
+    try{
+        const proveedores = await Proveedores.find({});
+        res.render("./proveedores/proveedores.ejs", { proveedores });
+    }catch (err){
+        console.log(err);
+        res.status(500).send('Error de datos')
+    }
+});
+
+router.post('/createProveedor', isAuthenticated, async (req, res, next) => {
+        const proveedor = new Proveedores({
+          tipoProveedor: req.body.tipoProveedor,
+          nombre: req.body.nombreProveedor,
+          contacto: req.body.contacto,
+          direccion: req.body.direccion,
+          telefono: req.body.telefono,
+          estado: "Habilitado",
+        });
+
+        proveedor.save()
+          .then(async (doc) => {
+            const proveedores = await Proveedores.find({});
+            res.render("./proveedores/proveedores.ejs", { proveedores });
+            console.log("Producto registrado", doc);
+          })
+          .catch((err) => {
+            console.log("Error al registrar: ", err.message);
+          });
+})
+
+router.get("/editProveedor/:id", isAuthenticated, async (req, res, next) => {
+  const id = req.params.id;
+
+  const proveedores = await Proveedores.findOne({ _id: id });
+
+  res.render("./proveedores/editProveedor.ejs", { proveedores });
+});
+
+router.post("/editProveedor", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.body.IDMongo;
+    const tipProveedor = req.body.tipoProveedor;
+    const nomb = req.body.nombreProveedor
+    const contac = req.body.contacto
+    const direc = req.body.direccion
+    const tel = req.body.telefono
+
+    await Proveedores.findByIdAndUpdate(id, {
+      tipoProveedor: tipProveedor,
+      nombre: nomb,
+      contacto: contac,
+      direccion: direc,
+      telefono: tel,
+    });
+
+    const proveedores = await Proveedores.find({});
+    res.render("./proveedores/proveedores.ejs", { proveedores });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error de edición");
+  }
+});
+
+router.get("/deleteProveedor/:id", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    await Proveedores.findByIdAndDelete(id);
+
+    const proveedores = await Proveedores.find({});
+    res.render("./proveedores/proveedores.ejs", { proveedores });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error al eliminar producto");
+  }
+});
 
 // SERVICIOS
 const Servicios = require('../models/servicio');

@@ -19,6 +19,28 @@ const registrarCompra = ()=>{
     }
 }
 
+const buscarCompra = ()=>{
+    const inputBuscarCompra = document.getElementById("buscarCompra");
+    const tablaCompras = document.getElementById("tabla");
+    const filas = tablaCompras.getElementsByTagName('tr')
+
+    const valorBuscado = inputBuscarCompra.value.toLowerCase();
+
+    for(let i = 1 ; i < filas.length; i++){
+        const fila = filas[i]
+        const nombreColumna = fila.getElementsByTagName('td')
+
+        if(nombreColumna){
+            const textoFila = nombreColumna.textContent.toLowerCase();
+            if(textoFila.includes(valorBuscado)){
+                fila.style.display =''
+            }else{
+                fila.style.display = 'none'
+            }
+        }
+    }
+}
+
 
 const verDetallesCompra = () =>{
     window.open('http://localhost:3000/detallesCompra/', 'detallesCompra', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=700,height=600,left = 390,top = 50')
