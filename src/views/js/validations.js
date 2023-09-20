@@ -87,15 +87,17 @@ function validarServicio(){
 // validar Venta
 
 function validarVentaServicio(){
+    let idVenta = document.getElementById("idVenta").value;
     let idVentaServicio = document.getElementById("idVentaServicio").value;
     let idCliente = document.getElementById("idCliente").value;
     let idCita = document.getElementById("idCita").value;
     let costoTotalCita = document.getElementById("costoTotalCita").value;
+    let idServicio = document.getElementById("idServicio").value;
     let fechaVentaServicio = document.getElementById("fechaVentaServicio").value;
-    let formaPagoServicio = document.getElementById("formaPagoServicio").value;
+    let formaPagoServicio = document.getElementById("formaPago").value;
     let estadoVentaServicio = document.getElementById("estadoVentaServicio").value;
 
-    if (idVentaServicio == "" || idCliente == "" || idCita == "" || fechaRegistro == "" || costoTotalCita == "" || fechaVentaServicio == "") {
+    if (idVenta == "" ||formaPagoServicio == "" ||idServicio == "" || idVentaServicio == "" || idCliente == "" || idCita == "" || costoTotalCita == "" || fechaVentaServicio == "") {
         alert("Hay campos sin completar");
         return false;
     }else if (formaPagoServicio == "noSelect"){
@@ -105,8 +107,13 @@ function validarVentaServicio(){
         alert("Elegir estado de la venta");
         return false;
     }else {
-        let confir = confirm("¿Desea registrar la venta?");
-        return confir;
+        let confir = Swal.fire(
+            'Venta exitosa!',
+            '',
+            'success',
+            'Cool'
+          ) 
+          return confir;
     }
 }
 

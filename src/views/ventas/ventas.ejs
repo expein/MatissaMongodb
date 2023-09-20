@@ -1,75 +1,99 @@
 <%- layout('./layouts/main.ejs') %>
-<link rel="stylesheet" href="../style/ventas.css">
-<div class="container-fluid ventaHead">
-    <h1>Ventas</h1>
-</div>
-<div class="container-fluid">
-    <div class="row mt-5">
-        <div class="col-3">
-            <div class="form-floating search">
-                <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="" >
-                <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar venta</label>
-            </div>
-        </div>
-        <div class="col-3">
-            <a href="" class="reporte-crear">
-                <p class="rounded-pill"><i class="fa-solid fa-download fa-2xl"></i>  Generar reporte de ventas</p>
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="/create-venta-servicio" class="reporte-crear">
-                <p class="rounded-pill">Crear venta servicio<i class="fa-solid fa-circle-plus fa-2xl" style="color: #ffffff; margin-left: 100px;"></i></p>
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="/create-venta-pedido" class="reporte-crear">
-                <p class="rounded-pill">Crear venta pedido<i class="fa-solid fa-circle-plus fa-2xl" style="color: #ffffff; margin-left: 100px;"></i></p>
-            </a>
-        </div>
+    <link rel="stylesheet" href="../style/ventas.css">
+
+    <div class="container-fluid ventaHead">
+        <h1>Ventas</h1>
     </div>
-</div>
-<div class="container-fluid">
-    <table class="table table-hover table-borderless mt-3 text-center table-sm">
-        <thead>
-            <tr class="table-secondary">
-                <th class="p-3">ID Venta</th>
-                <th class="p-3">Venta Pedido</th>
-                <th class="p-3">Venta Servicio</th>
-                <th class="p-3">Estado Venta</th>
-                <th class="p-3">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <% id = 1; %>
-            <% ventas.forEach(obj => { %>
-            <tr>
-            <td><%= obj.idVenta %></td>
-            <td><%= obj.idPedido %></td>
-            <td><%= obj.idCita %></td>
-            <% let estado; %>
-            <% if(idPedido){ estado = obj.estadoVentaPedido } else { estado = obj.estadoVentaServicio } %>
-            <td><%= estado %></td>
-            <td><div class="d-flex justify-content-between"><div><a href="/delete-servicio/<%= obj._id %>" onclick="return deleteCompra()"><i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i></a></div><div><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label></div></div></td>
-            </tr>
-            <% id++; %>
-            <% }); %>
-
-        </tbody>
-    </table>
-</div>
-<div class="container-fluid container-paginado">
-    <div>
-        <div class="row">
-            <div class="col d-flex paginado">
-                <a href="">
-                    <i class="fa-solid fa-caret-left"></i>
-                </a>
-                <p>1</p>
-                <a href="">
-                    <i class="fa-solid fa-caret-right"></i>
-                </a>
+    <div class="container-fluid">
+        <div class="row mt-5">
+            <div class="col-3">
+                <div class="form-floating search">
+                    <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="">
+                    <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
+                        Buscar venta</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <button class="reporte-crear rounded-pill text-start">
+                    <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de
+                        ventas</p>
+                </button>
+            </div>
+            <div class="col-3">
+                <button class="reporte-crear rounded-pill text-start"
+                    onclick="window.location.href='/create-venta-servicio'">
+                    <p class="rounded-pill">crear venta de servicio<i class="fa-solid fa-circle-plus fa-2xl"
+                            style="color: #ffffff; margin-left: 20% ;"></i></p>
+                </button>
+            </div>
+            <div class="col-3">
+                <button class="reporte-crear rounded-pill text-start"
+                    onclick="window.location.href='/create-venta-pedido'">
+                    <p class="rounded-pill">crear venta de pedido<i class="fa-solid fa-circle-plus fa-2xl"
+                            style="color: #ffffff; margin-left: 20% ;"></i></p>
+                </button>
             </div>
         </div>
     </div>
-</div>
+    <div class="container-fluid">
+        <table class="table table-hover table-borderless mt-3 text-center table-sm">
+            <thead>
+                <tr class="table-secondary">
+                    <th class="p-3">ID Venta</th>
+                    <th class="p-3">Venta Pedido</th>
+                    <th class="p-3">Venta Servicio</th>
+                    <th class="p-3">Estado Venta</th>
+                    <th class="p-3">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% id=1; %>
+                    <% ventas.forEach(obj=> { %>
+                        <tr>
+                            <td>
+                                <%= obj.idVenta %>
+                            </td>
+                            <td>
+                                <%= obj.idPedido %>
+                            </td>
+                            <td>
+                                <%= obj.idCita %>
+                            </td>
+                            <% let estado; %>
+                                <% if(idPedido){ estado=obj.estadoVentaPedido } else { estado=obj.estadoVentaServicio }
+                                    %>
+                                    <td>
+                                        <%= estado %>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-between">
+                                            <div><a href="/delete-servicio/<%= obj._id %>"
+                                                    onclick="return deleteCompra()"><i class="fa-solid fa-trash fa-xl"
+                                                        style="color: #929292;"></i></a></div>
+                                            <div><label class="switch"><input type="checkbox" checked><span
+                                                        class="slider round"></span></label></div>
+                                        </div>
+                                    </td>
+                        </tr>
+                        <% id++; %>
+                            <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="container-fluid container-paginado">
+        <div>
+            <div class="row">
+                <div class="col d-flex paginado">
+                    <a href="">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+                    <p>1</p>
+                    <a href="">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,197 +1,253 @@
 <%- layout('./layouts/main.ejs') %>
-<link rel="stylesheet" href="../style/ventas.css">
-<script src="../js/validations.js"></script>
-<div class="container-fluid">
-    <div class="create-tittle container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1>Crear venta pedido</h1>
+    <link rel="stylesheet" href="../style/ventas.css">
+    <script src="../js/validations.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <div class="container-fluid">
+        <div class="create-tittle container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Crear venta pedido</h1>
+                </div>
             </div>
         </div>
+
+
+
+        <% let idVenta; %>
+            <% if (venta) { %>
+                <% idVenta=venta.idVenta + 1; %>
+                    <% } else { %>
+                        <% idVenta=1; %>
+                            <% }; %>
+                                <script>
+                                    let servicesAdded =  []
+                                    function valueInputCliente(sel) {
+                                        let nombreCliente = document.getElementById("nombreCliente");
+                                        if (sel.value == 1) {
+                                            nombreCliente.value = "Juan";
+                                        } else if (sel.value == 2) {
+                                            nombreCliente.value = "Diego";
+                                        } else if (sel.value == 3) {
+                                            nombreCliente.value = "Johan";
+                                        } else if (sel.value == 4) {
+                                            nombreCliente = "Santiago";
+                                        }
+                                    }
+
+                                    function valueInputServicio(sel) {
+                                        let nombreServicio = document.getElementById("nombreServicio");
+                                        let precioServicio = document.getElementById("precioServicio");
+                                        let duracionServicio = document.getElementById("duracionServicio");
+                                        if (sel.value == 1) {
+                                            nombreServicio.value = "Corte de cabello";
+                                            precioServicio.value = 12000;
+                                            duracionServicio.value = 30;
+                                        } else if (sel.value == 2) {
+                                            nombreServicio.value = "Uñas acrílicas";
+                                            precioServicio.value = 60000;
+                                            duracionServicio.value = 60;
+                                        } else if (sel.value == 3) {
+                                            nombreServicio.value = "Tinturado";
+                                            precioServicio.value = 20000;
+                                            duracionServicio.value = 120;
+                                        } else if (sel.value == 4) {
+                                            nombreServicio.value = "Alizado";
+                                            precioServicio.value = 50000;
+                                            duracionServicio.value = 120;
+                                        }
+                                    }
+
+                                </script>
+
+
+                                <div class="create-body">
+
+                                    <form action="/createVentaPed" method="post"
+                                        onsubmit="return validarVentaServicio();">
+                                        <div class="container-fluid">
+                                            <div class="text-center row mt-4 fields">
+                                                <div class="col">
+                                                    <label for="idVenta" class="form-label">ID Venta</label><br>
+                                                    <input type="text" class="input-bonito" id="idVenta" name="idVenta"
+                                                        value="<%= idVenta %>" readonly>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="IDEmpleado" class="form-label ">Seleccione el
+                                                        Empleado</label><br>
+                                                    <select id="IDEmpleado" class="form-select" name="IDEmpleado"
+                                                        onchange="valueInputEmpleado(this)">
+                                                        <option value="noSelect" selected disabled>Empleado...</option>
+                                                        <option value="1">1. Juan</option>
+                                                        <option value="2">2. Diego</option>
+                                                        <option value="3">3. Johan</option>
+                                                        <option value="4">4. Santiago</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="IDServicio" class="form-label ">Seleccione el
+                                                        Servicio</label><br>
+                                                    <select id="IDServicio" class="form-select" name="IDServicio"
+                                                        onchange="valueInputServicio(this)">
+                                                        <option value="noSelect" selected disabled>Servicio...</option>
+                                                        <option value="1">1. Corte de cabello</option>
+                                                        <option value="2">2. Uñas acrílicas</option>
+                                                        <option value="3">3. Tinturado</option>
+                                                        <option value="4">4. Alizado</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="duracionServicio" class="form-label">Duración
+                                                        Servicio</label><br>
+                                                    <input type="text" class="input-bonito" id="duracionServicio"
+                                                        name="duracionServicio" readonly>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="estadoCita" class="form-label ">Estado</label><br>
+                                                    <select id="estadoCita" class="form-select" name="estadoCita">
+                                                        <option value="noSelect" selected disabled>Estado...</option>
+                                                        <option value="1">Pendiente</option>
+                                                        <option value="2">En progreso</option>
+                                                        <option value="3">Finalizado</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="text-center row mt-4 fields">
+                                                <div class="col">
+                                                    <label for="fechaCita" class="form-label">Fecha cita</label><br>
+                                                    <input type="date" id="fechaCita" class="input-bonito"
+                                                        name="fechaCita">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="nombreEmpleado" class="form-label">Nombre
+                                                        empleado</label><br>
+                                                    <input type="text" id="nombreEmpleado" class="input-bonito" value=""
+                                                        name="nombreEmpleado" readonly>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="nombreServicio" class="form-label">Nombre
+                                                        servicio</label><br>
+                                                    <input type="text" id="nombreServicio" class="input-bonito" value=""
+                                                        name="nombreServicio" readonly>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="precioServicio" class="form-label">Precio
+                                                        servicio</label><br>
+                                                    <input type="text" id="precioServicio" class="input-bonito"
+                                                        name="precioServicio">
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#exampleModal">
+                                                        Launch demo modal
+                                                    </button>
+                                                    <input type="button" class="input-bonito"
+                                                        value="Agregar servicio..." onclick="openModalAddServices();">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="addServicio">
+
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save
+                                                            changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            function openModalAddServices() {
+                                                alert('Ome');
+                                                $('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body input').val(recipient)
+})
+                                            }
+                                            function agregarServicio() {
+                                                let fields = "";
+
+                                                let divServicio = document.getElementById("addServicio");
+
+                                                fields = '<div class="row text-center mt-4 fields">' +
+                                                    '<div class="col">' +
+                                                    '<label for="IDEmpleado" class="form-label ">Seleccione el Empleado</label><br>' +
+                                                    '<select id="IDEmpleado" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado(this)">' +
+                                                    '<option value="noSelect" selected disabled>Empleado...</option>' +
+                                                    '<option value="1">1. Juan</option>' +
+                                                    '<option value="2">2. Diego</option>' +
+                                                    '<option value="3">3. Johan</option>' +
+                                                    '<option value="4">4. Santiago</option>' +
+                                                    '</select>' +
+                                                    '</div>' +
+                                                    '<div class="col">' +
+                                                    '<label for="client" class="form-label ">Seleccione el Servicio</label><br>' +
+                                                    '<select id="client" class="form-select" name="client" onchange="valueInputServicio(this)">' +
+                                                    '<option value="noSelect" selected disabled>Servicio...</option>' +
+                                                    '<option value="1">1. Corte de cabello</option>' +
+                                                    '<option value="2">2. Uñas acrílicas</option>' +
+                                                    '<option value="3">3. Tinturado</option>' +
+                                                    '<option value="4">4. Alizado</option>' +
+                                                    '</select>' +
+                                                    '</div>' +
+                                                    '<div class="col">' +
+                                                    '<label for="duracionServicio" class="form-label">Duración Servicio</label><br>' +
+                                                    '<input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio" readonly>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="row text-center mt-4 fields">' +
+                                                    '<div class="col">' +
+                                                    '<label for="nombreEmpleado" class="form-label">Nombre empleado</label><br>' +
+                                                    '<input type="text" id="nombreEmpleado" class="input-bonito" value="" name="nombreEmpleado" readonly>' +
+                                                    '</div>' +
+                                                    '<div class="col">' +
+                                                    '<label for="nombreServicio" class="form-label">Nombre servicio</label><br>' +
+                                                    '<input type="text" id="nombreServicio" class="input-bonito" value="" name="nombreServicio" readonly>' +
+                                                    '</div>' +
+                                                    '<div class="col">' +
+                                                    '<label for="precioServicio" class="form-label">Precio servicio</label><br>' +
+                                                    '<input type="text" id="precioServicio" class="input-bonito" name="precioServicio">' +
+                                                    '</div>' +
+                                                    '</div>';
+
+                                                divServicio.innerHTML = fields;
+                                            }
+                                        </script>
+                                        <div class="container-fluid">
+                                            <div class="row justify-content-center mt-5">
+                                                <div class="col text-end">
+                                                    <button type="button" class="cancel-btn" onclick="backPage();">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                                <div class="col text-start">
+                                                    <button type="submit" class="acept-btn">
+                                                        Aceptar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
     </div>
-    
-
-
-    <% let idVenta; %>
-    <% if (venta) { %>
-        <% idVenta = venta.idVenta + 1; %>
-    <% } else { %>
-        <% idVenta = 1; %>
-    <% }; %>
-    <script>
-
-        function valueInputCliente(sel){
-            let nombreCliente = document.getElementById("nombreCliente");
-            if (sel.value == 1){
-                nombreCliente.value = "Juan";
-            }else if (sel.value == 2){
-                nombreCliente.value = "Diego";
-            }else if (sel.value == 3){
-                nombreCliente.value = "Johan";
-            }else if (sel.value == 4){
-                nombreCliente = "Santiago";
-            }
-        }
-
-        function valueInputServicio(sel){
-            let nombreServicio = document.getElementById("nombreServicio");
-            let precioServicio = document.getElementById("precioServicio");
-            let duracionServicio = document.getElementById("duracionServicio");
-            if (sel.value == 1){
-                nombreServicio.value = "Corte de cabello";
-                precioServicio.value = 12000;
-                duracionServicio.value = 30;
-            }else if (sel.value == 2){
-                nombreServicio.value = "Uñas acrílicas";
-                precioServicio.value = 60000;
-                duracionServicio.value = 60;
-            }else if (sel.value == 3){
-                nombreServicio.value = "Tinturado";
-                precioServicio.value = 20000;
-                duracionServicio.value = 120;
-            }else if (sel.value == 4){
-                nombreServicio.value = "Alizado";
-                precioServicio.value = 50000;
-                duracionServicio.value = 120;
-            }
-        }
-        
-    </script>
-
-
-    <div class="create-body">
-        
-        <form action="/createVentaPed" method="post" onsubmit="return validarVentaServicio();">
-            <div class="container-fluid">
-                <div class="text-center row mt-4 fields">
-                    <div class="col">
-                        <label for="idVenta" class="form-label">ID Venta</label><br>
-                        <input type="text" class="input-bonito" id="idVenta" name="idVenta" value="<%= idVenta %>" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="IDEmpleado" class="form-label ">Seleccione el Empleado</label><br>
-                        <select id="IDEmpleado" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado(this)">
-                            <option value="noSelect" selected disabled>Empleado...</option>
-                            <option value="1">1. Juan</option>
-                            <option value="2">2. Diego</option>
-                            <option value="3">3. Johan</option>
-                            <option value="4">4. Santiago</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="IDServicio" class="form-label ">Seleccione el Servicio</label><br>
-                        <select id="IDServicio" class="form-select" name="IDServicio" onchange="valueInputServicio(this)">
-                            <option value="noSelect" selected disabled>Servicio...</option>
-                            <option value="1">1. Corte de cabello</option>
-                            <option value="2">2. Uñas acrílicas</option>
-                            <option value="3">3. Tinturado</option>
-                            <option value="4">4. Alizado</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="duracionServicio" class="form-label">Duración Servicio</label><br>
-                        <input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="estadoCita" class="form-label ">Estado</label><br>
-                        <select id="estadoCita" class="form-select" name="estadoCita">
-                            <option value="noSelect" selected disabled>Estado...</option>
-                            <option value="1">Pendiente</option>
-                            <option value="2">En progreso</option>
-                            <option value="3">Finalizado</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="text-center row mt-4 fields">
-                    <div class="col">
-                        <label for="fechaCita" class="form-label">Fecha cita</label><br>
-                        <input type="date" id="fechaCita" class="input-bonito" name="fechaCita">
-                    </div>
-                    <div class="col">
-                        <label for="nombreEmpleado" class="form-label">Nombre empleado</label><br>
-                        <input type="text" id="nombreEmpleado" class="input-bonito" value="" name="nombreEmpleado" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="nombreServicio" class="form-label">Nombre servicio</label><br>
-                        <input type="text" id="nombreServicio" class="input-bonito" value="" name="nombreServicio" readonly>
-                    </div>
-                    <div class="col">
-                        <label for="precioServicio" class="form-label">Precio servicio</label><br>
-                        <input type="text" id="precioServicio" class="input-bonito" name="precioServicio">
-                    </div>
-                    <div class="col">
-                        <input type="button" class="input-bonito" value="Agregar servicio..." onclick="agregarServicio();">
-                    </div>
-                </div>
-            </div>
-            <div id="addServicio">
-                
-            </div>
-
-            <script>
-                function agregarServicio(){
-                    let fields = "";
-
-                    let divServicio = document.getElementById("addServicio");
-
-                    fields = '<div class="row text-center mt-4 fields">'+
-                        '<div class="col">'+
-                            '<label for="IDEmpleado" class="form-label ">Seleccione el Empleado</label><br>'+
-                            '<select id="IDEmpleado" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado(this)">'+
-                                '<option value="noSelect" selected disabled>Empleado...</option>'+
-                                '<option value="1">1. Juan</option>'+
-                                '<option value="2">2. Diego</option>'+
-                                '<option value="3">3. Johan</option>'+
-                                '<option value="4">4. Santiago</option>'+
-                            '</select>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="client" class="form-label ">Seleccione el Servicio</label><br>'+
-                            '<select id="client" class="form-select" name="client" onchange="valueInputServicio(this)">'+
-                                '<option value="noSelect" selected disabled>Servicio...</option>'+
-                                '<option value="1">1. Corte de cabello</option>'+
-                                '<option value="2">2. Uñas acrílicas</option>'+
-                                '<option value="3">3. Tinturado</option>'+
-                                '<option value="4">4. Alizado</option>'+
-                            '</select>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="duracionServicio" class="form-label">Duración Servicio</label><br>'+
-                            '<input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio" readonly>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row text-center mt-4 fields">'+
-                        '<div class="col">'+
-                            '<label for="nombreEmpleado" class="form-label">Nombre empleado</label><br>'+
-                            '<input type="text" id="nombreEmpleado" class="input-bonito" value="" name="nombreEmpleado" readonly>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="nombreServicio" class="form-label">Nombre servicio</label><br>'+
-                            '<input type="text" id="nombreServicio" class="input-bonito" value="" name="nombreServicio" readonly>'+
-                        '</div>'+
-                        '<div class="col">'+
-                            '<label for="precioServicio" class="form-label">Precio servicio</label><br>'+
-                            '<input type="text" id="precioServicio" class="input-bonito" name="precioServicio">'+
-                        '</div>'+
-                    '</div>';
-                    
-                    divServicio.innerHTML = fields;
-                }
-            </script>
-            <div class="container-fluid">
-                <div class="row justify-content-center mt-5">
-                    <div class="col text-end">
-                        <button type="button" class="cancel-btn" onclick="backPage();">
-                            Cancelar
-                        </button>
-                    </div>
-                    <div class="col text-start">
-                        <button type="submit" class="acept-btn">
-                            Aceptar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
