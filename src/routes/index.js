@@ -46,34 +46,301 @@ router.get("/profile", isAuthenticated, async (req, res, next) => {
     
 });
 
+router.get("/usuarios", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('./usuarios/usuarios.ejs', { users });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.get("/create-user", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('./usuarios/create-usuario.ejs', { users });
+
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.post("/createUser", isAuthenticated, async (req, res, next) => {
+    try {
+        if (req.body.rol == "Admin"){
+            const user = new User({
+                idUser: req.body.idUser,
+                name: req.body.user,
+                email: req.body.email,
+                password: req.body.password,
+                estado: {
+                    estadoUsuario: 1,
+                    nombreRol: req.body.rol,
+                    estadoRol: 1,
+                    nombrePermiso: {
+                        configuracion: [ 
+                            "registrarUsuario", 
+                            "consultarUsuario", 
+                            "modificarUsuario" 
+                        ],
+                        roles: [
+                            "registrarRol",
+                            "consultarRol",
+                            "modificarRol",
+                            "eliminarRol"
+                        ],
+                        compras: [
+                            "registrarCompra",
+                            "consultarCompra",
+                            "modificarCompra"
+                        ],
+                        ventas: [
+                            "registrarVenta",
+                            "consultarVenta",
+                            "modificarVenta"
+                        ],
+                        servicios: [
+                            "registrarServicio",
+                            "consultarServicio",
+                            "modificarServicio",
+                            "eliminarServicio"
+                        ],
+                        citas: [
+                            "registrarCita",
+                            "consultarCita",
+                            "modificarCita",
+                            "eliminarCita"
+                        ],
+                        pedidos: [
+                            "registrarPedido",
+                            "consultarPedido",
+                            "modificarPedido",
+                            "eliminarPedido"
+                        ],
+                        empleados: [
+                            "registrarEmpleado",
+                            "consultarEmpleado",
+                            "modificarEmpleado",
+                            "eliminarEmpleado"
+                        ],
+                        clientes: [
+                            "registrarCliente",
+                            "consultarCliente",
+                            "modificarCliente",
+                            "eliminarCliente"
+                        ],
+                        productos: [
+                            "registrarProducto",
+                            "consultarProducto",
+                            "modificarProducto",
+                            "eliminarProducto"
+                        ],
+                        proveedores: [
+                            "registrarProveedor",
+                            "consultarProveedor",
+                            "modificarProveedor",
+                            "eliminarProveedor"
+                        ],
+                        servicio: [
+                            "registrarServicio",
+                            "consultarServicio",
+                            "modificarServicio"
+                        ]
+                    }
+                }
+            });
+            user.password = user.encryptPass(req.body.password);
+            user.save();
+        }else if (req.body.rol == "Empleado"){
+            const user = new User({
+                idUser: req.body.idUser,
+                name: req.body.user,
+                email: req.body.email,
+                password: req.body.password,
+                estado: {
+                    estadoUsuario: 1,
+                    nombreRol: req.body.rol,
+                    estadoRol: 1,
+                    nombrePermiso: {
+                        configuracion: [ 
+                            "registrarUsuario", 
+                            "consultarUsuario", 
+                            "modificarUsuario" 
+                        ],
+                        
+                        compras: [
+                            "registrarCompra",
+                            "consultarCompra"
+                        ],
+                        ventas: [
+                            "registrarVenta",
+                            "consultarVenta",
+                            "modificarVenta"
+                        ],
+                        servicios: [
+                            "registrarServicio",
+                            "consultarServicio",
+                            "modificarServicio",
+                            "eliminarServicio"
+                        ],
+                        citas: [
+                            "registrarCita",
+                            "consultarCita",
+                            "modificarCita",
+                            "eliminarCita"
+                        ],
+                        pedidos: [
+                            "registrarPedido",
+                            "consultarPedido",
+                            "modificarPedido",
+                            "eliminarPedido"
+                        ],
+                        
+                        clientes: [
+                            "registrarCliente",
+                            "consultarCliente",
+                            "modificarCliente",
+                            "eliminarCliente"
+                        ],
+                        productos: [
+                            "registrarProducto",
+                            "consultarProducto",
+                            "modificarProducto",
+                            "eliminarProducto"
+                        ]
+                    }
+                }
+            });
+            user.password = user.encryptPass(req.body.password);
+            user.save();
+        }else if (req.body.rol == "Cliente") {
+            const user = new User({
+                idUser: req.body.idUser,
+                name: req.body.user,
+                email: req.body.email,
+                password: req.body.password,
+                estado: {
+                    estadoUsuario: 1,
+                    nombreRol: req.body.rol,
+                    estadoRol: 1,
+                    nombrePermiso: {
+                        citas: [
+                            "registrarCita",
+                            "consultarCita",
+                            "modificarCita",
+                            "eliminarCita"
+                        ],
+                        pedidos: [
+                            "registrarPedido",
+                            "consultarPedido",
+                            "modificarPedido",
+                            "eliminarPedido"
+                        ]
+                    }
+                }
+            });
+            user.password = user.encryptPass(req.body.password);
+            user.save();
+        }
+        const users = await User.find({});
+        res.render('./usuarios/usuarios.ejs', { users });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.get("/edit-user/:id", isAuthenticated, async (req, res, next) => {
+    const id = req.params.id;
+
+    const user = await User.findOne({_id: id});
+
+    res.render("./usuarios/edit-user.ejs", { user });
+});
+
+router.post("/editUser", isAuthenticated, async (req, res, next) => {
+    try {
+        const id = req.body.IDMongo;
+        const email = req.body.email;
+
+        await User.findByIdAndUpdate(id, {
+            email: email
+        });
+        
+        const users = await User.find({});
+        res.render('./usuarios/usuarios.ejs', { users });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error de edición');
+    }
+});
+
+// ROLES
+
+router.get("/roles", isAuthenticated, async (req, res, next) => {
+    const users = await User.find({});
+    res.render('./roles/roles.ejs', { users });
+});
+
+router.get("/create-rol", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('./roles/create-rol.ejs', { users });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.post("/createRol", isAuthenticated, async (req, res, next) => {
+    // nothing
+});
+
 // COMPRAS
 const Compras = require('../models/compra');
+const Productos = require("../models/producto");
+const Proveedores = require("../models/proveedor");
 
 router.get("/compras", isAuthenticated, async (req, res, next) => {
     try {
         const compras = await Compras.find({});
-        res.render('./compras/compras.ejs', { compras });
+        const productos = await Productos.find({})
+        const proveedores = await Proveedores.find({})
+        res.render('./compras/compras.ejs', { compras, productos, proveedores });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error de datos');
     }
 });
 
-router.post("/createComp", isAuthenticated, async (req, res, next) => {
-     const cantidadDetalles = req.body.codigoDetalleCompra;
+router.get('/detallesCompra', isAuthenticated, async (req, res, next) =>{
+    try{
+        const compras = await Compras.find({});
+        res.render('./compras/detallesCompra.ejs', {compras})
+    }catch (error){
+        console.error(error);
+        res.status(500).send('Error de datos')
+    }
+})
 
-    const compraData = {
+router.post("/createComp", isAuthenticated, async (req, res, next) => {
+     const cantidadDetalles = req.body.detalleCompra;
+
+    let compraData = {
       idCompra: req.body.IDCompra,
       fechaCompra: req.body.fechaCompra,
       descrip: req.body.desc,
       factura: req.body.factura,
+      costoTotalCompra: 0
     };
 
     if (Array.isArray(cantidadDetalles)) {
       compraData.DetallesCompra = cantidadDetalles.map((detalle, index) => ({
         codigoDetalleCompra: Array.isArray(req.body.codigoDetalleCompra)
-          ? req.body.codigoDetalleCompra[index]
-          : req.body.codigoDetalleCompra,
+          ? req.body.detalleCompra[index]
+          : req.body.detalleCompra,
         proveedor: Array.isArray(req.body.proveedor)
           ? req.body.proveedor[index]
           : req.body.proveedor,
@@ -86,73 +353,195 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
         cantidad: Array.isArray(req.body.cantidad)
           ? req.body.cantidad[index]
           : req.body.cantidad,
+        costoTotalUnitario: req.body.cantidad[index] * req.body.precio[index],
       }));
     } else {
       compraData.DetallesCompra = [
         {
-          codigoDetalleCompra: req.body.codigoDetalleCompra,
+          detalleCompra: req.body.detalleCompra,
           proveedor: req.body.proveedor,
           product: req.body.product,
           precio: req.body.precio,
           cantidad: req.body.cantidad,
+          costoTotalUnitario: req.body.cantidad * req.body.precio,
         },
       ];
     }
+
+    let compraTotal = 0;
+
+    compraData.DetallesCompra.forEach(costoCompraTotal => {
+        compraTotal += costoCompraTotal.costoTotalUnitario
+    });
+
+    compraData.costoTotalCompra = compraTotal;
 
     const compra = new Compras(compraData);
 
     compra.save()
     .then(async doc => {
         const compras = await Compras.find({});
-        res.render("./compras/compras.ejs", { compras });
+        const productos = await Productos.find({});
+        const proveedores = await Proveedores.find({});
+        res.render("./compras/compras.ejs", {compras, productos, proveedores});
         console.log('Compra registrada', doc);
     }).catch(err => {
         console.log("Error al registrar: ",err.message);
     });
 });
 
-router.get("/edit-compra/:id", isAuthenticated, async (req, res, next) => {
+//PRODUCTOS
+
+router.get('/productos', isAuthenticated, async (req, res, next) => {
+    try{
+        const productos = await Productos.find({});
+        res.render('./productos/productos.ejs', {productos});
+    }catch (error) {
+        console.error(error);
+        res.status(500).send('Error de datos')
+    }
+})
+
+router.post("/createProd", isAuthenticated, async (req, res, next) => {
+    const producto = new Productos({
+        nombre: req.body.nombreProducto,
+        descripcion: req.body.desc,
+        saldoInventario: 0,
+        precioVenta: req.body.precioVenta,
+        estado: 'agotado'
+    })
+
+    producto.save()
+    .then(async doc => {
+        const productos = await Productos.find({})
+        res.render('./productos/productos.ejs', {productos})
+        console.log('Producto registrado', doc)
+    }).catch(err => {
+        console.log('Error al registrar: ', err.message)
+    })
+});
+
+router.get("/editProduct/:id", isAuthenticated, async (req, res, next) => {
     const id = req.params.id;
 
-    const compra = await Compras.findOne({idCompra: id});
+    const productos = await Productos.findOne({_id:id})
 
-    res.render("./compras/edit-compra.ejs", { compra });
+    res.render("./productos/editProduct.ejs", {productos});
 });
 
-router.post("/editCompra", isAuthenticated, async (req, res, next) => {
-    try {
+router.post('/editProduct', isAuthenticated, async (req, res, next) => {
+    try{
         const id = req.body.IDMongo;
-        const fechaCompra = req.body.fechaCompra;
+        const nombre = req.body.nombreProducto;
         const desc = req.body.desc;
+        const precVenta = req.body.precioVenta;
 
-        console.log(fechaCompra);
-
-        await Compras.findByIdAndUpdate(id, {
-            fechaCompra: fechaCompra,
-            descrip: desc
+        await Productos.findByIdAndUpdate(id, {
+            nombre: nombre,
+            descripcion: desc,
+            precioVenta: precVenta
         });
-        
-        const compras = await Compras.find({});
-        res.render('./compras/compras.ejs', { compras });
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Error de edición');
-    }
-});
 
-router.get("/delete-compra/:id", isAuthenticated, async (req, res, next) => {
-    try {
+        const productos = await Productos.find({});
+        res.render('./productos/productos.ejs', { productos })
+    }catch (err) {
+        console.log(err);
+        res.status(500).send('Error de edición')
+    }
+})
+
+router.get('/deleteProduct/:id', isAuthenticated, async (req, res, next) => {
+    try{
         const id = req.params.id;
 
-        await Compras.findByIdAndDelete(id);
+        await Productos.findByIdAndDelete(id)
 
-        const compras = await Compras.find({});
-        res.render('./compras/compras.ejs', { compras });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al eliminar');
+        const productos = await Productos.find({})
+        res.render('./productos/productos.ejs', { productos });
+    }catch(err){
+        console.log(err);
+        res.status(500).send('Error al eliminar producto')
     }
-    
+})
+
+//PROVEEDOR
+
+router.get("/proveedores", isAuthenticated, async (req, res, next) => {
+    try{
+        const proveedores = await Proveedores.find({});
+        res.render("./proveedores/proveedores.ejs", { proveedores });
+    }catch (err){
+        console.log(err);
+        res.status(500).send('Error de datos')
+    }
+});
+
+router.post('/createProveedor', isAuthenticated, async (req, res, next) => {
+        const proveedor = new Proveedores({
+          tipoProveedor: req.body.tipoProveedor,
+          nombre: req.body.nombreProveedor,
+          contacto: req.body.contacto,
+          direccion: req.body.direccion,
+          telefono: req.body.telefono,
+          estado: "Habilitado",
+        });
+
+        proveedor.save()
+          .then(async (doc) => {
+            const proveedores = await Proveedores.find({});
+            res.render("./proveedores/proveedores.ejs", { proveedores });
+            console.log("Producto registrado", doc);
+          })
+          .catch((err) => {
+            console.log("Error al registrar: ", err.message);
+          });
+})
+
+router.get("/editProveedor/:id", isAuthenticated, async (req, res, next) => {
+  const id = req.params.id;
+
+  const proveedores = await Proveedores.findOne({ _id: id });
+
+  res.render("./proveedores/editProveedor.ejs", { proveedores });
+});
+
+router.post("/editProveedor", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.body.IDMongo;
+    const tipProveedor = req.body.tipoProveedor;
+    const nomb = req.body.nombreProveedor
+    const contac = req.body.contacto
+    const direc = req.body.direccion
+    const tel = req.body.telefono
+
+    await Proveedores.findByIdAndUpdate(id, {
+      tipoProveedor: tipProveedor,
+      nombre: nomb,
+      contacto: contac,
+      direccion: direc,
+      telefono: tel,
+    });
+
+    const proveedores = await Proveedores.find({});
+    res.render("./proveedores/proveedores.ejs", { proveedores });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error de edición");
+  }
+});
+
+router.get("/deleteProveedor/:id", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    await Proveedores.findByIdAndDelete(id);
+
+    const proveedores = await Proveedores.find({});
+    res.render("./proveedores/proveedores.ejs", { proveedores });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error al eliminar producto");
+  }
 });
 
 // SERVICIOS

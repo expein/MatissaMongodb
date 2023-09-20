@@ -1,13 +1,62 @@
 <%- layout('./layouts/main.ejs') %>
+<div style="display: none;">
+    <input type="text" id="rol" value="<%= user.estado.nombreRol %>">
+</div>
+<script>
+    let rol = document.getElementById("rol").value;
+
+    let divUsers = document.getElementById("Usuarios");
+    let divCompras = document.getElementById("Compras");
+    let divServicios = document.getElementById("Servicios");
+    let divVentas = document.getElementById("Ventas");
+    let divPedidos = document.getElementById("Pedidos");
+    let divCitas = document.getElementById("Citas");
+    let divEmpleados = document.getElementById("Empleados");
+    
+    if(rol == "Cliente"){
+        divUsers.style.display = "none";
+        divCompras.style.display = "none";
+        divServicios.style.display = "none";
+        divVentas.style.display = "none";
+        divEmpleados.style.display = "none";
+    }
+
+</script>
 <div class="container-fluid">
-    <div class="col-2 btn btn-dark">
+    <div class="col-2 btn btn-dark" id="Roles">
+        <a href="./roles">Roles</a>
+    </div>
+    <div class="col-2 btn btn-dark" id="Usuarios">
+        <a href="./usuarios">Usuarios</a>
+    </div>
+    <div class="col-2 btn btn-dark" id="Compras">
         <a href="./compras">Compras</a>
     </div>
-    <div class="col-2 btn btn-dark">
+    <div class="col-2 btn btn-dark" id="Servicios">
         <a href="./servicios">Servicios</a>
     </div>
+<<<<<<< HEAD
     <div class="col-2 btn btn-dark">
         <a href="./ventas">Ventas</a>
+=======
+    <div class="col-2 btn btn-dark" id="Ventas">
+        <a href="./ventas">Venta</a>
+>>>>>>> 37dda06bbc957013d587f506ba77eec36f2369db
+    </div>
+    <div class="col-2 btn btn-dark" id="Pedidos">
+        <a href="./pedidos">Pedidos</a>
+    </div>
+    <div class="col-2 btn btn-dark" id="Citas">
+        <a href="./citas">Citas</a>
+    </div>
+    <div class="col-2 btn btn-dark" id="Empleados">
+        <a href="./empleados">Empleados</a>
+    </div>
+    <div class="col-2 btn btn-dark" id="Empleados">
+        <a href="./productos">Productos</a>
+    </div>
+    <div class="col-2 btn btn-dark" id="Empleados">
+        <a href="./proveedores">Proveedores</a>
     </div>
 </div>
 <div class="container-fluid">
@@ -21,42 +70,12 @@
                     <div class="card-body">
                         <h3><%= user.name %></h3>
                         <p><strong>Email: </strong><%= user.email %></p>
-                        <p><strong>Rol: </strong><%= user.rol %></p>
+                        <p><strong>Rol: </strong><%= user.estado.nombreRol %></p>
                         <p><strong>Password: </strong> <%= user.password %></p>
                         <p><strong>ID: </strong> <%= user._id %></p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col">
-            <h1>Lista de usuarios</h1>
-        <table class="table table-hover">
-            <thead class="table-primary">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <% id = 1; %>
-                <% users.forEach(obj => { %>
-                <tr>
-                <td><%= id %></td>
-                <td><%= obj.name %></td>
-                <td><%= obj.email %></td>
-                <td><%= obj.rol %></td>
-                </tr>
-                <% id++; %>
-                <% }); %>
-                
-            </tbody>
-        </table>
-    
         </div>
     </div>
 </div>

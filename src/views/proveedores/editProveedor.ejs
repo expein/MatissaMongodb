@@ -1,0 +1,67 @@
+<%- layout('./layouts/main.ejs') %>
+    <link rel="stylesheet" href="../style/compras.css">
+    <script src="../js/validations.js"></script>
+    <div class="container-fluid">
+        <div class="create-tittle container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Editar proveedor</h1>
+                </div>
+            </div>
+        </div>
+        <div class="create-body">
+            <form action="/editProveedor" method="post" onsubmit="return validacionProveedor()">
+                <div class="container-fluid">
+                    <div class="text-center row mt-4 fields">
+                        <div style="display: none;">
+                            <input type="text" name="IDMongo" value="<%= proveedores._id %>">
+                        </div>
+                        <div class="col">
+                            <label for="idC" class="form-label">Tipo proveedor</label><br>
+                            <select name="tipoProveedor" id="tipoProveedor"  class="input-bonito rounded-pill">
+                                <option value="noSelect">Seleccione</option>
+                                <option value="Empresa">Empresa</option>
+                                <option value="Persona">Persona</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="dateCompra" class="form-label">Nombre</label><br>
+                            <input type="text" id="nombreProveedor" class="input-bonito" name="nombreProveedor"
+                                value="<%= proveedores.nombre %>">
+                        </div>
+                        <div class="col">
+                            <label for="desc" class="form-label">Contacto</label><br>
+                            <input type="text" id="contacto" class="input-bonito" name="contacto"
+                                value="<%= proveedores.contacto %>">
+                        </div>
+                    </div>
+                    <div class="text-center row mt-4 fields">
+                        <div class="col">
+                            <label for="desc" class="form-label">Dirección</label><br>
+                            <input type="text" id="direccion" class="input-bonito" name="direccion"
+                                value="<%= proveedores.direccion %>">
+                        </div>
+                        <div class="col">
+                            <label for="desc" class="form-label">Telefono</label><br>
+                            <input type="text" id="telefono" class="input-bonito" name="telefono"
+                                value="<%= proveedores.telefono %>">
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col text-end">
+                            <button type="button" class="cancel-btn" onclick="backPage();">
+                                Cancelar
+                            </button>
+                        </div>
+                        <div class="col text-start">
+                            <button type="submit" class="acept-btn">
+                                Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

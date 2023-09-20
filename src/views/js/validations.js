@@ -1,12 +1,16 @@
 // Validar Usuario
 function valid(){
+    let id = document.getElementById("idUser").value;
     let user = document.getElementById("usuario").value;
     let email = document.getElementById("correo").value;
     let rol = document.getElementById("role").value;
     let pass = document.getElementById("password").value;
     let expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (user == "" || email == "" || pass == "" ) {
+    if (id == "" || user == "" || email == "" || pass == "" ) {
         alert("Campos vacíos");
+        return false;
+    }else if (isNaN(id)){
+        alert("El ID debe ser numérico.");
         return false;
     }else if (rol == "noSelect") {
         alert("Seleccione Rol");
@@ -22,8 +26,7 @@ function valid(){
 
 // Validar Compras
 
-function validarCompra(){
-    let id = document.getElementById("idC").value;
+function validacionCompra(){
     let date = document.getElementById("dateCompra").value;
     let factu = document.getElementById('factu').value;
     let proveedor = document.getElementById('proveedor').value;
@@ -31,31 +34,105 @@ function validarCompra(){
     let precio = document.getElementById('precio').value;
     let cantidad = document.getElementById('cantidad').value;
 
+    let verificar = validarCompra(date, factu, proveedor, product, precio, cantidad)
 
-    if (id == "" || date == "" || cost == "" || factu == "" || precio == '' || cantidad == ''){
-        alert ("Faltan datos en la compra.");
-        return false;
-    }else if (product == "noSelect" || proveedor == 'noSelect'){
-        alert("Seleccione producto");
-        return false;
-    }else {
-        let confir = confirm("¿Desea registrar la compra?");
-        return confir;
+    if(verificar === true){
+        let op = confirm('¿Estas seguro de hacer esta acción?')
+        return op
+    }else{
+        return false
     }
 }
 
-function validarEdit(){
-    let id = document.getElementById("idC").value;
-    let date = document.getElementById("dateCompra").value;
+const validarCompra = (date, factu, proveedor, product, precio, cantidad) =>{
 
-    if (id == "" || date == "" ){
-        alert ("Faltan datos en la compra.");
-        return false;
-    }else {
-        let confir = confirm("¿Desea editar la compra?");
-        return confir;
-    }
+        let validate = true;
+
+        if (
+          date == "" ||
+          factu == "" ||
+          precio == "" ||
+          cantidad == ""
+        ) {
+          alert("Faltan datos en la compra.");
+          validate = false
+        } else if (product == "noSelect" || proveedor == "noSelect") {
+          alert("Seleccione producto");
+          validate = false;
+        }else if(isNaN(precio)){
+          alert('El precio no es numerico')
+          validate = false
+        }
+
+        return validate
 }
+
+// validar Producto
+
+function validacionProducto() {
+  let nombreProducto = document.getElementById("nombreProducto").value;
+  let desc = document.getElementById("desc").value;
+  let precioVenta = document.getElementById("precioVenta").value;
+
+  let verificar = validarProducto(nombreProducto, desc, precioVenta);
+
+  if (verificar === true) {
+    let op = confirm("¿Estas seguro de hacer esta acción?");
+    return op;
+  } else {
+    return false;
+  }
+}
+
+const validarProducto = (nombreProducto, desc, precioVenta) => {
+  let validate = true;
+
+  if (nombreProducto == "" || desc == "" || precioVenta == "") {
+    alert("Faltan datos en la compra.");
+    validate = false;
+  } else if (isNaN(precioVenta)) {
+    alert("El precio no es numerico");
+    validate = false;
+  }
+
+  return validate;
+};
+
+// validar Proveedor
+
+function validacionProveedor() {
+  let tipoProveedor = document.getElementById("tipoProveedor").value;
+  let nombreProveedor = document.getElementById("nombreProveedor").value;
+  let contacto = document.getElementById("contacto").value;
+  let direccion = document.getElementById("direccion").value;
+  let telefono = document.getElementById("telefono").value;
+
+  let verificar = validarProveedor(tipoProveedor, nombreProveedor, contacto, direccion, telefono);
+
+  if (verificar === true) {
+    let op = confirm("¿Estas seguro de hacer esta acción?");
+    return op;
+  } else {
+    return false;
+  }
+}
+
+const validarProveedor = (tipoProveedor, nombreProveedor, contacto, direccion, telefono) => {
+  let validate = true;
+
+  if (nombreProveedor == "" || contacto == "" || direccion == "" || telefono == "") {
+    alert("Faltan datos");
+    validate = false;
+  }else if (tipoProveedor == "noSelect") {
+    alert("Seleccione el tipo de proveedor");
+    validate = false;
+  } else if (isNaN(telefono)) {
+    alert("El telefono debe ser numerico");
+    validate = false;
+  }
+
+  return validate;
+};
 
 // validar Servicio
 

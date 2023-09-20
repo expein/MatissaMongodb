@@ -1,7 +1,7 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/compras.css">
-<link rel="stylesheet" href="../style/compras.css">
 <script src="../js/validations.js"></script>
+<script></script>
 <div class="container-fluid" id="formRegistrarCompra" style="display: none;">
     <div class="row create-tittle">
         <div class="col-12">
@@ -9,12 +9,8 @@
         </div>
     </div>
     <div class="row form-agregar-compra">
-        <form action="/createComp" method="post" onsubmit="return validarCompra();">
+        <form action="/createComp" method="post" onsubmit="return validacionCompra();">
             <div class="text-center row mt-4 fields">
-                <div class="col">
-                    <label for="idC" class="form-label">Código compra</label><br>
-                    <input type="text" class="input-bonito" id="idC" name="IDCompra">
-                </div>
                 <div class="col">
                     <label for="dateCompra" class="form-label">Fecha compra</label><br>
                     <input type="date" id="dateCompra" class="input-bonito" name="fechaCompra">
@@ -32,23 +28,25 @@
             <div id="detallesCompra">
                 <div class="text-center row mt-4 fields" id="formDetalleCompra">
                     <div class="col">
-                        <label for="codigoDetalle" class="form-label">Codigo detalle de compra</label><br>
-                        <input type="text" name="codigoDetalleCompra" class="input-bonito codigo-detalle-compra" value="1" id="codigoDetalle" readonly>
+                        <label for="codigoDetalle" class="form-label">Detalle de compra</label><br>
+                        <input type="text" name="detalleCompra" class="input-bonito codigo-detalle-compra" value="1" id="codigoDetalle" readonly>
                     </div>
                     <div class="col">
                         <label for="proveedor" class="form-label">Proveedor</label><br>
                         <select name="proveedor" id="proveedor" class="input-bonito rounded-pill">
                             <option value="noSelect">Seleccione</option>
-                            <option value="Avon">Avon</option>
-                            <option value="Sofia">Sofia</option>
+                            <% proveedores.forEach(obj => { %>
+                                <option value="<%= obj.nombre %>"> <%= obj.nombre %> </option>
+                            <% }) %>
                         </select>
                     </div>
                     <div class="col">
                         <label for="prod" class="form-label ">Producto</label><br>
                         <select id="prod" class="input-bonito rounded-pill" name="product">
                             <option value="noSelect" selected> Seleccione</option>
-                            <option value="Shampoo">Shampoo</option>
-                            <option value="Acondicionador">Acondicionador</option>
+                            <% productos.forEach(obj => { %>
+                                <option value="<%= obj.nombre %>"> <%= obj.nombre %> </option>
+                            <% }) %>
                         </select>
                     </div>
                     <div class="col">
@@ -87,7 +85,7 @@
     <div class="row mt-5">
         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
             <div class="form-floating search">
-                <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="" >
+                <input type="text" class="form-control rounded-pill" id="buscarCompra" placeholder="" oninput="return buscarCompra()">
                 <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar compra</label>
             </div>
         </div>
@@ -109,46 +107,38 @@
     </div>
 </div>
 <div class="container-fluid">
-    <table class="table table-hover table-borderless mt-3 text-center table-sm">
+    <table class="table table-hover table-borderless mt-3 text-center table-sm" id="tabla">
         <thead>
             <tr class="table-secondary">
-                <th class="p-3">Código Compra</th>
                 <th class="p-3">Fecha Compra</th>
                 <th class="p-3">Descripción</th>
                 <th class="p-3">Factura</th>
+                <th class="p-3">Costoo total</th>
                 <th class="p-3">Opciones</th>
             </tr>
         </thead>
         <tbody>
-
-            <% id = 1; %>
             <% compras.forEach(obj => { %>
             <tr>
-            <td><%= obj.idCompra %></td>
             <td><%= obj.fechaCompra %></td>
             <td><%= obj.descrip %></td>
             <td><%= obj.factura %></td>
+            <td><%= obj.costoTotalCompra %></td>
             <td>
-                <div class="d-flex justify-content-between">
-                    <div class="">
-                        <a href="/edit-compra/<%= obj.idCompra %>">
-                            <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                <div class="row">
+                    <div class="col text-center">
+                        <a href="">
+                            <i class="fa-solid fa-circle-xmark" style="color: #929292;"></i>
                         </a>
                     </div>
-                    <div>
-                        <a href="/delete-compra/<%= obj._id %>">
-                            <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                    <div class="col text-center">
+                        <a href="#" onclick="verDetallesCompra()">
+                            <i class="fa-solid fa-eye" style="color: #3cc3bd;"></i>
                         </a>
-                    </div>
-                    <div>
-                        <label class="switch"><input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
                     </div>
                 </div>
             </td>
             </tr>
-            <% id++; %>
             <% }); %>
 
         </tbody>

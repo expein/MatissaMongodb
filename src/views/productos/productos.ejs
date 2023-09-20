@@ -1,0 +1,140 @@
+<%- layout('./layouts/main.ejs') %>
+    <link rel="stylesheet" href="../style/productos.css">
+    <script src="../js/validations.js"></script>
+    <script></script>
+    <div class="container-fluid" id="formRegistrarCompra" style="display: none;">
+        <div class="row create-tittle">
+            <div class="col-12">
+                <h1>Crear nuevo producto</h1>
+            </div>
+        </div>
+        <div class="row form-agregar-compra">
+            <form action="/createProd" method="post" onsubmit="return validacionProducto()">
+                <div class="text-center row mt-4 fields">
+                    <div class="col">
+                        <label for="dateCompra" class="form-label">Nombre</label><br>
+                        <input type="text" id="nombreProducto" class="input-bonito" name="nombreProducto">
+                    </div>
+                    <div class="col">
+                        <label for="desc" class="form-label">Descripción</label><br>
+                        <input type="text" id="desc" class="input-bonito" name="desc">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Precio venta</label><br>
+                        <input type="text" id="precioVenta" class="input-bonito" name="precioVenta">
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col text-center">
+                        <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrarCompra()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="acept-btn">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid compraHead" id="tituloCompra" style="display: block;">
+        <h1>Productos</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row mt-5">
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+                <div class="form-floating search">
+                    <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="">
+                    <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
+                        Buscar producto</label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+                <button class="reporte-crear rounded-pill text-start">
+                    <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de
+                        los productos</p>
+                </button>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
+                <button class="create-compra reporte-crear d-flex flex-row-reverse rounded-pill" type="button"
+                    onclick="opcion('mostrar'), registrarCompra()">
+                    <div class="icono-mas">
+                        <i class="fa-solid fa-circle-plus icon-agregar-proveedor text-end"></i>
+                    </div>
+                    <div>
+                        <p>Registrar producto</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <table class="table table-hover table-borderless mt-3 text-center table-sm">
+            <thead>
+                <tr class="table-secondary">
+                    <th class="p-3">Nombre</th>
+                    <th class="p-3">Descripción</th>
+                    <th class="p-3">Precio venta</th>
+                    <th class="p-3">Inventario</th>
+                    <th class="p-3">Estado</th>
+                    <th class="p-3">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% productos.forEach(obj=> { %>
+                    <tr>
+                        <td>
+                            <%= obj.nombre %>
+                        </td>
+                        <td>
+                            <%= obj.descripcion %>
+                        </td>
+                        <td>
+                            <%= obj.precioVenta %>
+                        </td>
+                        <td>
+                            <%= obj.saldoInventario %>
+                        </td>
+                        <td>
+                            <%=  obj.estado %>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col">
+                                    <a href="/editProduct/<%= obj._id %>">
+                                        <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a href="/deleteProduct/<%= obj._id %>">
+                                        <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <label class="switch"><input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="container-fluid container-paginado">
+        <div>
+            <div class="row">
+                <div class="col d-flex paginado">
+                    <a href="">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+                    <p>1</p>
+                    <a href="">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>

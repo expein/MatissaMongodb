@@ -38,6 +38,11 @@
                 <form action="/registrar" method="post" onsubmit="return valid();">
                     <div class="row">
                         <div class="col col-form mt-5">
+                            <input class="input-signin" type="text" name="idUser" id="idUser" placeholder="ID">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-form mt-5">
                             <input class="input-signin" type="text" name="user" id="usuario" placeholder="Usuario">
                         </div>
                     </div>
@@ -52,6 +57,7 @@
                                 <option value="noSelect">Seleccione Rol</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Empleado">Empleado</option>
+                                <option value="Cliente">Cliente</option>
                             </select>
                         </div>
                     </div>

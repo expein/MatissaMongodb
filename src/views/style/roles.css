@@ -1,0 +1,119 @@
+.titulo-roles{
+    background-color: #3cc3bd;
+    color: white;
+    font-family: "Merienda";
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 10%;
+    border: 1px solid gray;
+}
+
+.label-buscar{
+    font-size: 17px;
+    font-family: "Quicksand";
+}
+
+.crear-rol{
+    text-decoration: none;
+}
+
+.crear-rol p{
+    background-color: #444444;
+    height: 100%;
+    color: white;
+    font-family: 'Quicksand';
+    font-size: 17px;
+    padding-top: 15px;
+    text-align: center;
+    box-shadow: 3px 7px 10px black;
+    text-decoration: none;
+}
+
+.buscar-proveedor{
+    box-shadow: 3px 7px 10px black;
+}
+
+.table {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.table tr th {
+    background-color: #e2d4ff;
+}
+
+.iconos{
+  color: #3cc3bd;
+  font-size: 20px;
+}
+
+.boton-editar{
+  color: #3cc3bd;
+}
+
+/*swith*/
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 18px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #3cc3bd;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #3cc3bd;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(10px);
+    -ms-transform: translateX(10px);
+    transform: translateX(10px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+

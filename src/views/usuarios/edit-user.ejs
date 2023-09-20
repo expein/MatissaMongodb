@@ -1,0 +1,54 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/usuarios.css">
+<script src="../js/validations.js"></script>
+<div class="container-fluid create-tittle">
+    <div class="row">
+        <div class="col-12">
+            <h1>Editar usuario</h1>
+        </div>
+    </div>
+</div>
+<div class="create-body">
+    <form action="/editUser" method="post" onsubmit="return valid();">
+        <div class="container-fluid">
+            <div class="text-center row mt-4 fields">
+                <div style="display: none;">
+                    <input type="text" name="IDMongo" value="<%= user._id %>">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">ID</label><br>
+                    <input type="text" name="idUser" id="idUser" value="<%= user.idUser %>" class="input-bonito" readonly>
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Nombre de usuario</label><br>
+                    <input type="text" name="user" id="usuario" value="<%= user.name %>" class="input-bonito" readonly>
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Correo</label><br>
+                    <input type="email" name="email" id="correo" value="<%= user.email %>" class="input-bonito">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Rol</label><br>
+                    <select name="rol" id="role" class="form-select">
+                        <option value=""><%= user.estado.nombreRol %></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center mt-5">
+                <div class="col text-end">
+                    <button type="button" class="cancel-btn" onclick="backPage();">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col text-start">
+                    <button type="submit" class="acept-btn">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
