@@ -58,7 +58,8 @@ router.get("/usuarios", isAuthenticated, async (req, res, next) => {
 router.get("/create-user", isAuthenticated, async (req, res, next) => {
     try {
         const users = await User.find({});
-        res.render('./usuarios/create-usuario.ejs', { users });
+        const rols = await Roles.find({});
+        res.render('./usuarios/create-usuario.ejs', { users, rols });
 
     } catch (error){
         console.error(error);
@@ -66,7 +67,7 @@ router.get("/create-user", isAuthenticated, async (req, res, next) => {
     }
 });
 
-router.post("/createUser", isAuthenticated, async (req, res, next) => {
+router.post("/createUser/:nombreRol", isAuthenticated, async (req, res, next) => {
     try {
         if (req.body.rol == "Admin"){
             const user = new User({

@@ -31,6 +31,9 @@
                         <option value="Admin">Admin</option>
                         <option value="Empleado">Empleado</option>
                         <option value="Cliente">Cliente</option>
+                        <% rols.forEach(obj => { %>
+                            <option value="<%= obj.nombreRol %>"><%= obj.nombreRol %></option>
+                        <% }); %>
                     </select>
                 </div>
             </div>
