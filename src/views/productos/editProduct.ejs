@@ -1,0 +1,51 @@
+<%- layout('./layouts/main.ejs') %>
+    <link rel="stylesheet" href="../style/compras.css">
+    <script src="../js/validations.js"></script>
+    <div class="container-fluid">
+        <div class="create-tittle container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Editar producto</h1>
+                </div>
+            </div>
+        </div>
+        <div class="create-body">
+            <form action="/editProduct" method="post" onsubmit="return validarEditProduct();">
+                <div class="container-fluid">
+                    <div class="text-center row mt-4 fields">
+                        <div style="display: none;">
+                            <input type="text" name="IDMongo" value="<%= productos._id %>">
+                        </div>
+                        <div class="col">
+                            <label for="idC" class="form-label">Nombre</label><br>
+                            <input type="text" class="input-bonito" id="nombreProducto" name="nombreProducto"
+                                value="<%= productos.nombre %>" readonly>
+                        </div>
+                        <div class="col">
+                            <label for="dateCompra" class="form-label">Descripción</label><br>
+                            <input type="text" id="desc" class="input-bonito" name="desc"
+                                value="<%= productos.descripcion %>">
+                        </div>
+                        <div class="col">
+                            <label for="desc" class="form-label">Precio venta</label><br>
+                            <input type="text" id="precioVenta" class="input-bonito" name="precioVenta" value="<%= productos.precioVenta %>">
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col text-end">
+                            <button type="button" class="cancel-btn" onclick="backPage();">
+                                Cancelar
+                            </button>
+                        </div>
+                        <div class="col text-start">
+                            <button type="submit" class="acept-btn">
+                                Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

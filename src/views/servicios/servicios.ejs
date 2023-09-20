@@ -42,14 +42,33 @@
             <% id = 1; %>
             <% servicios.forEach(obj => { %>
             <tr>
-            <td><%= obj.idServicio %></td>
-            <td><%= obj.idEmpleado %></td>
-            <td><%= obj.idCita %></td>
-            <td><%= obj.precioServicio %></td>
-            <td><%= obj.duracionServicio %></td>
-            <td><%= obj.fechaCita %></td>
-            <td><%= obj.estadoCita %></td>
-            <td><div class="d-flex justify-content-between"><div class=""><a href="/edit-servicio/<%= obj.idServicio %>"><i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i></a></div><div><a href="/delete-servicio/<%= obj._id %>" onclick="return deleteCompra()"><i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i></a></div><div><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label></div></div></td>
+                <td><%= obj.idServicio %></td>
+                <td><%= obj.idEmpleado %></td>
+                <td><%= obj.idCita %></td>
+                <td><%= obj.precioServicio %></td>
+                <td><%= obj.duracionServicio %></td>
+                <td><%= obj.fechaCita %></td>
+                <td><%= obj.estadoCita %></td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            <a href="/edit-servicio/<%= obj.idServicio %>">
+                                <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/delete-servicio/<%= obj._id %>" onclick="return deleteCompra()">
+                                <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </td>
             </tr>
             <% id++; %>
             <% }); %>

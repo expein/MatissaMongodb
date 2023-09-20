@@ -26,8 +26,7 @@ function valid(){
 
 // Validar Compras
 
-function validarCompra(){
-    let id = document.getElementById("idC").value;
+function validacionCompra(){
     let date = document.getElementById("dateCompra").value;
     let factu = document.getElementById('factu').value;
     let proveedor = document.getElementById('proveedor').value;
@@ -35,30 +34,37 @@ function validarCompra(){
     let precio = document.getElementById('precio').value;
     let cantidad = document.getElementById('cantidad').value;
 
+    let verificar = validarCompra(date, factu, proveedor, product, precio, cantidad)
 
-    if (id == "" || date == "" || cost == "" || factu == "" || precio == '' || cantidad == ''){
-        alert ("Faltan datos en la compra.");
-        return false;
-    }else if (product == "noSelect" || proveedor == 'noSelect'){
-        alert("Seleccione producto");
-        return false;
-    }else {
-        let confir = confirm("¿Desea registrar la compra?");
-        return confir;
+    if(verificar === true){
+        let op = confirm('¿Estas seguro de hacer esta acción?')
+        return op
+    }else{
+        return false
     }
 }
 
-function validarEdit(){
-    let id = document.getElementById("idC").value;
-    let date = document.getElementById("dateCompra").value;
+const validarCompra = (date, factu, proveedor, product, precio, cantidad) =>{
 
-    if (id == "" || date == "" ){
-        alert ("Faltan datos en la compra.");
-        return false;
-    }else {
-        let confir = confirm("¿Desea editar la compra?");
-        return confir;
-    }
+        let validate = true;
+
+        if (
+          date == "" ||
+          factu == "" ||
+          precio == "" ||
+          cantidad == ""
+        ) {
+          alert("Faltan datos en la compra.");
+          validate = false
+        } else if (product == "noSelect" || proveedor == "noSelect") {
+          alert("Seleccione producto");
+          validate = false;
+        }else if(isNaN(precio)){
+          alert('El precio no es numerico')
+          validate = false
+        }
+
+        return validate
 }
 
 // validar Servicio

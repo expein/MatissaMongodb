@@ -384,49 +384,81 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
     });
 });
 
-router.get("/edit-compra/:id", isAuthenticated, async (req, res, next) => {
+//PRODUCTOS
+
+const Productos = require("../models/producto");
+
+router.get('/productos', isAuthenticated, async (req, res, next) => {
+    try{
+        const productos = await Productos.find({});
+        res.render('./productos/productos.ejs', {productos});
+    }catch (error) {
+        console.error(error);
+        res.status(500).send('Error de datos')
+    }
+})
+
+router.post("/createProd", isAuthenticated, async (req, res, next) => {
+    const producto = new Productos({
+        nombre: req.body.nombreProducto,
+        descripcion: req.body.desc,
+        saldoInventario: 0,
+        precioVenta: req.body.precioVenta,
+        estado: 'agotado'
+    })
+
+    producto.save()
+    .then(async doc => {
+        const productos = await Productos.find({})
+        res.render('./productos/productos.ejs', {productos})
+        console.log('Producto registrado', doc)
+    }).catch(err => {
+        console.log('Error al registrar: ', err.message)
+    })
+});
+
+router.get("/editProduct/:id", isAuthenticated, async (req, res, next) => {
     const id = req.params.id;
 
-    const compra = await Compras.findOne({idCompra: id});
+    const productos = await Productos.findOne({_id:id})
 
-    res.render("./compras/edit-compra.ejs", { compra });
+    res.render("./productos/editProduct.ejs", {productos});
 });
 
-router.post("/editCompra", isAuthenticated, async (req, res, next) => {
-    try {
+router.post('/editProduct', isAuthenticated, async (req, res, next) => {
+    try{
         const id = req.body.IDMongo;
-        const fechaCompra = req.body.fechaCompra;
+        const nombre = req.body.nombreProducto;
         const desc = req.body.desc;
+        const precVenta = req.body.precioVenta;
 
-        console.log(fechaCompra);
-
-        await Compras.findByIdAndUpdate(id, {
-            fechaCompra: fechaCompra,
-            descrip: desc
+        await Productos.findByIdAndUpdate(id, {
+            nombre: nombre,
+            descripcion: desc,
+            precioVenta: precVenta
         });
-        
-        const compras = await Compras.find({});
-        res.render('./compras/compras.ejs', { compras });
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Error de edición');
-    }
-});
 
-router.get("/delete-compra/:id", isAuthenticated, async (req, res, next) => {
-    try {
+        const productos = await Productos.find({});
+        res.render('./productos/productos.ejs', { productos })
+    }catch (err) {
+        console.log(err);
+        res.status(500).send('Error de edición')
+    }
+})
+
+router.get('/deleteProduct/:id', isAuthenticated, async (req, res, next) => {
+    try{
         const id = req.params.id;
 
-        await Compras.findByIdAndDelete(id);
+        await Productos.findByIdAndDelete(id)
 
-        const compras = await Compras.find({});
-        res.render('./compras/compras.ejs', { compras });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al eliminar');
+        const productos = await Productos.find({})
+        res.render('./productos/productos.ejs', { productos });
+    }catch(err){
+        console.log(err);
+        res.status(500).send('Error al eliminar producto')
     }
-    
-});
+})
 
 // SERVICIOS
 const Servicios = require('../models/servicio');
