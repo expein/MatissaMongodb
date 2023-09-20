@@ -22,33 +22,33 @@
             </div>
         </div>
     </div>
+    <br><br>
     <div class="">
         <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
             <thead>
                 <tr>
-                    <th>ID Rol</th>
+                    <th>#</th>
                     <th>Rol</th>
-                    <th>Permisos del rol</th>
+                    <th>Estado</th>
                     <th>Opciones</th>
                 </tr>       
             </thead>
             <tbody>
                 <% id = 1; %>
-                <% users.forEach(obj => { %>
+                <% rols.forEach(obj => { %>
                 <tr>
                 <td><%= id %></td>
-                <td><%= obj.estado.nombreRol %></td>
-                <td><%= obj.name %></td>
-                <td><%= obj.email %></td>
+                <td><%= obj.nombreRol %></td>
+                <td><%= obj.estadoRol %></td>
                 <td>
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <a href="/edit-user/<%= obj._id %>">
-                                <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                            <a href="/view-rol/<%= obj._id %>">
+                                <i class="fa-solid fa-eye fa-xl" style="color: #3cc3bd;"></i>
                             </a>
                         </div>
                         <div>
-                            <a href="/delete-user/<%= obj._id %>">
+                            <a href="/delete-rol/<%= obj._id %>">
                                 <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
                             </a>
                         </div>

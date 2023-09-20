@@ -37,8 +37,7 @@ router.get("/salir", (req, res, next) => {
 
 router.get("/profile", isAuthenticated, async (req, res, next) => {
     try {
-        const users = await User.find({});
-        res.render('profile.ejs', { users });
+        res.render('profile.ejs');
     } catch (error){
         console.error(error);
         res.status(500).send('Error datos');
@@ -71,7 +70,6 @@ router.post("/createUser", isAuthenticated, async (req, res, next) => {
     try {
         if (req.body.rol == "Admin"){
             const user = new User({
-                idUser: req.body.idUser,
                 name: req.body.user,
                 email: req.body.email,
                 password: req.body.password,
@@ -155,7 +153,6 @@ router.post("/createUser", isAuthenticated, async (req, res, next) => {
             user.save();
         }else if (req.body.rol == "Empleado"){
             const user = new User({
-                idUser: req.body.idUser,
                 name: req.body.user,
                 email: req.body.email,
                 password: req.body.password,
@@ -218,7 +215,6 @@ router.post("/createUser", isAuthenticated, async (req, res, next) => {
             user.save();
         }else if (req.body.rol == "Cliente") {
             const user = new User({
-                idUser: req.body.idUser,
                 name: req.body.user,
                 email: req.body.email,
                 password: req.body.password,
@@ -279,16 +275,17 @@ router.post("/editUser", isAuthenticated, async (req, res, next) => {
 });
 
 // ROLES
+const Roles = require("../models/roles");
 
 router.get("/roles", isAuthenticated, async (req, res, next) => {
-    const users = await User.find({});
-    res.render('./roles/roles.ejs', { users });
+    const rols = await Roles.find({});
+    res.render('./roles/roles.ejs', { rols });
 });
 
 router.get("/create-rol", isAuthenticated, async (req, res, next) => {
     try {
-        const users = await User.find({});
-        res.render('./roles/create-rol.ejs', { users });
+        const rols = await Roles.find({});
+        res.render('./roles/create-rol.ejs', { rols });
     } catch (error){
         console.error(error);
         res.status(500).send('Error datos');
@@ -296,7 +293,194 @@ router.get("/create-rol", isAuthenticated, async (req, res, next) => {
 });
 
 router.post("/createRol", isAuthenticated, async (req, res, next) => {
-    // nothing
+    const configuracion = [];
+    const roles = [];
+    const compras = [];
+    const ventas = [];
+    const servicios = [];
+    const pedidos = [];
+    const citas = [];
+    const clientes = [];
+    const empleados = [];
+    const proveedores = [];
+    const productos = [];
+    // config
+    if (req.body.createUser){
+        configuracion.push(req.body.createUser);
+    }
+    if (req.body.modifyUser){
+        configuracion.push(req.body.modifyUser);
+    }
+    if (req.body.deleteUser){
+        configuracion.push(req.body.deleteUser);
+    }
+    if (req.body.readUser){
+        configuracion.push(req.body.readUser);
+    }
+    // roles
+    if (req.body.createRol){
+        roles.push(req.body.createRol);
+    }
+    if (req.body.modifyRol){
+        roles.push(req.body.modifyRol);
+    }
+    if (req.body.deleteRol){
+        roles.push(req.body.deleteRol);
+    }
+    if (req.body.readRol){
+        roles.push(req.body.readRol);
+    }
+    // compras
+    if (req.body.createCompra){
+        compras.push(req.body.createCompra);
+    }
+    if (req.body.modifyCompra){
+        compras.push(req.body.modifyCompra);
+    }
+    if (req.body.deleteCompra){
+        compras.push(req.body.deleteCompra);
+    }
+    if (req.body.readCompra){
+        compras.push(req.body.readCompra);
+    }
+    // ventas
+    if (req.body.createVenta){
+        ventas.push(req.body.createVenta);
+    }
+    if (req.body.modifyVenta){
+        ventas.push(req.body.modifyVenta);
+    }
+    if (req.body.deleteVenta){
+        ventas.push(req.body.deleteVenta);
+    }
+    if (req.body.readVenta){
+        ventas.push(req.body.readVenta);
+    }
+    // servicios
+    if (req.body.createServicio){
+        servicios.push(req.body.createServicio);
+    }
+    if (req.body.modifyServicio){
+        servicios.push(req.body.modifyServicio);
+    }
+    if (req.body.deleteServicio){
+        servicios.push(req.body.deleteServicio);
+    }
+    if (req.body.readServicio){
+        servicios.push(req.body.readServicio);
+    }
+    // pedidos
+    if (req.body.createPedido){
+        pedidos.push(req.body.createPedido);
+    }
+    if (req.body.modifyPedido){
+        pedidos.push(req.body.modifyPedido);
+    }
+    if (req.body.deletePedido){
+        pedidos.push(req.body.deletePedido);
+    }
+    if (req.body.readPedido){
+        pedidos.push(req.body.readPedido);
+    }
+    // citas
+    if (req.body.createCita){
+        citas.push(req.body.createCita);
+    }
+    if (req.body.modifyCita){
+        citas.push(req.body.modifyCita);
+    }
+    if (req.body.deleteCita){
+        citas.push(req.body.deleteCita);
+    }
+    if (req.body.readCita){
+        citas.push(req.body.readCita);
+    }
+    // clientes
+    if (req.body.createCliente){
+        clientes.push(req.body.createCliente);
+    }
+    if (req.body.modifyCliente){
+        clientes.push(req.body.modifyCliente);
+    }
+    if (req.body.deleteCliente){
+        clientes.push(req.body.deleteCliente);
+    }
+    if (req.body.readCliente){
+        clientes.push(req.body.readCliente);
+    }
+    // empleados
+    if (req.body.createEmpleado){
+        empleados.push(req.body.createEmpleado);
+    }
+    if (req.body.modifyEmpleado){
+        empleados.push(req.body.modifyEmpleado);
+    }
+    if (req.body.deleteEmpleado){
+        empleados.push(req.body.deleteEmpleado);
+    }
+    if (req.body.readEmpleado){
+        empleados.push(req.body.readEmpleado);
+    }
+    // proveedores
+    if (req.body.createProveedor){
+        proveedores.push(req.body.createProveedor);
+    }
+    if (req.body.modifyProveedor){
+        proveedores.push(req.body.modifyProveedor);
+    }
+    if (req.body.deleteProveedor){
+        proveedores.push(req.body.deleteProveedor);
+    }
+    if (req.body.readProveedor){
+        proveedores.push(req.body.readProveedor);
+    }
+    // productos
+    if (req.body.createProducto){
+        productos.push(req.body.createProducto);
+    }
+    if (req.body.modifyProducto){
+        productos.push(req.body.modifyProducto);
+    }
+    if (req.body.deleteProducto){
+        productos.push(req.body.deleteProducto);
+    }
+    if (req.body.readProducto){
+        productos.push(req.body.readProducto);
+    }
+
+    try {
+        const rol = new Roles({
+            nombreRol: req.body.rol,
+            estadoRol: req.body.rolStat,
+            permisos: {
+                configuracion,
+                roles,
+                compras,
+                ventas,
+                servicios,
+                pedidos,
+                citas,
+                clientes,
+                empleados,
+                proveedores,
+                productos
+            }
+        });
+        rol.save();
+        const rols = await Roles.find({});
+        res.render('./roles/roles.ejs', { rols });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error datos');
+    }
+});
+
+router.get("/view-rol/:id", isAuthenticated, async (req, res, next) => {
+    const id = req.params.id;
+
+    const rol = await Roles.findOne({ _id: id });
+
+    res.render("./roles/ver-rol.ejs", { rol });
 });
 
 // COMPRAS

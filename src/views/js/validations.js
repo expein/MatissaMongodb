@@ -1,16 +1,14 @@
 // Validar Usuario
-function valid(){
-    let id = document.getElementById("idUser").value;
+
+
+function validarUsuario(){
     let user = document.getElementById("usuario").value;
     let email = document.getElementById("correo").value;
     let rol = document.getElementById("role").value;
     let pass = document.getElementById("password").value;
     let expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (id == "" || user == "" || email == "" || pass == "" ) {
+    if (user == "" || email == "" || pass == "" ) {
         alert("Campos vacíos");
-        return false;
-    }else if (isNaN(id)){
-        alert("El ID debe ser numérico.");
         return false;
     }else if (rol == "noSelect") {
         alert("Seleccione Rol");
@@ -141,6 +139,21 @@ function validarVentaPedido(){
     }
 }
 
+function validarRol(){
+    let nombreRol = document.getElementById("rol").value;
+    let estadoRol = document.getElementById("rolStat").value;
+    if (nombreRol == ""){
+        alert("El rol debe tener un nombre");
+        return false;
+    }else if (estadoRol == "noSelect"){
+        alert("Seleccione estado para el rol");
+        return false;
+    }else{
+        let confir = confirm("¿Desea crear el rol?");
+        return confir;
+    }
+}
+
 function proof(){
     let confir = confirm("Quiere un msj?");
     if (confir){
@@ -159,6 +172,8 @@ function delteCompra(){
         return false;
     }
 }
+
+
 
 function backPage(){
     window.location="/profile";

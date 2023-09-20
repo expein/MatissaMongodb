@@ -1,0 +1,37 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/roles.css">
+    <div class="container-fluid titulo-roles">
+        <div class="row">
+            <div class="col-12">
+                <h1>Información del rol</h1>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
+            <thead>
+                <tr>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Permisos</th>
+                </tr>       
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%= rol.nombreRol %></td>
+                    <td><%= rol.estadoRol %></td>
+                    <td style="text-align: justify;">
+                        <% for (let propiedad in rol.permisos) { %>
+                            <i class="fa-solid fa-caret-right fa-lg"></i> <%= propiedad %>: %> <br>
+                                <% for (let i = 0; i < rol.permisos[propiedad].length; i++) { %>
+                                    - <%= rol.permisos[propiedad][i] %> <br>
+                                <% } %>
+                        <% } %>
+                    </td>
+                        
+                    
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>

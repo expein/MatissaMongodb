@@ -35,12 +35,7 @@
             <div class="col-3 form-signin text-center" style="display: block;">
                 <a href="#"><b>Admistrador</b></a>|<a href="#">   Cliente</a>
                 <h1 class="mt-4 titulo-bienvenido">Bienvenido</h1>
-                <form action="/registrar" method="post" onsubmit="return valid();">
-                    <div class="row">
-                        <div class="col col-form mt-5">
-                            <input class="input-signin" type="text" name="idUser" id="idUser" placeholder="ID">
-                        </div>
-                    </div>
+                <form action="/registrar" method="post" onsubmit="return validarUsuario();">
                     <div class="row">
                         <div class="col col-form mt-5">
                             <input class="input-signin" type="text" name="user" id="usuario" placeholder="Usuario">
@@ -54,7 +49,7 @@
                     <div class="row">
                         <div class="col col-form mt-5">
                             <select name="rol" id="role" class="input-signin" style="width: 180px;">
-                                <option value="noSelect">Seleccione Rol</option>
+                                <option value="noSelect" disabled selected>Seleccione Rol</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Empleado">Empleado</option>
                                 <option value="Cliente">Cliente</option>

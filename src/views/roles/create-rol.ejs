@@ -1,0 +1,374 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/roles.css">
+<script src="../js/validations.js"></script>
+<script>
+    function mostrarConfig() {
+        let config = document.getElementById("config");
+        let div = document.getElementById("divConfig")
+        if (config.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarRoles() {
+        let roles = document.getElementById("roles");
+        let div = document.getElementById("divRoles")
+        if (roles.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarCompras() {
+        let compras = document.getElementById("compras");
+        let div = document.getElementById("divCompras")
+        if (compras.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarVentas() {
+        let ventas = document.getElementById("ventas");
+        let div = document.getElementById("divVentas")
+        if (ventas.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarServicios() {
+        let servicios = document.getElementById("servicios");
+        let div = document.getElementById("divServicios")
+        if (servicios.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarPedidos() {
+        let pedidos = document.getElementById("pedidos");
+        let div = document.getElementById("divPedidos")
+        if (pedidos.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarCitas() {
+        let citas = document.getElementById("citas");
+        let div = document.getElementById("divCitas")
+        if (citas.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarClientes() {
+        let clientes = document.getElementById("clientes");
+        let div = document.getElementById("divClientes")
+        if (clientes.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarEmpleados() {
+        let empleados = document.getElementById("empleados");
+        let div = document.getElementById("divEmpleados")
+        if (empleados.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarProveedores() {
+        let proveedores = document.getElementById("proveedores");
+        let div = document.getElementById("divProveedores")
+        if (proveedores.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+    function mostrarProductos() {
+        let productos = document.getElementById("productos");
+        let div = document.getElementById("divProductos")
+        if (productos.checked){
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+</script>
+<div class="container-fluid create-tittle">
+    <div class="row">
+        <div class="col-12">
+            <h1>Agregar nuevo rol</h1>
+        </div>
+    </div>
+</div>
+<div class="create-body">
+    <form action="/createRol" method="post" onsubmit="return validarRol();">
+        <div class="container-fluid">
+            <div class="text-center row mt-4 fields">
+                <div class="row">
+                    <div class="col">
+                        <label for="rol" class="form-label">Nombre del rol</label><br>
+                        <input type="text" name="rol" id="rol" class="input-bonito">
+                    </div>
+                    <div class="col">
+                        <label for="rolStat" class="form-label">Estado del rol</label><br>
+                        <select name="rolStat" id="rolStat" class="form-select">
+                            <option value="noSelect" disabled selected>Seleccione</option>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="config">Configuración <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="config" onchange="mostrarConfig();" style="display: none;">
+                        <div id="divConfig" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createUser" value="Crear usuario">
+                            <label for="">Crear usuarios</label><br>
+                            <input type="checkbox" name="modifyUser" value="Modificar usuario">
+                            <label for="">Modificar usuarios</label><br>
+                            <input type="checkbox" name="deleteUser" value="Eliminar usuario">
+                            <label for="">Eliminar usuarios</label><br>
+                            <input type="checkbox" name="readUser" value="Consultar usuario">
+                            <label for="">Consultar usuarios</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="roles">Roles <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="roles" onchange="mostrarRoles();" style="display: none;">
+                        <div id="divRoles" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createRol" value="Crear rol">
+                            <label for="">Crear roles</label><br>
+                            <input type="checkbox" name="modifyRol" value="Modificar rol">
+                            <label for="">Modificar roles</label><br>
+                            <input type="checkbox" name="deleteRol" value="Eliminar rol">
+                            <label for="">Eliminar roles</label><br>
+                            <input type="checkbox" name="readRol" value="Consultar rol">
+                            <label for="">Consultar roles</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="compras">Compras <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="compras" onchange="mostrarCompras();" style="display: none;">
+                        <div id="divCompras" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createCompra" value="Crear compra">
+                            <label for="">Crear compras</label><br>
+                            <input type="checkbox" name="modifyCompra" value="Modificar compra">
+                            <label for="">Modificar compras</label><br>
+                            <input type="checkbox" name="deleteCompra" value="Eliminar compra">
+                            <label for="">Eliminar compras</label><br>
+                            <input type="checkbox" name="readCompra" value="Consultar compra">
+                            <label for="">Consultar compras</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="ventas">Ventas <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="ventas" onchange="mostrarVentas();" style="display: none;">
+                        <div id="divVentas" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createVenta" value="Crear venta">
+                            <label for="">Crear ventas</label><br>
+                            <input type="checkbox" name="modifyVenta" value="Modificar venta">
+                            <label for="">Modificar ventas</label><br>
+                            <input type="checkbox" name="deleteVenta" value="Eliminar venta">
+                            <label for="">Eliminar ventas</label><br>
+                            <input type="checkbox" name="readVenta" value="Consultar venta">
+                            <label for="">Consultar ventas</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="servicios">Servicios <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="servicios" onchange="mostrarServicios();" style="display: none;">
+                        <div id="divServicios" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createServicio" value="Crear servicio">
+                            <label for="">Crear servicios</label><br>
+                            <input type="checkbox" name="modifyServicio" value="Modificar servicio">
+                            <label for="">Modificar servicios</label><br>
+                            <input type="checkbox" name="deleteServicio" value="Eliminar servicio">
+                            <label for="">Eliminar servicios</label><br>
+                            <input type="checkbox" name="readServicio" value="Consultar servicio">
+                            <label for="">Consultar servicios</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="pedidos">Pedidos <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="pedidos" onchange="mostrarPedidos();" style="display: none;">
+                        <div id="divPedidos" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createPedido" value="Crear pedidos">
+                            <label for="">Crear pedidos</label><br>
+                            <input type="checkbox" name="modifyPedido" value="Modificar pedidos">
+                            <label for="">Modificar pedidos</label><br>
+                            <input type="checkbox" name="deletePedido" value="Eliminar pedidos">
+                            <label for="">Eliminar pedidos</label><br>
+                            <input type="checkbox" name="readPedido" value="Consultar pedidos">
+                            <label for="">Consultar pedidos</label><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="citas">Citas <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" value="Citas" name="Citas" id="citas" onchange="mostrarCitas();" style="display: none;">
+                        <div id="divCitas" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createCita" value="Crear cita">
+                            <label for="">Crear citas</label><br>
+                            <input type="checkbox" name="modifyCita" value="Modificar cita">
+                            <label for="">Modificar citas</label><br>
+                            <input type="checkbox" name="deleteCita" value="Eliminar cita">
+                            <label for="">Eliminar citas</label><br>
+                            <input type="checkbox" name="readCita" value="Consultar cita">
+                            <label for="">Consultar citas</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="clientes">Clientes <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="clientes" onchange="mostrarClientes();" style="display: none;">
+                        <div id="divClientes" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createCliente" value="Crear cliente">
+                            <label for="">Crear clientes</label><br>
+                            <input type="checkbox" name="modifyCliente" value="Modificar cliente">
+                            <label for="">Modificar clientes</label><br>
+                            <input type="checkbox" name="deleteCliente" value="Eliminar cliente">
+                            <label for="">Eliminar clientes</label><br>
+                            <input type="checkbox" name="readCliente" value="Consultar cliente">
+                            <label for="">Consultar clientes</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="empleados">Empleados <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="empleados" onchange="mostrarEmpleados();" style="display: none;">
+                        <div id="divEmpleados" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createEmpleado" value="Crear empleado">
+                            <label for="">Crear empleados</label><br>
+                            <input type="checkbox" name="modifyEmpleado" value="Modificar empleado">
+                            <label for="">Modificar empleados</label><br>
+                            <input type="checkbox" name="deleteEmpleado" value="Eliminar empleado">
+                            <label for="">Eliminar empleados</label><br>
+                            <input type="checkbox" name="readEmpleado" value="Consultar empleado">
+                            <label for="">Consultar empleados</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="proveedores">Proveedores <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="proveedores" onchange="mostrarProveedores();" style="display: none;">
+                        <div id="divProveedores" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createProveedor" value="Crear proveedor">
+                            <label for="">Crear proveedores</label><br>
+                            <input type="checkbox" name="modifyProveedor" value="Modificar proveedor">
+                            <label for="">Modificar proveedores</label><br>
+                            <input type="checkbox" name="deleteProveedor" value="Eliminar proveedor">
+                            <label for="">Eliminar proveedores</label><br>
+                            <input type="checkbox" name="readProveedor" value="Consultar proveedor">
+                            <label for="">Consultar proveedores</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="productos">Productos <i class="fa-solid fa-caret-down"></i></label>
+                        <input type="checkbox" name="" id="productos" onchange="mostrarProductos();" style="display: none;">
+                        <div id="divProductos" style="display: none;" class="text-justify">
+                            <input type="checkbox" name="createProducto" value="Crear producto">
+                            <label for="">Crear productos</label><br>
+                            <input type="checkbox" name="modifyProducto" value="Modificar producto">
+                            <label for="">Modificar productos</label><br>
+                            <input type="checkbox" name="deleteProducto" value="Eliminar producto">
+                            <label for="">Eliminar productos</label><br>
+                            <input type="checkbox" name="readProducto" value="Consultar producto">
+                            <label for="">Consultar productos</label><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center mt-5">
+                <div class="col text-end">
+                    <button type="button" class="cancel-btn" onclick="backPage();">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col text-start">
+                    <button type="submit" class="acept-btn">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br><br>
+<div class="user-list-header row justify-content-around">
+    <div class="col m-4">
+        <h1>Lista de usuarios</h1>
+    </div>
+    <div class="col">
+        <div class="form-floating search">
+            <input type="text" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="" >
+            <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar usuario</label>
+        </div>
+    </div>
+</div>
+<div class="">
+    <table class="table table-bordered" style="width: 95%; margin-left: 25px;">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+            </tr>       
+        </thead>
+        <tbody>
+            <% id = 1; %>
+            <% rols.forEach(obj => { %>
+            <tr>
+            <td><%= id %></td>
+            <td><%= obj.nombreRol %></td>
+            <td><%= obj.estadoRol %></td>
+            <td>
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <a href="/view-rol/<%= obj._id %>">
+                            <i class="fa-solid fa-eye fa-xl" style="color: #3cc3bd;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/delete-rol/<%= obj._id %>">
+                            <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <label class="switch"><input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </td>
+            </tr>
+            <% id++; %>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+<div class="container-fluid container-paginado">
+    <div>
+        <div class="row">
+            <div class="col d-flex paginado">
+                <a href="">
+                    <i class="fa-solid fa-caret-left"></i>
+                </a>
+                <p>1</p>
+                <a href="">
+                    <i class="fa-solid fa-caret-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

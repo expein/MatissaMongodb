@@ -30,17 +30,12 @@
     text-decoration: none;
 }
 
-.buscar-proveedor{
+.buscar-rol{
     box-shadow: 3px 7px 10px black;
 }
 
 .table {
     text-align: center;
-    margin-top: 10%;
-}
-
-.table tr th {
-    background-color: #e2d4ff;
 }
 
 .iconos{
@@ -51,6 +46,57 @@
 .boton-editar{
   color: #3cc3bd;
 }
+
+.md-label {
+    padding: 0px 10px;
+}
+.md-input {
+    margin: 0px 10px;
+}
+
+.input-bonito {
+    height: 38px;
+}
+
+.fields input{
+    border: 1px solid rgb(88, 88, 88);
+    border-radius: 20px;
+    text-align: center;
+}
+.fields select{
+    border: 1px solid rgb(88, 88, 88);
+    border-radius: 20px;
+    
+}
+.cancel-btn {
+    width: 100px;
+    height: 35px;
+    padding: 0px 10px 0px 10px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.34);
+    background: #ffffff;
+    color: #232323;
+    border-color: rgb(88, 88, 88);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 20px 20px 20px 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.acept-btn {
+	width: 100px;
+	height: 35px;
+	padding: 0px 10px 0px 10px;
+	box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.34);
+	background: #444444;
+	color: #ffffff;
+	border-color: rgb(88, 88, 88);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 20px 20px 20px 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
 
 /*swith*/
 

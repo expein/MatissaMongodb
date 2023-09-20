@@ -9,13 +9,9 @@
     </div>
 </div>
 <div class="create-body">
-    <form action="/createUser" method="post" onsubmit="return valid();">
+    <form action="/createUser" method="post" onsubmit="return validarUsuario();">
         <div class="container-fluid">
             <div class="text-center row mt-4 fields">
-                <div class="col">
-                    <label for="" class="form-label">ID</label><br>
-                    <input type="text" name="idUser" class="input-bonito" id="idUser">
-                </div>
                 <div class="col">
                     <label for="" class="form-label">Nombre de usuario</label><br>
                     <input type="text" name="user" id="usuario" class="input-bonito">
