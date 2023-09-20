@@ -118,6 +118,7 @@
             </tr>
         </thead>
         <tbody>
+            <% detail = 1 %>
             <% compras.forEach(obj => { %>
             <tr>
             <td><%= obj.fechaCompra %></td>
@@ -139,6 +140,26 @@
                 </div>
             </td>
             </tr>
+            <% obj.DetallesCompra.forEach(detalle =>{ %>
+                <tr class="detalle<%= detail %> todosLosDetalles">
+                  <td>
+                    <%= detalle.proveedor %>
+                  </td>
+                  <td>
+                    <%= detalle.product %>
+                  </td>
+                  <td>
+                    <%= detalle.precio %>
+                  </td>
+                  <td>
+                    <%= detalle.cantidad %>
+                  </td>
+                  <td>
+                    <%= detalle.costoTotalUnitario %>
+                  </td>
+                </tr>
+              <% }); %>
+              <% detail++ %>
             <% }); %>
 
         </tbody>
