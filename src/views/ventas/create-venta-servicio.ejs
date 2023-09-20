@@ -86,20 +86,20 @@
 
                                 <div class="create-body">
 
-                                    <form action="createVentaSer" method="post"
+                                    <form action="/createVentaSer" method="post"
                                         onsubmit=" return validarVentaServicio();">
                                         <div class="container-fluid">
                                             <div class="text-center row mt-4 fields">
                                                 <div class="col">
-                                                    <label for="idVenta" class="form-label">ID Venta</label><br>
-                                                    <input type="text" class="input-bonito" id="idVenta" name="idVenta"
-                                                        value="<%= idVenta %>" readonly>
-                                                </div>
-                                                <div class="col">
-                                                    <label for="idVentaServicio" class="form-label">ID Venta
-                                                        Servicio</label><br>
-                                                    <input type="text" class="input-bonito" id="idVentaServicio"
-                                                        name="idVentaServicio">
+                                                    <label for="idEmpleado" class="form-label ">Seleccione el</label><br>
+                                                    <select id="idEmpleado" class="form-select" name="idEmpleado"
+                                                        onchange="valueInputEmpleado(this)">
+                                                        <option value="noSelect" selected disabled>Empleado</option>
+                                                        <option value="1">1. Juan</option>
+                                                        <option value="2">2. Diego</option>
+                                                        <option value="3">3. Johan</option>
+                                                        <option value="4">4. Santiago</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col">
                                                     <label for="idCliente" class="form-label ">Seleccione el</label><br>
@@ -154,6 +154,12 @@
                                                     <label for="fechaVentaServicio" class="form-label">Fecha</label><br>
                                                     <input type="date" id="fechaVentaServicio" class="input-bonito"
                                                         name="fechaVentaServicio">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="nombreEmpleado" class="form-label">Nombre
+                                                        Empleado</label><br>
+                                                    <input type="text" id="nombreEmpleado" class="input-bonito" value=""
+                                                        name="nombreEmpleado" readonly>
                                                 </div>
                                                 <div class="col">
                                                     <label for="nombreCliente" class="form-label">Nombre

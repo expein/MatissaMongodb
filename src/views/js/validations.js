@@ -164,8 +164,7 @@ function validarServicio(){
 // validar Venta
 
 function validarVentaServicio(){
-    let idVenta = document.getElementById("idVenta").value;
-    let idVentaServicio = document.getElementById("idVentaServicio").value;
+    let idEmpleado = document.getElementById("idEmpleado").value;
     let idCliente = document.getElementById("idCliente").value;
     let idCita = document.getElementById("idCita").value;
     let costoTotalCita = document.getElementById("costoTotalCita").value;
@@ -174,7 +173,7 @@ function validarVentaServicio(){
     let formaPagoServicio = document.getElementById("formaPago").value;
     let estadoVentaServicio = document.getElementById("estadoVentaServicio").value;
 
-    if (idVenta == "" ||formaPagoServicio == "" ||idServicio == "" || idVentaServicio == "" || idCliente == "" || idCita == "" || costoTotalCita == "" || fechaVentaServicio == "") {
+    if (formaPagoServicio == "" ||idServicio == "" || idCliente == "" || idCita == "" || costoTotalCita == "" || fechaVentaServicio == "") {
         alert("Hay campos sin completar");
         return false;
     }else if (formaPagoServicio == "noSelect"){

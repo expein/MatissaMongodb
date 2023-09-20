@@ -627,7 +627,16 @@ router.get("/create-venta-pedido", isAuthenticated, async (req, res, next) => {
 });
 
 router.get("/createVentaSer", isAuthenticated, async (req, res, next) => {
-    try {
+    try { const ventaSer = new ventaServ ({
+            nombreEmpleado: req.body.nombreEmpleado,
+            nombreCliente: req.body.nombreCliente,
+            idCita: req.body.idCita,
+            fechaResgitro: req.body.fechaRegistro,
+            costoTotalCita: req.body.costoTotalCita,
+            fechaVentaServicio: req.body.fechaVentaServicio,
+            formaPagoServicio: req.body.formaPagoServicio,
+            estadoVentaServicio: req.body.estadoVentaServicio,  
+    })
         
     } catch (error) {
         console.log(error);

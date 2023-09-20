@@ -2,10 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const ventaSchema = new Schema({
-    idVenta: Number,
-
-    idVentaServicio: Number,
-    idCliente: Number,
+    nombreEmpleado: String,
     nombreCliente: String,
     idCita: Number,
     fechaRegistro: Number,

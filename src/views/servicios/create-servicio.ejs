@@ -32,6 +32,18 @@
                 nombreEmpleado = "Santiago";
             }
         }
+        function valueInputEmpleado1(sel){
+            let nombreEmpleado = document.getElementById("nombreEmpleado1");
+            if (sel.value == 1){
+                nombreEmpleado.value = "Juan";
+            }else if (sel.value == 2){
+                nombreEmpleado.value = "Diego";
+            }else if (sel.value == 3){
+                nombreEmpleado.value = "Johan";
+            }else if (sel.value == 4){
+                nombreEmpleado = "Santiago";
+            }
+        }
 
         function valueInputServicio(sel){
             let nombreServicio = document.getElementById("nombreServicio");
@@ -148,7 +160,7 @@
                         <div class="row text-center mt-4 fields">
                             <div class="col">
                                 <label for="IDEmpleado_${contadorCampos}" class="form-label ">Seleccione el Empleado</label><br>
-                                <select id="IDEmpleado_${contadorCampos}" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado(this)">
+                                <select id="IDEmpleado_${contadorCampos}" class="form-select" name="IDEmpleado" onchange="valueInputEmpleado1(this)">
                                     <option value="noSelect" selected disabled>Empleado...</option>
                                     <option value="1">1. Juan</option>
                                     <option value="2">2. Diego</option>
@@ -173,8 +185,8 @@
                         </div>
                         <div class="row text-center mt-4 fields">
                             <div class="col">
-                                <label for="nombreEmpleado_${contadorCampos}" class="form-label">Nombre empleado</label><br>
-                                <input type="text" id="nombreEmpleado_${contadorCampos}" class="input-bonito" value="" name="nombreEmpleado" readonly>
+                                <label for="nombreEmpleado1_${contadorCampos}" class="form-label">Nombre empleado</label><br>
+                                <input type="text" id="nombreEmpleado1_${contadorCampos}" class="input-bonito" value="" name="nombreEmpleado1   " readonly>
                             </div>
                             <div class="col">
                                 <label for="nombreServicio_${contadorCampos}" class="form-label">Nombre servicio</label><br>
