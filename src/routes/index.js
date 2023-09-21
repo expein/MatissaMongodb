@@ -296,7 +296,7 @@ router.post("/buscarUser", isAuthenticated, async (req, res, next) => {
     const busca = req.body.busca;
 
     try {
-        const user = await User.find({ $or: [ { name: busca }, { email: busca } ]});
+        const user = await User.find({ $or: [ { 'estado.nombreRol': busca }, { name: busca }, { email: busca } ]});
         res.render("./usuarios/buscar-user.ejs", { user });
     } catch (error) {
         
@@ -322,6 +322,7 @@ router.get("/create-reporte-usuarios", isAuthenticated, async (req, res, next) =
             report.text(`Nombre del usuario: ${obj.name}`);
             report.text(`Email del usuario: ${obj.email}`);
             report.text(`Rol del usuario: ${obj.estado.nombreRol}`);
+            report.text(`Estado del usuario: ${obj.estado.estadoUsuario}`);
             report.moveDown();
         });
         report.end();

@@ -61,10 +61,12 @@
         <h1>Lista de usuarios</h1>
     </div>
     <div class="col">
-        <div class="form-floating search">
-            <input type="text" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="" >
-            <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar usuario</label>
-        </div>
+        <form action="/buscarUser" method="post">
+            <div class="form-floating search">
+                <input type="text" name="busca" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="" >
+                <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar usuario</label>
+            </div>
+        </form>
     </div>
 </div>
 <div class="user-list-body" style="margin: 10px;">
