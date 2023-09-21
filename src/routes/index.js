@@ -1,5 +1,7 @@
 const express = require('express');
 const passport = require('passport');
+const PDF = require('pdfkit');
+
 const User = require('../models/user');
 
 const router = express.Router();
@@ -282,7 +284,7 @@ router.get("/delete-user/:id", isAuthenticated, async (req, res) => {
         await User.findByIdAndDelete(id);
 
         const users = await User.find({});
-    res.render("./usuarios/usuarios.ejs", { users });
+        res.render("./usuarios/usuarios.ejs", { users });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
@@ -299,6 +301,61 @@ router.post("/buscarUser", isAuthenticated, async (req, res, next) => {
     } catch (error) {
         
     }
+});
+
+
+
+router.get("/create-reporte-usuarios", isAuthenticated, async (req, res, next) => {
+    try {
+        const users = await User.find({});
+
+        const report = new PDF();
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'inline; filename = "reporte_usuarios.pdf"');
+
+        report.pipe(res);
+
+        report.fontSize(16).text('Reporte de usuarios', { align: 'center' });
+        report.moveDown();
+
+        users.forEach(obj => {
+            report.text(`Nombre del usuario: ${obj.name}`);
+            report.text(`Email del usuario: ${obj.email}`);
+            report.text(`Rol del usuario: ${obj.estado.nombreRol}`);
+            report.moveDown();
+        });
+        report.end();
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos");
+    }
+});
+
+router.post("/cambiarEstadoUser", isAuthenticated, async (req, res, next) => {
+    try {
+        const id = req.body.id;
+        console.log(id);
+        const user = await User.findOne({_id: id});
+        const estado = user.estado.estadoUsuario;
+        var newEstado = 0;
+        if (estado == 1){
+            newEstado = 0;
+        }else {
+            newEstado = 1;
+        }
+        
+        await User.findByIdAndUpdate(id, {
+            'estado.estadoUsuario': newEstado
+        });
+        
+        const users = await User.find({});
+        res.render("./usuarios/usuarios.ejs", { users });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error de datos")
+    }
+    
+    
 });
 
 // ROLES
@@ -544,11 +601,38 @@ router.post("/buscarRol", isAuthenticated, async (req, res, next) => {
     }
 });
 
-const PDF = require('pdfkit');
-
 router.get("/create-reporte-roles", isAuthenticated, async (req, res, next) => {
     try {
         const roles = await Roles.find({});
+
+        const report = new PDF();
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'inline; filename = "reporte_roles.pdf"');
+
+        report.pipe(res);
+
+        report.fontSize(16).text('Reporte de roles', { align: 'center' });
+        report.moveDown();
+
+        roles.forEach(obj => {
+            report.text(`Nombre del rol: ${obj.nombreRol}`);
+            const estadoRol = obj.estadoRol;
+            if (estadoRol == 1){
+                const estadoVisual = "Activo";
+                report.text(`Estado del rol: ${estadoVisual}`);
+            }else{
+                const estadoVisual = "Inactivo";
+                report.text(`Estado del rol: ${estadoVisual}`);
+            }
+            for (let permiso in obj.permisos){
+                report.text(`Módulo: ${permiso}`);
+                for (let i = 0; i < obj.permisos[permiso].length; i++){
+                    report.text(`- ${obj.permisos[permiso][i]}`);
+                }
+            }
+            report.moveDown();
+        });
+        report.end();
     } catch (error) {
         console.log(error);
         res.status(500).send("Error de datos");

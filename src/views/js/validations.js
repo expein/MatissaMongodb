@@ -1,24 +1,45 @@
 // Validar Usuario
 
 
+
 function validarUsuario(){
+    
     let user = document.getElementById("usuario").value;
     let email = document.getElementById("correo").value;
     let rol = document.getElementById("role").value;
     let pass = document.getElementById("password").value;
     let expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (user == "" || email == "" || pass == "" ) {
-        alert("Campos vacíos");
+        Swal.fire(
+                '¡Alerta!', 'Campos vacios', 'info'
+            );
         return false;
     }else if (rol == "noSelect") {
-        alert("Seleccione Rol");
+        Swal.fire(
+                '¡Alerta!', 'Seleccione el rol', 'info'
+            );
         return false;
     }else if (!expression.test(email)){
-        alert("Correo inválido");
+        Swal.fire(
+                '¡Alerta!', 'Correo inválido', 'info'
+            );
         return false;
     }else {
-        let result = confirm("¿Desea registrar el usuario?");
-        return result;
+        event.preventDefault();
+        Swal.fire({
+            title: '¿Desea registrar el usuario?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#232323',
+            confirmButtonText: 'Registrar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let form = document.getElementById("form");
+                form.submit();
+            }
+        });
     }
 }
 
@@ -143,14 +164,31 @@ function validarRol(){
     let nombreRol = document.getElementById("rol").value;
     let estadoRol = document.getElementById("rolStat").value;
     if (nombreRol == ""){
-        alert("El rol debe tener un nombre");
+        Swal.fire(
+            '¡Alerta!', 'El rol debe tener nombre', 'info'
+        );
         return false;
     }else if (estadoRol == "noSelect"){
-        alert("Seleccione estado para el rol");
+        Swal.fire(
+            '¡Alerta!', 'Seleccione el estado del rol', 'info'
+        );
         return false;
     }else{
-        let confir = confirm("¿Desea crear el rol?");
-        return confir;
+        event.preventDefault();
+        Swal.fire({
+            title: '¿Desea crear el nuevo rol?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#232323',
+            confirmButtonText: 'Crear'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let form = document.getElementById("form");
+                form.submit();
+            }
+        });
     }
 }
 
@@ -188,3 +226,4 @@ function delteCompra(){
 function backPage(){
     window.location="/profile";
 }
+

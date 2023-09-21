@@ -1,19 +1,28 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/usuarios.css">
 <script src="../js/validations.js"></script>
-<div class="col-10 mx-auto">
+<script src="./js/estadoCambio.js"></script>
+<div class="col mx-auto">
     <form action="/buscarUser" method="post">
         <div class="form-floating search">
             <input type="text" name="busca" class="form-control rounded-pill buscar-proveedor" id="floatingInputInvalid" placeholder="" >
             <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar usuario</label>
         </div>
     </form>
-
 </div>
+
 <div class="container-fluid">
     <div class="row mt-5">
         <div class="col ">
             <h1>Lista de usuarios</h1>
+        </div>
+        <div class="col">
+            <a href="/create-reporte-usuarios">
+                <button class="reporte-crear rounded-pill text-start">
+                    <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i>  Generar reporte de usuarios</p>
+                  </button>        
+            </a>
+            
         </div>
         <div class="col d-flex justify-content-end">
             <a href="/create-user" class="create-user">
@@ -28,6 +37,7 @@
             <tr class="table-secondary">
                 <th class="p-3">ID Usuario</th>
                 <th class="p-3">Rol</th>
+                <th class="p-3">Estado</th>
                 <th class="p-3">Nombre Usuario</th>
                 <th class="p-3">Correo</th>
                 <th class="p-3">Opciones</th>
@@ -39,6 +49,7 @@
             <tr>
             <td><%= id %></td>
             <td><%= obj.estado.nombreRol %></td>
+            <td><%= obj.estado.estadoUsuario %></td>
             <td><%= obj.name %></td>
             <td><%= obj.email %></td>
             <td>
@@ -54,9 +65,14 @@
                         </a>
                     </div>
                     <div>
-                        <label class="switch"><input type="checkbox" checked>
-                            <span class="slider round"></span>
-                        </label>
+                        <form action="/cambiarEstadoUser" method="post" id="form">
+                            <label class="switch"><input type="checkbox" value="<%= obj._id %>" name="id" id="<%= obj._id %>"  onchange="return cambiarEstadoUser(this.id);" <%= obj.estado.estadoUsuario === 1 ? 'checked' : '' %>>
+                                <span class="slider round"></span>
+                            </label>
+                        </form>
+                            
+                        
+                        
                     </div>
                 </div>
             </td>

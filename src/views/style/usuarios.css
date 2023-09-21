@@ -42,6 +42,19 @@ h1{
     text-align: center;
     box-shadow: 3px 7px 10px black;
 }
+
+.reporte-crear{
+    border: none;
+    width: 100%;
+    background-color: #444444;
+    height: 100%;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 15px;
+    box-shadow: 3px 7px 10px black;
+  }
+
 body {
     font-family: "Quicksand";
 }

@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="create-body">
-    <form action="/createUser" method="post" onsubmit="return validarUsuario();">
+    <form action="/createUser" method="post" id="form" onsubmit="return validarUsuario();">
         <div class="container-fluid">
             <div class="text-center row mt-4 fields">
                 <div class="col">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="col">
                     <label for="" class="form-label">Contraseña</label><br>
-                    <input type="text" name="password" id="password" class="input-bonito">
+                    <input type="password" name="password" id="password" class="input-bonito">
                 </div>
                 <div class="col">
                     <label for="" class="form-label ">Rol</label><br>
