@@ -332,9 +332,9 @@ router.get("/create-reporte-usuarios", isAuthenticated, async (req, res, next) =
     }
 });
 
-router.post("/cambiarEstadoUser", isAuthenticated, async (req, res, next) => {
+router.get("/cambiarEstadoUser/:id", isAuthenticated, async (req, res, next) => {
     try {
-        const id = req.body.id;
+        const id = req.params.id;
         console.log(id);
         const user = await User.findOne({_id: id});
         const estado = user.estado.estadoUsuario;

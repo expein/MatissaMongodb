@@ -2,38 +2,18 @@ function cambiarEstadoUser(id){
     let user = document.getElementById(id);
     alert(id);
     if(!user.checked){
-        Swal.fire({
-            title: '¿Desea inhabilitar el usuario?',
-            text: "",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#232323',
-            confirmButtonText: 'Si'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let form = document.getElementById("form");
-                form.submit();
-            }else{
-                user.checked = true;
-            }
-        });
+        let confir = confirm("¿Desea inhabilitar el usuario?");
+        if (!confir){
+            user.cheked = true;
+        }
+        return confir;
+        
+        
     }else{
-        Swal.fire({
-            title: '¿Desea habilitar el usuario?',
-            text: "",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#232323',
-            confirmButtonText: 'Si'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let form = document.getElementById("form");
-                form.submit();
-            }else{
-                user.checked = false;
-            }
-        });
+        let confir = confirm("¿Desea habilitar el usuario?");
+        if (confir){
+            user.cheked = false;
+        }
+        return confir;
     }
 }

@@ -65,14 +65,11 @@
                         </a>
                     </div>
                     <div>
-                        <form action="/cambiarEstadoUser" method="post" id="form">
-                            <label class="switch"><input type="checkbox" value="<%= obj._id %>" name="id" id="<%= obj._id %>"  onchange="return cambiarEstadoUser(this.id);" <%= obj.estado.estadoUsuario === 1 ? 'checked' : '' %>>
+                        <a href="/cambiarEstadoUser/<%= obj._id %>">
+                            <label class="switch"><input type="checkbox" id="<%= obj._id %>" onchange="return cambiarEstadoUser(this.id)" <%= obj.estado.estadoUsuario === 1 ? 'checked' : '' %>>
                                 <span class="slider round"></span>
                             </label>
-                        </form>
-                            
-                        
-                        
+                        </a>
                     </div>
                 </div>
             </td>
