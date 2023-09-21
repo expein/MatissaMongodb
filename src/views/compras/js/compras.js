@@ -8,8 +8,6 @@ const registrarCompra = ()=>{
     let tituloCompra = document.getElementById('tituloCompra')
     let formRegistrarCompra = document.getElementById('formRegistrarCompra')
 
-    console.log(op);
-
     if(op == 'mostrar'){
         tituloCompra.style.display = 'none'
         formRegistrarCompra.style.display = 'block'
@@ -19,27 +17,33 @@ const registrarCompra = ()=>{
     }
 }
 
-const buscarCompra = ()=>{
-    const inputBuscarCompra = document.getElementById("buscarCompra");
-    const tablaCompras = document.getElementById("tabla");
-    const filas = tablaCompras.getElementsByTagName('tr')
+const buscador = () => {
+  const inputBuscar = document.getElementById("buscar");
+  const tabla = document.getElementById("tabla");
+  const filas = tabla.getElementsByTagName("tr");
 
-    const valorBuscado = inputBuscarCompra.value.toLowerCase();
+  const valorBuscado = inputBuscar.value.toLowerCase();
 
-    for(let i = 1 ; i < filas.length; i++){
-        const fila = filas[i]
-        const nombreColumna = fila.getElementsByTagName('td')
+  for (let i = 1; i < filas.length; i++) {
+    const fila = filas[i];
+    const celdas = fila.getElementsByTagName("td");
+    let encontrado = false;
 
-        if(nombreColumna){
-            const textoFila = nombreColumna.textContent.toLowerCase();
-            if(textoFila.includes(valorBuscado)){
-                fila.style.display =''
-            }else{
-                fila.style.display = 'none'
-            }
-        }
+    for (let j = 0; j < celdas.length; j++) {
+      const textoCelda = celdas[j].textContent.toLowerCase();
+      if (textoCelda.includes(valorBuscado)) {
+        encontrado = true;
+        break;
+      }
     }
-}
+
+    if (encontrado) {
+      fila.style.display = "";
+    } else {
+      fila.style.display = "none";
+    }
+  }
+};
 
 
 const verDetallesCompra = () =>{
@@ -69,7 +73,6 @@ const AgregarDetalleCompra = ()=>{
 
     cantidadDetalles.value = codigoDetalleSum;
 
-    console.log(formDetalleCompra)
 
     let formClonado = formDetalleCompra.cloneNode(true)
 
@@ -82,7 +85,4 @@ const AgregarDetalleCompra = ()=>{
     let nuevoForm = document.getElementById(nuevaId)
 
     nuevoForm.querySelector('#codigoDetalle').value = codigoDetalleSum
-
-    console.log(detallesCompra)
-    console.log(nuevaId)
 }

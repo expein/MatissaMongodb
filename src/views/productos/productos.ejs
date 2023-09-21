@@ -44,7 +44,7 @@
         <div class="row mt-5">
             <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
                 <div class="form-floating search">
-                    <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="">
+                    <input type="text" class="form-control rounded-pill" placeholder="" id="buscar" oninput="return buscador()">
                     <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
                         Buscar producto</label>
                 </div>
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="container-fluid">
-        <table class="table table-hover table-borderless mt-3 text-center table-sm">
+        <table class="table table-hover table-borderless mt-3 text-center table-sm" id="tabla">
             <thead>
                 <tr class="table-secondary">
                     <th class="p-3">Nombre</th>

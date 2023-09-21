@@ -1,7 +1,7 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/compras.css">
 <script src="../js/validations.js"></script>
-<script></script>
+<script src="./js/alerts.js"></script>
 <div class="container-fluid" id="formRegistrarCompra" style="display: none;">
     <div class="row create-tittle">
         <div class="col-12">
@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="row form-agregar-compra">
-        <form action="/createComp" method="post" onsubmit="return validacionCompra();">
+        <form action="/createComp" method="post" id="formularioCompra" onsubmit="return validacionCompra(event);">
             <div class="text-center row mt-4 fields">
                 <div class="col">
                     <label for="dateCompra" class="form-label">Fecha compra</label><br>
@@ -85,14 +85,14 @@
     <div class="row mt-5">
         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
             <div class="form-floating search">
-                <input type="text" class="form-control rounded-pill" id="buscarCompra" placeholder="" oninput="return buscarCompra()">
+                <input type="text" class="form-control rounded-pill" id="buscar" placeholder="" oninput="return buscador()">
                 <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar compra</label>
             </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
-            <button class="reporte-crear rounded-pill text-start">
+            <a href="/reporteCompras" class="reporte-crearp rounded-pill text-start">
               <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i>  Generar reporte de las compras</p>
-            </button>        
+            </a>        
         </div>
         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
             <button class="create-compra reporte-crear d-flex flex-row-reverse rounded-pill" type="button" onclick="opcion('mostrar'), registrarCompra()">
@@ -118,30 +118,30 @@
             </tr>
         </thead>
         <tbody>
-            <% detail = 1 %>
+            <!-- <% detail = 1 %> -->
             <% compras.forEach(obj => { %>
             <tr>
-            <td><%= obj.fechaCompra %></td>
-            <td><%= obj.descrip %></td>
-            <td><%= obj.factura %></td>
-            <td><%= obj.costoTotalCompra %></td>
-            <td>
-                <div class="row">
-                    <div class="col text-center">
-                        <a href="">
-                            <i class="fa-solid fa-circle-xmark" style="color: #929292;"></i>
-                        </a>
+                <td><%= obj.fechaCompra %></td>
+                <td><%= obj.descrip %></td>
+                <td><%= obj.factura %></td>
+                <td><%= obj.costoTotalCompra %></td>
+                <td>
+                    <div class="row">
+                        <div class="col text-center">
+                            <a href="">
+                                <i class="fa-solid fa-circle-xmark" style="color: #929292;"></i>
+                            </a>
+                        </div>
+                        <div class="col text-center">
+                            <a href="#" onclick="verDetallesCompra()">
+                                <i class="fa-solid fa-eye" style="color: #3cc3bd;"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="col text-center">
-                        <a href="#" onclick="verDetallesCompra()">
-                            <i class="fa-solid fa-eye" style="color: #3cc3bd;"></i>
-                        </a>
-                    </div>
-                </div>
-            </td>
+                </td>
             </tr>
-            <% obj.DetallesCompra.forEach(detalle =>{ %>
-                <tr class="detalle<%= detail %> todosLosDetalles">
+            <!--<% obj.DetallesCompra.forEach(detalle =>{ %>
+                <tr class="detalle<%= detail %> todosLosDetalles" style="display: none;">
                   <td>
                     <%= detalle.proveedor %>
                   </td>
@@ -160,8 +160,8 @@
                 </tr>
               <% }); %>
               <% detail++ %>
+            -->
             <% }); %>
-
         </tbody>
     </table>
 </div>

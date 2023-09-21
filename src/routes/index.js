@@ -390,6 +390,48 @@ router.post("/createComp", isAuthenticated, async (req, res, next) => {
     });
 });
 
+const PDFDocument = require('pdfkit');
+
+router.get("/reporteCompras", isAuthenticated, async (req, res) =>{
+    try {
+
+        const compras = await Compras.find({}).exec();
+
+        const doc = new PDFDocument();
+        res.setHeader('Content-type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'Inline; filename = "Reporte-compras"')
+
+        doc.pipe(res)
+
+        doc.fontSize(16).text('Reporte de compras', {align: 'center'})
+        doc.moveDown();
+
+        compras.forEach((compra) => {
+            doc.text(`Fecha de la compra: ${compra.fechaCompra}`);
+            doc.text(`Descripción: ${compra.descrip}`);
+            doc.text(`Factura: ${compra.factura}`);
+            doc.text(`Costo total de la compra: ${compra.costoTotalCompra}`);
+            doc.text(`Detalles de la compra: `);
+            compra.DetallesCompra.forEach((detalleCompra) =>{
+                doc.moveDown();
+                doc.text(`  Proveedor: ${detalleCompra.proveedor}`);
+                doc.text(`  Product: ${detalleCompra.product}`);
+                doc.text(`  Precio: ${detalleCompra.precio}`);
+                doc.text(`  Cantidad: ${detalleCompra.cantidad}`);
+                doc.text(`  Costo total unitario: ${detalleCompra.costoTotalUnitario}`);
+                doc.moveDown();
+            })
+            doc.moveDown();
+        })
+
+        doc.end()
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error de datos");
+    }
+});
+
 //PRODUCTOS
 
 router.get('/productos', isAuthenticated, async (req, res, next) => {

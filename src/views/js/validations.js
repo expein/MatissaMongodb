@@ -26,7 +26,8 @@ function valid(){
 
 // Validar Compras
 
-function validacionCompra(){
+function validacionCompra(event){
+  event.preventDefault();
     let date = document.getElementById("dateCompra").value;
     let factu = document.getElementById('factu').value;
     let proveedor = document.getElementById('proveedor').value;
@@ -37,8 +38,21 @@ function validacionCompra(){
     let verificar = validarCompra(date, factu, proveedor, product, precio, cantidad)
 
     if(verificar === true){
-        let op = confirm('¿Estas seguro de hacer esta acción?')
-        return op
+      Swal.fire({
+          title: "¿Estás seguro?",
+          text: "¿Quieres registrar la compra?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Sí, enviar",
+          cancelButtonText: "Cancelar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Enviado", "El mensaje ha sido enviado.", "success");
+            document.getElementById("formularioCompra").submit();
+          } else if (result.isDismissed) {
+            Swal.fire("Cancelado", "El mensaje no ha sido enviado.", "info");
+          }
+        });
     }else{
         return false
     }
@@ -236,3 +250,10 @@ function delteCompra(){
 function backPage(){
     window.location="/profile";
 }
+
+const MensajeDeExito = () => {
+  Swal.fire({
+    title: "Registro exitoso",
+    icon: "success",
+  });
+};
