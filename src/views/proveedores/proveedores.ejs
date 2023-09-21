@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="row form-agregar-compra">
-            <form action="/createProveedor" method="post" onsubmit="return validacionProveedor()">
+            <form action="/createProveedor" method="post" id="formularioProveedor" onsubmit="return validacionProveedor(event)">
                 <div class="text-center row mt-4 fields">
                     <div class="col">
                         <label for="dateCompra" class="form-label">Tipo proveedor</label><br>
@@ -63,9 +63,9 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
-                <button class="reporte-crear rounded-pill text-start">
+                <a href="/reporteProveedor" class="reporte-crearp rounded-pill text-start">
                     <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte delos proveedores</p>
-                </button>
+                </a>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 mt-3">
                 <button class="create-compra reporte-crear d-flex flex-row-reverse rounded-pill" type="button"

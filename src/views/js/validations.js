@@ -43,18 +43,18 @@ function validacionCompra(event){
           text: "¿Quieres registrar la compra?",
           icon: "question",
           showCancelButton: true,
-          confirmButtonText: "Sí, enviar",
+          confirmButtonText: "Sí, registrar",
           cancelButtonText: "Cancelar",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Enviado", "El mensaje ha sido enviado.", "success");
+            Swal.fire("Enviado", "La compra ha sido registrada.", "success");
             document.getElementById("formularioCompra").submit();
           } else if (result.isDismissed) {
-            Swal.fire("Cancelado", "El mensaje no ha sido enviado.", "info");
+            Swal.fire("Cancelado", "La compra no se ha registrado", "info");
           }
         });
     }else{
-        return false
+      return false
     }
 }
 
@@ -68,13 +68,22 @@ const validarCompra = (date, factu, proveedor, product, precio, cantidad) =>{
           precio == "" ||
           cantidad == ""
         ) {
-          alert("Faltan datos en la compra.");
+          Swal.fire({
+            title: 'Faltan campos por llenar',
+            icon: 'warning'
+          })
           validate = false
         } else if (product == "noSelect" || proveedor == "noSelect") {
-          alert("Seleccione producto");
-          validate = false;
-        }else if(isNaN(precio)){
-          alert('El precio no es numerico')
+          Swal.fire({
+            title: 'Falta campos por seleccionar',
+            icon: 'warning'
+          })
+          validate = false
+        }else if(isNaN(precio, cantidad)){
+          Swal.fire({
+            title: 'El precio y cantidad deben ser numericos',
+            icon: 'warning'
+          })
           validate = false
         }
 
@@ -83,29 +92,48 @@ const validarCompra = (date, factu, proveedor, product, precio, cantidad) =>{
 
 // validar Producto
 
-function validacionProducto() {
+function validacionProducto(event) {
+  event.preventDefault();
   let nombreProducto = document.getElementById("nombreProducto").value;
-  let desc = document.getElementById("desc").value;
   let precioVenta = document.getElementById("precioVenta").value;
 
-  let verificar = validarProducto(nombreProducto, desc, precioVenta);
+  let verificar = validarProducto(nombreProducto, precioVenta);
 
   if (verificar === true) {
-    let op = confirm("¿Estas seguro de hacer esta acción?");
-    return op;
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¿Quieres registrar el producto?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, registrar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Enviado", "El producto ha sido registrado.", "success");
+          document.getElementById("formularioProducto").submit();
+        } else if (result.isDismissed) {
+          Swal.fire("Cancelado", "El producto no se ha registrado", "info");
+        }
+      });
   } else {
     return false;
   }
 }
 
-const validarProducto = (nombreProducto, desc, precioVenta) => {
+const validarProducto = (nombreProducto, precioVenta) => {
   let validate = true;
 
-  if (nombreProducto == "" || desc == "" || precioVenta == "") {
-    alert("Faltan datos en la compra.");
+  if (nombreProducto == "" || precioVenta == "") {
+    Swal.fire({
+      title: "Faltan campos por llenar",
+      icon: "warning",
+    });
     validate = false;
   } else if (isNaN(precioVenta)) {
-    alert("El precio no es numerico");
+    Swal.fire({
+      title: "El precio debe ser numerico",
+      icon: "warning",
+    });
     validate = false;
   }
 
@@ -114,7 +142,8 @@ const validarProducto = (nombreProducto, desc, precioVenta) => {
 
 // validar Proveedor
 
-function validacionProveedor() {
+function validacionProveedor(event) {
+  event.preventDefault();
   let tipoProveedor = document.getElementById("tipoProveedor").value;
   let nombreProveedor = document.getElementById("nombreProveedor").value;
   let contacto = document.getElementById("contacto").value;
@@ -124,8 +153,21 @@ function validacionProveedor() {
   let verificar = validarProveedor(tipoProveedor, nombreProveedor, contacto, direccion, telefono);
 
   if (verificar === true) {
-    let op = confirm("¿Estas seguro de hacer esta acción?");
-    return op;
+          Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¿Quieres registrar el proveedor?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, registrar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Enviado", "El proveedor ha sido registrado.", "success");
+          document.getElementById("formularioProveedor").submit();
+        } else if (result.isDismissed) {
+          Swal.fire("Cancelado", "El proveedor no se ha registrado", "info");
+        }
+      });
   } else {
     return false;
   }
@@ -135,13 +177,22 @@ const validarProveedor = (tipoProveedor, nombreProveedor, contacto, direccion, t
   let validate = true;
 
   if (nombreProveedor == "" || contacto == "" || direccion == "" || telefono == "") {
-    alert("Faltan datos");
+    Swal.fire({
+      title: "Faltan campos por llenar",
+      icon: "warning",
+    });
     validate = false;
   }else if (tipoProveedor == "noSelect") {
-    alert("Seleccione el tipo de proveedor");
+    Swal.fire({
+      title: "Faltan campos por seleccionar",
+      icon: "warning",
+    });
     validate = false;
   } else if (isNaN(telefono)) {
-    alert("El telefono debe ser numerico");
+    Swal.fire({
+      title: "El telefono debe ser numerico",
+      icon: "warning",
+    });
     validate = false;
   }
 

@@ -506,6 +506,38 @@ router.get('/deleteProduct/:id', isAuthenticated, async (req, res, next) => {
     }
 })
 
+router.get("/reporteProductos", isAuthenticated, async (req, res) => {
+  try {
+    const productos = await Productos.find({}).exec();
+
+    const doc = new PDFDocument();
+    res.setHeader("Content-type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      'Inline; filename = "Reporte-productos"'
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(16).text("Reporte de los productos", { align: "center" });
+    doc.moveDown();
+
+    productos.forEach((producto) => {
+      doc.text(`Nombre: ${producto.nombre}`);
+      doc.text(`Descripción: ${producto.descripcion}`);
+      doc.text(`Saldo en inventario: ${producto.saldoInventario}`);
+      doc.text(`Precio en venta: ${producto.precioVenta}`);
+      doc.text(`estado: ${producto.estado}`);
+      doc.moveDown();
+    });
+
+    doc.end();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error de datos");
+  }
+});
+
 //PROVEEDOR
 
 router.get("/proveedores", isAuthenticated, async (req, res, next) => {
@@ -583,6 +615,39 @@ router.get("/deleteProveedor/:id", isAuthenticated, async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("Error al eliminar producto");
+  }
+});
+
+router.get("/reporteProveedor", isAuthenticated, async (req, res) => {
+  try {
+    const proveedores = await Proveedores.find({}).exec();
+
+    const doc = new PDFDocument();
+    res.setHeader("Content-type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      'Inline; filename = "Reporte-proveedores"'
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(16).text("Reporte de los proveedores", { align: "center" });
+    doc.moveDown();
+
+    proveedores.forEach((proveedor) => {
+      doc.text(`Tipo de proveedor: ${proveedor.tipoProveedor}`);
+      doc.text(`Nombre: ${proveedor.nombre}`);
+      doc.text(`Contacto: ${proveedor.contacto}`);
+      doc.text(`Dirección: ${proveedor.direccion}`);
+      doc.text(`Telefono: ${proveedor.telefono}`);
+      doc.text(`Estado: ${proveedor.estado}`);
+      doc.moveDown();
+    });
+
+    doc.end();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error de datos");
   }
 });
 
