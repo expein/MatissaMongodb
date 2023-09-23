@@ -12,14 +12,103 @@
         crossorigin="anonymous"></script>
     <script src="../js/validations.js"></script>
     <div class="container-fluid">
-        <div class="create-tittle container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <h1>Crear venta servicio</h1>
-                </div>
+        <div class="row create-tittle">
+            <div class="col-12">
+                <h1>Crear nueva Venta</h1>
             </div>
         </div>
+        <script>
+            var total = 0;
+            let Users = ["Juan", "Diego", "Johan", "Santiago"];
+            let Services = ["Corte de cabello", "Uñas acrílicas", "Tinturado", "Alizado"];
+            let Clientes = ["Carlos", "Pedro", "Esteban", "Dario"];
 
+            function loadUsers(idInput, array) {
+                let selectUsers = document.getElementById(idInput);
+                for (let i = 0; i <= array.length - 1; i++) {
+                    let addUser = new Option(array[i], i);
+                    selectUsers.appendChild(addUser);
+                }
+
+            }
+
+            const servicesAdded = [];
+
+            // Función para obtener los detalles de venta
+            function getDetalleVenta() {
+                return {
+                    detalleVenta: document.getElementById("codigoDetalle").value,
+                    idEmpleado: document.getElementById("idEmpleado").value,
+                    idServicio: document.getElementById("idServicio").value,
+                    costoServicio: document.getElementById("costoServicio").value,
+                };
+            }
+
+            // Función para agregar detalles de venta al array
+            function agregarDetalleVenta() {
+                const detalleVenta = getDetalleVenta();
+                servicesAdded.push(detalleVenta);
+
+                // Aquí puedes agregar lógica para actualizar la interfaz de usuario si es necesario.
+            }
+
+            // Función para crear la solicitud y enviarla al servidor
+            function createRequest() {
+                const request = {
+                    nombreEmpleado: document.getElementById("nombreEmpleado").value,
+                    nombreCliente: document.getElementById("nombreCliente").value,
+                    idCita: document.getElementById("idCita").value,
+                    costoTotalCita: document.getElementById("costoTotalCita").value,
+                    fechaVentaServicio: document.getElementById("fechaVentaServicio").value,
+                    formaPagoServicio: document.getElementById("formaPago").value,
+                    estadoVentaServicio: document.getElementById("estadoVentaServicio").value,
+                    detallesVenta: servicesAdded,
+                };
+
+                const url = '/createVentaSer';
+
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(request)
+                };
+
+                fetch(url, options)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la solicitud: ' + response.status);
+                        }
+                        Swal.fire('Venta exitosa!', '', 'success', 'Cool');
+                    })
+                    .then(data => {
+                        console.log('Respuesta del servidor:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+
+            function valueInputCliente(sel, idInput) {
+                let nombreCliente = document.getElementById(idInput);
+                nombreCliente.value = Clientes[sel];
+            }
+
+            function valueInputEmpleado(sel, idInput) {
+                let nombreEmpleado = document.getElementById(idInput);
+                nombreEmpleado.value = Users[sel];
+            }
+
+            function valueInputServicio(sel, idInput) {
+                let nombreServicio = document.getElementById(idInput);
+                nombreServicio.value = Services[sel];
+
+            }
+
+
+        </script>
 
 
         <% let idVenta; %>
@@ -28,111 +117,51 @@
                     <% } else { %>
                         <% idVenta=1; %>
                             <% }; %>
-                                <script>
-                                    let servicesAdded = [];
-
-                                    function valueInputCliente(sel) {
-                                        let nombreCliete = document.getElementById("nombreCliente");
-                                        if (sel.value == 1) {
-                                            nombreCliete.value = "Juan";
-                                        } else if (sel.value == 2) {
-                                            nombreCliete.value = "Diego";
-                                        } else if (sel.value == 3) {
-                                            nombreCliete.value = "Johan";
-                                        } else if (sel.value == 4) {
-                                            nombreCliete = "Santiago";
-                                        }
-                                    }
-                                    function valueInputEmpleado(sel) {
-                                        let nombreCliete = document.getElementById("nombreEmpleado");
-                                        if (sel.value == 1) {
-                                            nombreCliete.value = "Juan";
-                                        } else if (sel.value == 2) {
-                                            nombreCliete.value = "Diego";
-                                        } else if (sel.value == 3) {
-                                            nombreCliete.value = "Johan";
-                                        } else if (sel.value == 4) {
-                                            nombreCliete = "Santiago";
-                                        }
-                                    }
-
-                                    function valueInputServicio(sel) {
-                                        let nombreServicio = document.getElementById("nombreServicio");
-                                        if (sel.value == 1) {
-                                            nombreServicio.value = "Corte de cabello";
-                                        } else if (sel.value == 2) {
-                                            nombreServicio.value = "Uñas acrílicas";
-                                        } else if (sel.value == 3) {
-                                            nombreServicio.value = "Tinturado";
-                                        } else if (sel.value == 4) {
-                                            nombreServicio.value = "Alizado";
-                                        }
-                                    }
-                                    function valueInputServi(sel) {
-                                        let nombreServicio = document.getElementById("nombreServicio");
-                                        if (sel.value == 1) {
-                                            nombreServicio.value = "Corte de cabello";
-                                        } else if (sel.value == 2) {
-                                            nombreServicio.value = "Uñas acrílicas";
-                                        } else if (sel.value == 3) {
-                                            nombreServicio.value = "Tinturado";
-                                        } else if (sel.value == 4) {
-                                            nombreServicio.value = "Alizado";
-                                        }
-                                    }
-
-                                </script>
-
-
-                                <div class="create-body">
-
+                                <div class=" row create-body ">
                                     <form action="/createVentaSer" method="post"
                                         onsubmit=" return validarVentaServicio();">
                                         <div class="container-fluid">
                                             <div class="text-center row mt-4 fields">
                                                 <div class="col">
-                                                    <label for="idEmpleado" class="form-label ">Seleccione el</label><br>
+                                                    <label for="idEmpleado" class="form-label ">Seleccione
+                                                        el</label><br>
                                                     <select id="idEmpleado" class="form-select" name="idEmpleado"
-                                                        onchange="valueInputEmpleado(this)">
+                                                        onchange="valueInputEmpleado(this.value,'nombreEmpleado')">
                                                         <option value="noSelect" selected disabled>Empleado</option>
-                                                        <option value="1">1. Juan</option>
-                                                        <option value="2">2. Diego</option>
-                                                        <option value="3">3. Johan</option>
-                                                        <option value="4">4. Santiago</option>
+
                                                     </select>
                                                 </div>
                                                 <div class="col">
                                                     <label for="idCliente" class="form-label ">Seleccione el</label><br>
                                                     <select id="idCliente" class="form-select" name="idCliente"
-                                                        onchange="valueInputCliente(this)">
+                                                        onchange="valueInputCliente(this.value,'nombreCliente')">
                                                         <option value="noSelect" selected disabled>Cliente...</option>
-                                                        <option value="1">1. Juan</option>
-                                                        <option value="2">2. Diego</option>
-                                                        <option value="3">3. Johan</option>
-                                                        <option value="4">4. Santiago</option>
                                                     </select>
                                                 </div>
                                                 <div class="col">
-                                                    <label for="idCita" class="form-label">ID Cita</label><br>
-                                                    <input type="text" class="input-bonito" id="idCita" name="idCita">
+                                                    <label for="idCita" class="form-label">ID Venta
+                                                        Servicio</label><br>
+                                                    <input type="text" class="input-bonito" id="idCita" name="idCita"
+                                                        value="<%= id %>" readonly>
                                                 </div>
 
                                                 <div class="col">
-                                                    <label for="IDServicio" class="form-label ">Seleccione el
+                                                    <label for="IDServicio" class="form-label ">Seleccione
+                                                        el
                                                     </label><br>
                                                     <select id="idServicio" class="form-select" name="IDServicio"
-                                                        onchange="valueInputServicio(this)">
-                                                        <option value="noSelect" selected disabled>Servicio...</option>
-                                                        <option value="1">1. Corte de cabello</option>
-                                                        <option value="2">2. Uñas acrílicas</option>
-                                                        <option value="3">3. Tinturado</option>
-                                                        <option value="4">4. Alizado</option>
+                                                        onchange="valueInputServicio(this.value,'nombreServicio')">
+                                                        <option value="noSelect" selected disabled>
+                                                            Servicio...
+                                                        </option>
                                                     </select>
                                                 </div>
                                                 <div class="col">
-                                                    <label for="formaPago" class="form-label ">Forma de pago</label><br>
+                                                    <label for="formaPago" class="form-label ">Forma de
+                                                        pago</label><br>
                                                     <select id="formaPago" class="form-select" name="pago">
-                                                        <option value="noSelect" selected disabled>Pago...</option>
+                                                        <option value="noSelect" selected disabled>Pago...
+                                                        </option>
                                                         <option value="1">Transferencia</option>
                                                         <option value="2">Efectivo</option>>
                                                     </select>
@@ -142,10 +171,11 @@
                                                         class="form-label ">Estado</label><br>
                                                     <select id="estadoVentaServicio" class="form-select"
                                                         name="estadoVentaServicio">
-                                                        <option value="noSelect" selected disabled>Estado...</option>
-                                                        <option value="1">Pendiente</option>
-                                                        <option value="2">En progreso</option>
-                                                        <option value="3">Finalizado</option>
+                                                        <option value="noSelect" selected disabled>Estado...
+                                                        </option>
+                                                        <option value="Pendiente">Pendiente</option>
+                                                        <option value="En progreso">En progreso</option>
+                                                        <option value="Finalizado">Finalizado</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -168,6 +198,12 @@
                                                         name="nombreCliente" readonly>
                                                 </div>
                                                 <div class="col">
+                                                    <label for="costoTotalCita" class="form-label">Costo
+                                                        Servicio</label><br>
+                                                    <input type="number" id="costoServicio" class="input-bonito sumar"
+                                                        name="costoTotalCita" onchange="sumar(this.value)">
+                                                </div>
+                                                <div class="col">
                                                     <label for="nombreServicio" class="form-label">Nombre
                                                         servicio</label><br>
                                                     <input type="text" id="nombreServicio" class="input-bonito" value=""
@@ -179,98 +215,47 @@
                                                     <input type="text" id="costoTotalCita" class="input-bonito"
                                                         name="costoTotalCita">
                                                 </div>
-                                                <div class="col">
-                                                    <input type="button" class="input-bonito" data-toggle="modal"
-                                                        data-target="#exampleModal" value="Agregar servicio..."
-                                                        onclick="agregarServicio()">
+                                            </div>
+                                        </div>
+                                        <div name="detallesVenta" id="detallesVenta">
+                                            <div id="cantidadDetalle" style="display: none;">
+                                                <div class="text-center row mt-4 fields" id="formDetalleVenta">
+                                                    <div class="col">
+                                                        <label for="codigoDetalle" class="form-label">Detalle de
+                                                            Venta</label><br>
+                                                        <input type="text" name="detalleVenta"
+                                                            class="input-bonito codigo-detalle-venta" value="1"
+                                                            id="codigoDetalle" disabled>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="idEmpleado" class="form-label ">Seleccione
+                                                            el</label><br>
+                                                        <select id="idEmpleadoS" class="form-select" name="idEmpleado">
+                                                            <option value="noSelect" selected disabled>Empleado</option>
+                                                        </select>
+                                                    </div>
 
+                                                    <div class="col">
+                                                        <label for="IDServicio" class="form-label ">Seleccione
+                                                            el
+                                                        </label><br>
+                                                        <select id="idServicioS" class="form-select" name="IDServicio">
+                                                            <option value="noSelect" selected disabled>
+                                                                Servicio...
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="costoServicio" class="form-label ">Costo
+                                                            Servicio</label><br>
+                                                        <input type="number" id="costoServicio"
+                                                            class="input-bonito sumar" onchange="sumar(this.value)"
+                                                            name="costoServicio">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="addServicio">
-                                        </div>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Agregar servicio</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body" id="modal-body">
-                                                        ...
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cerrar</button>
-                                                        <button type="button" class="btn btn-primary"
-                                                            onclick="addServiceToSale()"
-                                                            data-dismiss="modal">Agregar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <script>
-                                            function addServiceToSale() {
-                                                let duracionServicioValue = $('#precioServicio').val();
-                                                // Agrega elementos de a uno
-                                                servicesAdded.push(duracionServicioValue);
-                                                let div = document.getElementById('addServicio');
-                                                div.append( duracionServicioValue );
-                                            }
-                                            function agregarServicio() {
-                                                let fields = "";
-
-                                                let divServicio = document.getElementById("modal-body");
-
-                                                fields = '<div class="row text-center mt-4 fields">' +
-                                                    '<div class="col">' +
-                                                    '<label for="idEmpleado" class="form-label ">Seleccione el Empleado</label><br>' +
-                                                    '<select id="idEmpleado" class="form-select" name="idEmpleado" onchange="valueInputEmpleado(this)">' +
-                                                    '<option value="noSelect" selected disabled>Empleado...</option>' +
-                                                    '<option value="1">1. Juan</option>' +
-                                                    '<option value="2">2. Diego</option>' +
-                                                    '<option value="3">3. Johan</option>' +
-                                                    '<option value="4">4. Santiago</option>' +
-                                                    '</select>' +
-                                                    '</div>' +
-                                                    '<div class="col">' +
-                                                    '<label for="idServicioA" class="form-label ">Seleccione el Servicio</label><br>' +
-                                                    '<select id="idServicioA" class="form-select" name="servicio" onchange="valueInputServi(this)">' +
-                                                    '<option value="noSelect" selected disabled>Servicio...</option>' +
-                                                    '<option value="1">1. Corte de cabello</option>' +
-                                                    '<option value="2">2. Uñas acrílicas</option>' +
-                                                    '<option value="3">3. Tinturado</option>' +
-                                                    '<option value="4">4. Alizado</option>' +
-                                                    '</select>' +
-                                                    '</div>' +
-                                                    '<div class="col">' +
-                                                    '<label for="duracionServicio" class="form-label">Duración Servicio</label><br>' +
-                                                    '<input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio">' +
-                                                    '</div>' +
-                                                    '</div>' +
-                                                    '<div class="row text-center mt-4 fields">' +
-                                                    '<div class="col">' +
-                                                    '<label for="nombreEmpleado" class="form-label">Nombre empleado</label><br>' +
-                                                    '<input type="text" id="nombreEmpleado" class="input-bonito" value="" name="nombreEmpleado" readonly>' +
-                                                    '</div>' +
-                                                    '<div class="col">' +
-                                                    '<label for="nombreServicio" class="form-label">Nombre servicio</label><br>' +
-                                                    '<input type="text" id="nombreServicio" class="input-bonito" value="" name="nombreServicio" readonly>' +
-                                                    '</div>' +
-                                                    '<div class="col">' +
-                                                    '<label for="precioServicio" class="form-label">Precio servicio</label><br>' +
-                                                    '<input type="text" id="precioServicio" class="input-bonito" name="precioServicio">' +
-                                                    '</div>' +
-                                                    '</div>';
-
-                                                divServicio.innerHTML = fields;
-                                            }
-                                        </script>
                                         <div class="container-fluid">
                                             <div class="row justify-content-center mt-5">
                                                 <div class="col text-end">
@@ -279,12 +264,113 @@
                                                     </button>
                                                 </div>
                                                 <div class="col text-start">
-                                                    <button type="button" onclick="validarVentaServicio()" class="acept-btn">
+                                                    <button type="button"
+                                                        onclick="validarVentaServicio(),createRequest()"
+                                                        class="acept-btn">
                                                         Aceptar
+                                                    </button>
+                                                    <button type="button" id="mostrarDetalleButton"
+                                                        class="boton-agregar-detalle-Venta  rounded-pill"
+                                                        onclick="mostrarCamposDetalleVenta()">
+                                                        Agregar detalle
+                                                        <i class="fa-solid fa-plus"></i>
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <script>
+                                                loadUsers("idEmpleadoS", Users);
+                                                loadUsers("idEmpleado", Users);
+                                                loadUsers("idCliente", Clientes);
+                                                loadUsers("idServicio", Services);
+                                                loadUsers("idServicioS", Services);
+                                                // Obtén una referencia al botón y al div que contiene los campos
+                                                var mostrarDetalleButton = document.getElementById("mostrarDetalleButton");
+                                                var cantidadDetalleDiv = document.getElementById("cantidadDetalle");
+
+
+                                                function duplicate() {
+                                                    // Obtén una referencia al div original
+                                                    const divOriginal = document.getElementById('detallesVenta');
+
+                                                    // Duplica el div original
+                                                    const divDuplicado = divOriginal.cloneNode(true);
+
+                                                    // Modifica los IDs de los inputs dentro del div duplicado
+                                                    const inputsDuplicados = divDuplicado.querySelectorAll('input');
+                                                    inputsDuplicados.forEach((input, index) => {
+                                                        const nuevoID = input.id + '_' + index; // Genera IDs únicos basados en el índice
+                                                        input.id = nuevoID;
+                                                    });
+
+                                                    // Agrega el div duplicado al documento
+                                                    document.body.appendChild(divDuplicado);
+                                                }
+
+
+                                                const mostrarCamposDetalleVenta = () => {
+                                                    // Clona el elemento div que contiene los campos
+                                                    const cantidadDetalleDiv = document.getElementById("cantidadDetalle");
+                                                    const formDetalleVenta = document.getElementById('formDetalleVenta');
+                                                    const nuevoFormClonado = formDetalleVenta.cloneNode(true);
+
+                                                    codigoDetalleSum += 1
+
+                                                    cantidadDetalleDiv.value = codigoDetalleSum;
+
+                                                    console.log(formDetalleVenta)
+
+                                                    let formClonado = formDetalleVenta.cloneNode(true)
+
+                                                    detallesVenta.appendChild(formClonado)
+
+                                                    formClonado.id = 'formClonado' + codigoDetalleSum
+
+                                                    const nuevaId = formClonado.id
+
+                                                    let nuevoForm = document.getElementById(nuevaId)
+
+                                                    nuevoForm.querySelector('#codigoDetalle').value = codigoDetalleSum
+
+                                                    // Agrega el formulario clonado al div
+                                                    cantidadDetalleDiv.appendChild(nuevoFormClonado);
+
+                                                    const selectDuplicados = formClonado.querySelectorAll('select');
+                                                    selectDuplicados.forEach((input, index) => {
+                                                        const nuevoID = input.id + '_' + index; // Genera IDs únicos basados en el índice
+                                                        input.id = nuevoID;
+                                                        input.addEventListener('change', function () {
+                                                            //valueInputEmpleado(2, 'nombreEmpleadoS' + '_' + index);
+                                                            //handleChange(input); // Puedes pasar el <select> como argumento si lo necesitas
+                                                        });
+                                                    });
+
+                                                };
+                                                // Obtén todos los elementos con la clase "input-numerico"
+                                                function sumar(value) {
+                                                    const elementosNumericos = document.querySelectorAll('.sumar');
+
+                                                    // Inicializa una variable para almacenar la suma
+
+                                                    let totalInput = document.getElementById('costoTotalCita');
+                                                    total = 0;
+                                                    // Itera sobre los elementos y suma sus valores
+                                                    elementosNumericos.forEach((elemento) => {
+                                                        const valorNumerico = parseFloat(elemento.value); // Convierte el valor a número
+                                                        if (!isNaN(valorNumerico)) {
+                                                            total += valorNumerico;
+                                                        }
+                                                    });
+
+                                                    console.log('La suma total es:', total);
+                                                    totalInput.value = total
+                                                }
+
+                                                function handleChange(select) {
+
+                                                }
+
+
+
+                                            </script>
                                     </form>
                                 </div>
-    </div>

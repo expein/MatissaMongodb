@@ -17,6 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', engine);
 app.set('view-engine', 'ejs');
 app.set('port', process.env.PORT || 3000);
+app.use(express.json());
 
 // MiddleWare
 app.use(express.static(path.join(__dirname, 'views')))

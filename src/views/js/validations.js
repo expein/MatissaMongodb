@@ -183,15 +183,11 @@ function validarVentaServicio(){
         alert("Elegir estado de la venta");
         return false;
     }else {
-        let confir = Swal.fire(
-            'Venta exitosa!',
-            '',
-            'success',
-            'Cool'
-          ) 
-          return confir;
+      confir = confirm("¿Desea crear la Venta ?");
+      return confir;
+  }
     }
-}
+
 
 function validarVentaPedido(){
     let idVentaPedido = document.getElementById("idVentaPedido").value;

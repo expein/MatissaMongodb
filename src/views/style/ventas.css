@@ -10,6 +10,10 @@
     padding-bottom: 2vh;
     border-bottom: 1px solid black;
 }
+.ver {
+    font-size: 28px;
+
+}
 
 .reporte-crear{
     width: 100%;
@@ -20,12 +24,6 @@
     text-align: center;
     padding-top: 15px;
     box-shadow: 3px 7px 10px black;
-}
-
-.icon-agregar-proveedor{
-    font-size: 35px;
-    margin-left: 15vh;
-    margin-right: 1vh;
 }
 
 .icon-generar-reporte{
