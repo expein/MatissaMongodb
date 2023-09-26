@@ -629,6 +629,7 @@ router.get("/create-venta-pedido", isAuthenticated, async (req, res, next) => {
 
 
 // Ruta para crear una venta con detalles
+
 router.post("/createVenta", isAuthenticated, async (req, res, next) => {
     try {
         const venta = new Venta({
@@ -651,6 +652,16 @@ router.post("/createVenta", isAuthenticated, async (req, res, next) => {
         res.status(500).send("Error en el servidor");
     }
 });
+router.get('/detallesVeSer', isAuthenticated, async (req, res, next) => {
+    try {
+        const ventas = await Ventas.find({});
+        res.render('./ventas/detallesVeSer.ejs', { ventas })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error de datos')
+    }
+})
+
 
 
 router.get("/createVentaPed", isAuthenticated, async (req, res, next) => {

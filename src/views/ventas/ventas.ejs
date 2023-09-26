@@ -1,6 +1,12 @@
 <%- layout('./layouts/main.ejs') %>
     <link rel="stylesheet" href="../style/ventas.css">
 
+    <script>
+        function verDetallesVenta() {
+            window.open('http://localhost:3000/detallesVeSer/', 'detallesVenta', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=700,height=600,left = 390,top = 50')
+        }
+    </script>
+
     <div class="container-fluid ventaHead">
         <h1>Ventas</h1>
     </div>
@@ -48,15 +54,6 @@
                 </tr>
             </thead>
             <tbody>
-                <script>
-                    // Definir el mapeo de estados
-                    const estadoMapping = {
-                        '1': 'Pendiente',
-                        '2': 'En progreso',
-                        '3': 'Finalizado'
-                    };
-                </script>
-
                 <% id=1; %>
                     <% ventas.forEach(obj=> { %>
                         <tr>
@@ -73,13 +70,13 @@
                                 <%= obj.costoTotalCita %>
                             </td>
                             <td>
-                                
+
                                 <%= obj.estadoVentaServicio %>
                             </td>
                             <td>
                                 <div class="d-flex justify-content-between">
                                     <div class="col margin-left: 1%">
-                                        <a href="#" onclick="verDetallesCompra()">
+                                        <a href="#" onclick="window.location.href='/detallesVeSer'">
                                             <i class="fa-solid fa-eye ver" style="color: #3cc3bd;"></i>
                                         </a>
                                     </div>

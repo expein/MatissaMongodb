@@ -7,6 +7,7 @@ const detalleVentaSchema = new mongoose.Schema({
     idEmpleado: String,
     idServicio: String,
     costoServicio: Number,
+    nombreEmpleado: String,
 });
 
 const ventaSchema = new mongoose.Schema({

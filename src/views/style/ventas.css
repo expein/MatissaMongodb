@@ -31,6 +31,16 @@
     margin-left: 2%;
     margin-right: 2%;
 }
+.flechas::-webkit-inner-spin-button,
+.flechas::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.flechas {
+    -moz-appearance: textfield;
+}
 
 
 /* Paginado */

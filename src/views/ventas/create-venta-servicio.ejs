@@ -36,20 +36,42 @@
 
             // Función para obtener los detalles de venta
             function getDetalleVenta() {
+                var elemento = document.getElementById("valorServicio");
                 return {
                     detalleVenta: document.getElementById("codigoDetalle").value,
-                    idEmpleado: document.getElementById("idEmpleado").value,
-                    idServicio: document.getElementById("idServicio").value,
-                    costoServicio: document.getElementById("costoServicio").value,
+                    idEmpleado: document.getElementById("idEmpleadoS").value,
+                    idServicio: document.getElementById("idServicioS").value,
+                    nombreEmpleado: document.getElementById("nombreEmpleado").value,
+                    costoServicio: parseFloat(elemento.value),
+
                 };
+
             }
+
 
             // Función para agregar detalles de venta al array
             function agregarDetalleVenta() {
                 const detalleVenta = getDetalleVenta();
                 servicesAdded.push(detalleVenta);
+                loadDetallesOnDiv(detalleVenta);
+
+                // Asegúrate de que el elemento con id "costoTotalCita" existe en el DOM.
+                let costoTotal = document.getElementById("costoTotalCita");
+
+                // Verifica si costoTotal.value es un número válido antes de sumar.
+                if (!isNaN(parseFloat(costoTotal.value)) && isFinite(costoTotal.value)) {
+                    costoTotal.value = parseFloat(costoTotal.value) + parseFloat(detalleVenta.costoServicio);
+                } else {
+                    costoTotal.value = parseFloat(detalleVenta.costoServicio);
+                }
+
+                console.log(servicesAdded);
 
                 // Aquí puedes agregar lógica para actualizar la interfaz de usuario si es necesario.
+            }
+            function loadDetallesOnDiv(detalleVenta) {
+                let divDetalles = document.getElementById('divDetalles');
+                divDetalles.innerHTML += '<br><span>' + '"+detalleVenta.nombreEmpleado"' + '</span>';
             }
 
             // Función para crear la solicitud y enviarla al servidor
@@ -64,8 +86,8 @@
                     estadoVentaServicio: document.getElementById("estadoVentaServicio").value,
                     detallesVenta: servicesAdded,
                 };
-
-                const url = '/createVentaSer';
+                console.log(request);
+                const url = '/createVenta';
 
                 const options = {
                     method: 'POST',
@@ -200,14 +222,14 @@
                                                 <div class="col">
                                                     <label for="costoTotalCita" class="form-label">Costo
                                                         Servicio</label><br>
-                                                    <input type="number" id="costoServicio" class="input-bonito sumar"
-                                                        name="costoTotalCita" onchange="sumar(this.value)">
+                                                    <input type="number" id="costoServicio" class="input-bonito sumar "
+                                                        name="costoTotal" onchange="sumar(this.value)">
                                                 </div>
                                                 <div class="col">
                                                     <label for="nombreServicio" class="form-label">Nombre
                                                         servicio</label><br>
-                                                    <input type="text" id="nombreServicio" class="input-bonito" value=""
-                                                        name="nombreServicio" readonly>
+                                                    <input type="text" id="nombreServicio" class="input-bonito "
+                                                        value="" name="nombreServicio" readonly>
                                                 </div>
                                                 <div class="col">
                                                     <label for="costoTotalCita" class="form-label">Costo
@@ -217,45 +239,76 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div name="detallesVenta" id="detallesVenta">
-                                            <div id="cantidadDetalle" style="display: none;">
-                                                <div class="text-center row mt-4 fields" id="formDetalleVenta">
-                                                    <div class="col">
-                                                        <label for="codigoDetalle" class="form-label">Detalle de
-                                                            Venta</label><br>
-                                                        <input type="text" name="detalleVenta"
-                                                            class="input-bonito codigo-detalle-venta" value="1"
-                                                            id="codigoDetalle" disabled>
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="idEmpleado" class="form-label ">Seleccione
-                                                            el</label><br>
-                                                        <select id="idEmpleadoS" class="form-select" name="idEmpleado">
-                                                            <option value="noSelect" selected disabled>Empleado</option>
-                                                        </select>
-                                                    </div>
+                                        <div class="col" id="divDetalles">
 
-                                                    <div class="col">
-                                                        <label for="IDServicio" class="form-label ">Seleccione
-                                                            el
-                                                        </label><br>
-                                                        <select id="idServicioS" class="form-select" name="IDServicio">
-                                                            <option value="noSelect" selected disabled>
-                                                                Servicio...
-                                                            </option>
-                                                        </select>
+                                        </div>
+                                        <div class=" col modal fade " id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" style="max-width: 800px;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                     </div>
+                                                    <div class=" col modal-body">
+                                                        <div name="detallesVenta" id="detallesVenta">
+                                                            <div id="cantidadDetalle">
+                                                                <div class="text-center row mt-4 fields"
+                                                                    id="formDetalleVenta">
+                                                                    <div class="col">
+                                                                        <label for="codigoDetalle"
+                                                                            class="form-label">Detalle de
+                                                                            Venta</label><br>
+                                                                        <input type="text" name="detalleVenta"
+                                                                            class="input-bonito codigo-detalle-venta"
+                                                                            value="1" id="codigoDetalle" disabled>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <label for="idEmpleado"
+                                                                            class="form-label ">Seleccione
+                                                                            el</label><br>
+                                                                        <select id="idEmpleadoS" class="form-select"
+                                                                            name="idEmpleado">
+                                                                            <option value="noSelect" selected disabled>
+                                                                                Empleado</option>
+                                                                        </select>
+                                                                    </div>
 
-                                                    <div class="col">
-                                                        <label for="costoServicio" class="form-label ">Costo
-                                                            Servicio</label><br>
-                                                        <input type="number" id="costoServicio"
-                                                            class="input-bonito sumar" onchange="sumar(this.value)"
-                                                            name="costoServicio">
+                                                                    <div class="col">
+                                                                        <label for="IDServicio"
+                                                                            class="form-label ">Seleccione
+                                                                            el
+                                                                        </label><br>
+                                                                        <select id="idServicioS" class="form-select"
+                                                                            name="IDServicio">
+                                                                            <option value="noSelect" selected disabled>
+                                                                                Servicio...
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="col">
+                                                                        <label for="costoServicio"
+                                                                            class="form-label ">Costo
+                                                                            Servicio</label><br>
+                                                                        <input type="number" id="valorServicio"
+                                                                            class="input-bonito" name="costoServicio">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            onclick="agregarDetalleVenta()"
+                                                            data-bs-dismiss="modal">Guardar</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="container-fluid">
                                             <div class="row justify-content-center mt-5">
                                                 <div class="col text-end">
@@ -270,18 +323,18 @@
                                                         Aceptar
                                                     </button>
                                                     <button type="button" id="mostrarDetalleButton"
-                                                        class="boton-agregar-detalle-Venta  rounded-pill"
-                                                        onclick="mostrarCamposDetalleVenta()">
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                        class="boton-agregar-detalle-Venta  rounded-pill" onclick="">
                                                         Agregar detalle
                                                         <i class="fa-solid fa-plus"></i>
                                                     </button>
                                                 </div>
                                             </div>
                                             <script>
-                                                loadUsers("idEmpleadoS", Users);
                                                 loadUsers("idEmpleado", Users);
                                                 loadUsers("idCliente", Clientes);
                                                 loadUsers("idServicio", Services);
+                                                loadUsers("idEmpleadoS", Users);
                                                 loadUsers("idServicioS", Services);
                                                 // Obtén una referencia al botón y al div que contiene los campos
                                                 var mostrarDetalleButton = document.getElementById("mostrarDetalleButton");
@@ -347,30 +400,21 @@
                                                 };
                                                 // Obtén todos los elementos con la clase "input-numerico"
                                                 function sumar(value) {
-                                                    const elementosNumericos = document.querySelectorAll('.sumar');
-
+                                                    //const elementosNumericos = document.querySelectorAll('.sumar');
                                                     // Inicializa una variable para almacenar la suma
-
                                                     let totalInput = document.getElementById('costoTotalCita');
-                                                    total = 0;
-                                                    // Itera sobre los elementos y suma sus valores
-                                                    elementosNumericos.forEach((elemento) => {
-                                                        const valorNumerico = parseFloat(elemento.value); // Convierte el valor a número
-                                                        if (!isNaN(valorNumerico)) {
-                                                            total += valorNumerico;
-                                                        }
-                                                    });
 
+                                                    if (!isNaN(totalInput.value)) {
+                                                        totalInput.value = parseFloat(totalInput.value) + parseFloat(value);
+                                                    } else {
+                                                        totalInput.value = parseFloat(value);
+                                                    }
                                                     console.log('La suma total es:', total);
-                                                    totalInput.value = total
+
                                                 }
 
                                                 function handleChange(select) {
-
                                                 }
-
-
-
                                             </script>
                                     </form>
                                 </div>
