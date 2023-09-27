@@ -1,39 +1,80 @@
 <%- layout('./layouts/main.ejs') %>
 <link rel="stylesheet" href="../style/Servicios.css">
-<div class="container-fluid servicioHead">
+<script src="../js/validations.js"></script>
+<div class="container-fluid form-registrar-servicio" id="formRegistrar" style="display: none;">
+    <div class="row create-tittle">
+        <div class="col-12">
+            <h1>Crear nuevo servicio</h1>
+        </div>
+    </div>
+    <form action="/createSer" method="post" id="formularioServicio" onsubmit="return validacionServicio(event);">
+        <div class="text-center row mt-4 fields">
+            <div class="col">
+                <label for="duracionServicio" class="form-label">Nombre</label><br>
+                <input type="text" class="input-bonito" id="nombreServicio" name="nombreServicio">
+            </div>
+            <div class="col">
+                <label for="duracionServicio" class="form-label">Duración</label><br>
+                <input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio">
+            </div>
+            <div class="col">
+                <label for="nombreServicio" class="form-label">Desripción</label><br>
+                <input type="text" id="descripcionServicio" class="input-bonito" value=""
+                    name="descripcionServicio">
+            </div>
+            <div class="col">
+                <label for="precioServicio" class="form-label">Precio</label><br>
+                <input type="text" id="precioServicio" class="input-bonito" name="precioServicio">
+            </div>
+
+        </div>
+        <div style="background-color: #ff6565;"></div>
+        <div class="row justify-content-center mt-5 mb-5">
+            <div class="col text-end">
+                <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrar()">
+                    Cancelar
+                </button>
+            </div>
+            <div class="col text-start">
+                <button type="submit" class="acept-btn">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid servicioHead" id="tituloPrincipal" style="display: block;">
     <h1>Servicios</h1>
 </div>
 <div class="container-fluid">
     <div class="row mt-5">
-        <div class="col-4">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 mt-3">
             <div class="form-floating search">
-                <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="" >
+                <input type="text" class="form-control rounded-pill" id="buscar" placeholder="" oninput="return buscador()">
                 <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>   Buscar servicio</label>
             </div>
         </div>
-        <div class="col-4">
-            <a href="" class="reporte-crear">
-                <p class="rounded-pill"><i class="fa-solid fa-download fa-2xl"></i>  Generar reporte de Servicios</p>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 mt-3">
+            <a href="/reporteServicios" class="reporte-crearp">
+                <p class="rounded-pill"><i class="fa-solid fa-download fa-2xl icon-generar-reporte"></i>  Generar reporte de Servicios</p>
             </a>
         </div>
-        <div class="col-4">
-            <a href="/create-servicio" class="create-servicio">
-                <p class="rounded-pill">Crear servicio<i class="fa-solid fa-circle-plus fa-2xl" style="color: #ffffff; margin-left: 100px;"></i></p>
-            </a>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 mt-3">
+            <button class="create-comprab reporte-crear rounded-pill" type="button"
+                onclick="opcion('mostrar'), registrar()">
+                    <p>Registrar nuevo servicio<i class="fa-solid fa-circle-plus icon-crear-servicio text-end   "></i></p>
+            </button>
         </div>
     </div>
 </div>
 <div class="container-fluid">
-    <table class="table table-hover table-borderless mt-3 text-center table-sm">
+    <table class="table table-hover table-borderless mt-3 text-center table-sm" id="tabla">
         <thead>
             <tr class="table-secondary">
-                <th class="p-3">ID Servicio</th>
-                <th class="p-3">ID Empleado</th>
-                <th class="p-3">ID Cita</th>
-                <th class="p-3">Precio servicio</th>
-                <th class="p-3">Duración servicio</th>
-                <th class="p-3">Fecha servicio</th>
-                <th class="p-3">Estado cita</th>
+                <th class="p-3">Nombre</th>
+                <th class="p-3">Precio</th>
+                <th class="p-3">Duración</th>
+                <th class="p-3">Estado</th>
                 <th class="p-3">Opciones</th>
             </tr>
         </thead>
@@ -42,17 +83,15 @@
             <% id = 1; %>
             <% servicios.forEach(obj => { %>
             <tr>
-                <td><%= obj.idServicio %></td>
-                <td><%= obj.idEmpleado %></td>
-                <td><%= obj.idCita %></td>
-                <td><%= obj.precioServicio %></td>
-                <td><%= obj.duracionServicio %></td>
-                <td><%= obj.fechaCita %></td>
-                <td><%= obj.estadoCita %></td>
+                <td><%= obj.nombre %></td>
+                <td><%= obj.duracion %></td>
+                <td><%= obj.precio %></td>
+                <td><%= obj.descripcion %></td>
+                <td><%= obj.estado %></td>
                 <td>
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <a href="/edit-servicio/<%= obj.idServicio %>">
+                            <a href="/edit-servicio/<%= obj._id %>">
                                 <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
                             </a>
                         </div>

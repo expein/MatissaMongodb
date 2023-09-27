@@ -1,0 +1,181 @@
+<%- layout('./layouts/main.ejs') %>
+    <link rel="stylesheet" href="../style/empleados.css">
+    <script src="../js/validations.js"></script>
+    <div class="container-fluid" id="formRegistrar" style="display: none;">
+        <div class="row create-tittle">
+            <div class="col-12">
+                <h1>Registrar nuevo empleado</h1>
+            </div>
+        </div>
+        <div class="row form-agregar-compra">
+            <form action="/createEmpleado" method="post" id="formularioEmpleado" onsubmit="return validacionEmpleado(event)">
+                <div class="text-center row mt-4 fields">
+                    <div class="col">
+                        <label for="dateCompra" class="form-label">Nombre</label><br>
+                        <input type="text" id="nombresEmpleado" class="input-bonito" name="nombresEmpleado">
+                    </div>
+                    <div class="col">
+                        <label for="desc" class="form-label">Apellidos</label><br>
+                        <input type="text" id="apellidosEmpleado" class="input-bonito" name="apellidosEmpleado">
+                    </div>
+                    <div class="col">
+                        <label for="dateCompra" class="form-label">Genero</label><br>
+                        <select name="genero" id="genero" class="input-bonito rounded-pill">
+                            <option value="noSelect">Seleccione</option>
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="desc" class="form-label">Fecha de contrato</label><br>
+                        <input type="date" id="fechaContrato" class="input-bonito" name="fechaContrato">
+                    </div>
+                </div>
+                <div class="text-center row mt-4 fields">
+                    <div class="col">
+                        <label for="desc" class="form-label">Fecha de nacimiento</label><br>
+                        <input type="date" id="fechaNacimiento" class="input-bonito" name="fechaNacimiento">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Correo</label><br>
+                        <input type="text" id="correo" class="input-bonito" name="correo">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Dirección</label><br>
+                        <input type="text" id="direccion" class="input-bonito" name="direccion">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Telefono</label><br>
+                        <input type="text" id="telefono" class="input-bonito" name="telefono">
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col text-center">
+                        <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrar()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="acept-btn">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid compraHead" id="tituloPrincipal" style="display: block;">
+        <h1>Empleados</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row mt-5">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 mt-3">
+                <div class="form-floating search">
+                    <input type="text" class="form-control rounded-pill" id="buscar" placeholder="" oninput="return buscador()">
+                    <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
+                        Buscar empleado</label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 mt-3">
+                <a href="/reporteEmpleados" class="reporte-crearp">
+                    <p class="rounded-pill"><i class="fa-solid fa-download fa-2xl icon-generar-reporte"></i> Generar reporte de
+                        Servicios</p>
+                </a>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4 mt-3">
+                <button class="create-compra reporte-crear d-flex flex-row-reverse rounded-pill" type="button"
+                    onclick="opcion('mostrar'), registrar()">
+                    <div class="icono-mas">
+                        <i class="fa-solid fa-circle-plus icon-agregar-proveedor text-end"></i>
+                    </div>
+                    <div>
+                        <p>Registrar empleado</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <table id="tabla" class="table table-hover table-borderless mt-3 text-center table-sm">
+            <thead>
+                <tr class="table-secondary">
+                    <th class="p-3">Nombres</th>
+                    <th class="p-3">Apellidos</th>
+                    <th class="p-3">Genero</th>
+                    <th class="p-3">Fecha de contrato</th>
+                    <th class="p-3">Fecha de nacimiento</th>
+                    <th class="p-3">Correo</th>
+                    <th class="p-3">Dirección</th>
+                    <th class="p-3">Telefono</th>
+                    <th class="p-3">Estado</th>
+                    <th class="p-3">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% empleados.forEach(obj=> { %>
+                    <tr>
+                        <td>
+                            <%= obj.nombres %>
+                        </td>
+                        <td>
+                            <%= obj.apellidos %>
+                        </td>
+                        <td>
+                            <%= obj.genero %>
+                        </td>
+                        <td>
+                            <%= obj.fechaContrato %>
+                        </td>
+                        <td>
+                            <%= obj.fechaNacimiento %>
+                        </td>
+                        <td>
+                            <%= obj.correo %>
+                        </td>
+                        <td>
+                            <%= obj.direccion %>
+                        </td>
+                        <td>
+                            <%= obj.telefono %>
+                        </td>
+                        <td>
+                            <%= obj.estado %>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col">
+                                    <a href="/editEmpleado/<%= obj._id %>">
+                                        <i class="fa-solid fa-pen fa-xl" style="color: #3cc3bd;"></i>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a href="/deleteEmpleado/<%= obj._id %>">
+                                        <i class="fa-solid fa-trash fa-xl" style="color: #929292;"></i>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <label class="switch"><input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="container-fluid container-paginado">
+        <div>
+            <div class="row">
+                <div class="col d-flex paginado">
+                    <a href="">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </a>
+                    <p>1</p>
+                    <a href="">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>

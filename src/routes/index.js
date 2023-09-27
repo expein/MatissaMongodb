@@ -546,6 +546,7 @@ router.get("/deleteProveedor/:id", isAuthenticated, async (req, res, next) => {
 });
 
 // SERVICIOS
+
 const Servicios = require('../models/servicio');
 
 router.get("/servicios", isAuthenticated, async (req, res, next) => {
@@ -558,40 +559,240 @@ router.get("/servicios", isAuthenticated, async (req, res, next) => {
     }
 });
 
-router.get("/create-servicio", isAuthenticated, async (req, res, next) => {
-    try {
-        const servicios = Servicios.find().sort({ idCita: -1 }).limit(1);
-        res.render("./servicios/create-servicio.ejs", { servicio: servicios[0] });
-    } catch (error) {
-        console.log("Error al consultar DB", error);
-        res.status(500).send("Error de datos")
-    }
-});
-
 router.post("/createSer", isAuthenticated, async (req, res, next) => {
     const servicio = new Servicios({
-        idServicio: req.body.IDServicio,
-        idEmpleado: req.body.IDEmpleado,
-        idCita: req.body.IDCita,
-        nombreServicio: req.body.nombreServicio,
-        precioServicio: req.body.precioServicio,
-        nombreEmpleado: req.body.nombreEmpleado,
-        cedulaEmpleado: req.body.cedulaEmpleado,
-        duracionServicio: req.body.duracionServicio,
-        estadoCita: req.body.estadoCita,
-        fechaCita: req.body.fechaCita
+      nombre: req.body.nombreServicio,
+      duracion: req.body.duracionServicio,
+      descripcion: req.body.descripcionServicio,
+      precio: req.body.precioServicio,
+      estado: "Activo",
     });
+
     servicio.save()
-        .then(async doc => {
-            const servicios = await Servicios.find({});
-            console.log('Servicio registrado', doc);
-            res.render('./servicios/servicios.ejs', { servicios });
-        }).catch(err => {
-            console.log("Error al registrar: ", err.message);
-        });
+
+      .then(async (doc) => {
+        const servicios = await Servicios.find({});
+        res.render("./servicios/servicios.ejs", { servicios });
+        console.log("Servicio registrado ", doc);
+      })
+      .catch((err) => {
+        console.log("Error al registrar: ", err.message);
+      });
 });
 
-router.get("");
+const PDFDocument = require('pdfkit')
+
+router.get("/reporteServicios", isAuthenticated, async (req, res) => {
+  try {
+    const servicios = await Servicios.find({}).exec();
+
+    const doc = new PDFDocument();
+    res.setHeader("Content-type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      'Inline; filename = "Reporte-servicios"'
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(16).text("Reporte de los servicios", { align: "center" });
+    doc.moveDown();
+
+    servicios.forEach((servicio) => {
+      doc.text(`Nombre: ${servicio.nombre}`);
+      doc.text(`Duración: ${servicio.duracion}`);
+      doc.text(`Precio: ${servicio.precio}`);
+      doc.text(`Descripción: ${servicio.descripcion}`);
+      doc.text(`estado: ${servicio.estado}`);
+      doc.moveDown();
+    });
+
+    doc.end();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error de datos");
+  }
+});
+
+router.get("/edit-servicio/:id", isAuthenticated, async (req, res, next) => {
+  const id = req.params.id;
+
+  const servicios = await Servicios.findOne({ _id: id });
+
+  res.render("./servicios/edit-servicio.ejs", { servicios });
+});
+
+router.post("/servEdit", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.body.IDMongo;
+    const nombre = req.body.nombreServicio;
+    const duracion = req.body.duracionServicio;
+    const desc = req.body.descripcionServicio;
+    const precio = req.body.precioServicio;
+
+    await Servicios.findByIdAndUpdate(id, {
+      nombre: nombre,
+      duracion: duracion,
+      descripcion: desc,
+      precio: precio,
+    });
+
+    const servicios = await Servicios.find({});
+    res.render("./servicios/servicios.ejs", { servicios });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error de edición");
+  }
+});
+
+router.get("/delete-servicio/:id", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    await Servicios.findByIdAndDelete(id);
+
+    const servicios = await Servicios.find({});
+    res.render("./servicios/servicios.ejs", { servicios });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error al eliminar producto");
+  }
+});
+
+//EMPLEADOS
+
+const Empleados = require('../models/empleado')
+
+router.get("/empleados", isAuthenticated, async (req, res, next) => {
+  try {
+    const empleados = await Empleados.find({});
+    res.render("./empleados/empleados.ejs", { empleados });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error de datos");
+  }
+});
+
+router.post("/createEmpleado", isAuthenticated, async (req, res, next) => {
+  const empleado = new Empleados({
+    nombres: req.body.nombresEmpleado,
+    apellidos: req.body.apellidosEmpleado,
+    genero: req.body.genero,
+    fechaContrato: req.body.fechaContrato,
+    fechaNacimiento: req.body.fechaNacimiento,
+    correo: req.body.correo,
+    direccion: req.body.direccion,
+    telefono: req.body.telefono,
+    estado: 'Activo'
+  });
+
+  empleado.save()
+    .then(async (doc) => {
+      const empleados = await Empleados.find({});
+      res.render("./empleados/empleados.ejs", { empleados });
+      console.log("Producto registrado", doc);
+    })
+    .catch((err) => {
+      console.log("Error al registrar: ", err.message);
+    });
+});
+
+router.get("/editEmpleado/:id", isAuthenticated, async (req, res, next) => {
+  const id = req.params.id;
+
+  const empleado = await Empleados.findOne({ _id: id });
+
+  res.render("./empleados/edit-empleado.ejs", { empleado });
+});
+
+router.get("/editProduct/:id", isAuthenticated, async (req, res, next) => {
+  const id = req.params.id;
+
+  const productos = await Productos.findOne({ _id: id });
+
+  res.render("./productos/editProduct.ejs", { productos });
+});
+
+router.post("/editEmp", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.body.IDMongo;
+    const nombres = req.body.nombresEmpleado;
+    const apellidos = req.body.apellidosEmpleado;
+    const genero = req.body.genero;
+    const fechaContrato = req.body.fechaContrato;
+    const fechaNacimiento = req.body.fechaNacimiento;
+    const correo = req.body.correo;
+    const direccion = req.body.direccion;
+    const telefono = req.body.telefono;
+
+    await Empleados.findByIdAndUpdate(id, {
+      nombres: nombres,
+      apellidos: apellidos,
+      genero: genero,
+      fechaContrato: fechaContrato,
+      fechaNacimiento: fechaNacimiento,
+      corre: correo,
+      direccion: direccion,
+      telefono: telefono,
+    });
+
+    const empleados = await Empleados.find({});
+    res.render("./empleados/empleados.ejs", { empleados });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error de edición");
+  }
+});
+
+router.get("/deleteEmpleado/:id", isAuthenticated, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    await Empleados.findByIdAndDelete(id);
+
+    const empleados = await Empleados.find({});
+    res.render("./empleados/empleados.ejs", { empleados });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error al eliminar producto");
+  }
+});
+
+router.get("/reporteEmpleados", isAuthenticated, async (req, res) => {
+  try {
+    const empleados = await Empleados.find({}).exec();
+
+    const doc = new PDFDocument();
+    res.setHeader("Content-type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      'Inline; filename = "Reporte-empleados"'
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(16).text("Reporte de los empleados", { align: "center" });
+    doc.moveDown();
+
+    empleados.forEach((empleado) => {
+      doc.text(`Nombres: ${empleado.nombres}`);
+      doc.text(`Apellidos: ${empleado.apellidos}`);
+      doc.text(`Genero: ${empleado.genero}`);
+      doc.text(`Fecha de contrato: ${empleado.fechaContrato}`);
+      doc.text(`Fecha de nacimiento: ${empleado.fechaNacimiento}`);
+      doc.text(`Correo: ${empleado.correo}`);
+      doc.text(`Dirección: ${empleado.direccion}`);
+      doc.text(`Telefono: ${empleado.telefono}`);
+      doc.text(`Estado: ${empleado.estado}`);
+      doc.moveDown();
+    });
+
+    doc.end();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error de datos");
+  }
+});
 
 // VENTAS
 

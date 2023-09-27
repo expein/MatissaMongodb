@@ -3,18 +3,37 @@
     text-align: center;
     color: white;
     padding: 10px 0px;
+    margin-top: -10.4vh;
 }
 .reporte-crear{
     text-decoration: none;
 }
 
-.reporte-crear p{
+.form-registrar-servicio{
+    border-bottom: 1px solid black;
+    margin-top: -10.4vh;
+}
+
+.reporte-crearp p{
     background-color: #444444;
     height: 100%;
     color: white;
-    font-size: 17px;
+    font-size: 20px;
     padding-top: 15px;
     text-align: center;
+    box-shadow: 3px 7px 10px black;
+}
+
+
+.create-comprab{
+    border: none;
+    width: 100%;
+    background-color: #444444;
+    height: 100%;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 15px;
     box-shadow: 3px 7px 10px black;
 }
 
@@ -26,6 +45,19 @@
     text-align: center;
     padding-top: 15px;
     box-shadow: 3px 7px 10px black;
+}
+
+.icon-crear-servicio{
+    font-size: 35px;
+    margin-left: 2%;
+    margin-right: 2%;
+    position: absolute;
+}
+
+.icon-generar-reporte{
+    font-size: 25px;
+    margin-left: 2%;
+    margin-right: 2px;
 }
 
 /* Paginado */

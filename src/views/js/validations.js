@@ -136,31 +136,134 @@ const validarProveedor = (tipoProveedor, nombreProveedor, contacto, direccion, t
 
 // validar Servicio
 
-function validarServicio(){
-    let idServicio = document.getElementById("IDServicio").value;
-    let idEmpleado = document.getElementById("IDEmpleado").value;
-    let idCita = document.getElementById("IDCita").value;
-    let nombreServicio = document.getElementById("nombreServicio").value;
-    let precioServicio = document.getElementById("precioServicio").value;
-    let nombreEmpleado = document.getElementById("nombreEmpleado").value;
-    let duracionServicio = document.getElementById("duracionServicio").value;
-    let estadoCita = document.getElementById("estadoCita").value;
-    let fechaCita = document.getElementById("fechaCita").value;
+function validacionServicio(event){
+  event.preventDefault();
 
-    if(idCita == "" || nombreServicio == "" || precioServicio == "" || nombreEmpleado == "" || duracionServicio == "" || estadoCita == "" || fechaCita == ""){
-        alert('Falta completar los campos');
-        return false;
-    }else if (idEmpleado == "noSelect"){
-        alert("No se ha seleccionado empleado");
-        return false;
-    }else if (idServicio == "noSelect"){
-        alert ('No se ha seleccionado servicio');
-        return false;
-    }else {
-        confir = confirm("¿Desea crear el servicio?");
-        return confir;
-    }
+  let nombreServicio = document.getElementById("nombreServicio").value;
+  let duracionServicio = document.getElementById("duracionServicio").value;
+  let precioServicio = document.getElementById("precioServicio").value;
+
+  let verificar = validarServicio(nombreServicio, duracionServicio, precioServicio)
+ //formularioServicio
+  if(verificar === true){
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Quieres registrar el servicio?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, registrar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Enviado", "El servicio ha sido registrado.", "success");
+        document.getElementById("formularioServicio").submit();
+      } else if (result.isDismissed) {
+        Swal.fire("Cancelado", "El Servicio no se ha registrado", 'error');
+      }
+    });
+  }else{
+    return false
+  }
 }
+
+const validarServicio  = (nombreServicio, duracionServicio, precioServicio) => {
+  let validate = true;
+
+  if (nombreServicio == "" || duracionServicio == "" || precioServicio == "") {
+    Swal.fire({
+      title: "Faltan campos por llenar",
+      icon: "warning",
+    });
+    validate = false
+  } else if (isNaN(precioServicio)) {
+    Swal.fire({
+      title: 'El precio del servicio debe ser numerico',
+      icon: 'warning'
+    })
+    validate = false
+  }
+
+  return validate
+}
+
+// Validar empleado
+
+const validacionEmpleado = (event) => {
+ event.preventDefault();
+
+  let nombresEmpleado = document.getElementById("nombresEmpleado").value;
+  let apellidosEmpleado = document.getElementById("apellidosEmpleado").value;
+  let genero = document.getElementById("genero").value;
+  let fechaContrato = document.getElementById("fechaContrato").value;
+  let fechaNacimiento = document.getElementById("fechaNacimiento").value;
+  let correo = document.getElementById("correo").value;
+  let direccion = document.getElementById("direccion").value;
+  let telefono = document.getElementById("telefono").value;
+
+
+  let verificar = validarEmpleado(nombresEmpleado, apellidosEmpleado, genero, fechaContrato, fechaNacimiento, correo, direccion, telefono)
+  if(verificar === true){
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Quieres registrar el empleado?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, registrar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Enviado", "El servicio ha sido registrado.", "success");
+        document.getElementById("formularioEmpleado").submit();
+      } else if (result.isDismissed) {
+        Swal.fire("Cancelado", "El Servicio no se ha registrado", 'error');
+      }
+    });
+  }else{
+    return false
+  }
+}
+
+const validarEmpleado = (nombresEmpleado, apellidosEmpleado, genero, fechaContrato, fechaNacimiento, correo, direccion, telefono) => {
+  let validate = true;
+  let expression = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  if (
+    nombresEmpleado == "" ||
+    apellidosEmpleado == "" ||
+    fechaContrato == "" ||
+    fechaNacimiento == "" ||
+    correo == "" ||
+    direccion == "" ||
+    telefono == ""
+  ) {
+    Swal.fire({
+      title: "Faltan campos por llenar",
+      icon: "warning",
+    });
+    validate = false;
+  }else if(genero == 'noSelect'){
+    Swal.fire({
+      title: "Seleccione un genero",
+      icon: "warning",
+    });
+    validate = false;
+  }else if(isNaN(telefono)){
+    Swal.fire({
+      title: "El telefono debe ser numerico",
+      icon: "warning",
+    });
+    validate = false;
+  }else if(!expression.test(correo)){
+    Swal.fire({
+      title: "El correo esta mal ingresado",
+      icon: "warning",
+    });
+    validate = false;
+  }
+
+  return validate
+}
+
 // validar Venta
 
 function validarVentaServicio(){

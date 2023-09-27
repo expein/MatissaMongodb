@@ -1,0 +1,47 @@
+<%- layout('./layouts/main.ejs') %>
+<link rel="stylesheet" href="../style/Servicios.css">
+<script src="../js/validations.js"></script>
+<div class="container-fluid form-registrar-servicio" id="formRegistrarServicio">
+    <div class="row create-tittle">
+        <div class="col-12">
+            <h1>Editar servicio</h1>
+        </div>
+    </div>
+    <form action="/servEdit" method="post" onsubmit="return validarServicio();">
+        <div class="text-center row mt-4 fields">
+            <div style="display: none;">
+                <input type="text" name="IDMongo" value="<%= servicios._id %>">
+            </div>
+            <div class="col">
+                <label for="duracionServicio" class="form-label">Nombre</label><br>
+                <input type="text" class="input-bonito" id="nombreServicio" name="nombreServicio" value="<%= servicios.nombre %>">
+            </div>
+            <div class="col">
+                <label for="duracionServicio" class="form-label">Duración</label><br>
+                <input type="text" class="input-bonito" id="duracionServicio" name="duracionServicio" value="<%= servicios.duracion %>">
+            </div>
+            <div class="col">
+                <label for="nombreServicio" class="form-label">Desripción</label><br>
+                <input type="text" id="descripcionServicio" class="input-bonito" name="descripcionServicio" value="<%= servicios.descripcion %>">
+            </div>
+            <div class="col">
+                <label for="precioServicio" class="form-label">Precio</label><br>
+                <input type="text" id="precioServicio" class="input-bonito" name="precioServicio" value="<%= servicios.precio %>">
+            </div>
+
+        </div>
+        <div style="background-color: #ff6565;"></div>
+        <div class="row justify-content-center mt-5 mb-5">
+            <div class="col text-end">
+                <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrarServicio()">
+                    Cancelar
+                </button>
+            </div>
+            <div class="col text-start">
+                <button type="submit" class="acept-btn">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,67 @@
+<%- layout('./layouts/main.ejs') %>
+    <link rel="stylesheet" href="../style/productos.css">
+    <script src="../js/validations.js"></script>
+    <div class="container-fluid" id="formRegistrar">
+        <div class="row create-tittle">
+            <div class="col-12">
+                <h1>Editar empleado</h1>
+            </div>
+        </div>
+        <div class="row form-agregar-compra">
+            <form action="/editEmp" method="post" id="formularioEmpleado" onsubmit="return validacionEmpleado(event)">
+                <div class="text-center row mt-4 fields">
+                        <div style="display: none;">
+                            <input type="text" name="IDMongo" value="<%= empleado._id %>">
+                        </div>
+                    <div class="col">
+                        <label for="dateCompra" class="form-label">Nombre</label><br>
+                        <input type="text" id="nombresEmpleado" class="input-bonito" name="nombresEmpleado" value="<%= empleado.nombres %>">
+                    </div>
+                    <div class="col">
+                        <label for="desc" class="form-label">Apellidos</label><br>
+                        <input type="text" id="apellidosEmpleado" class="input-bonito" name="apellidosEmpleado" value="<%= empleado.apellidos %>">
+                    </div>
+                    <div class="col">
+                        <label for="dateCompra" class="form-label">Genero</label><br>
+                        <select name="genero" id="genero" class="input-bonito rounded-pill" value="<%= empleado.genero %>">
+                            <option value="noSelect">Seleccione</option>
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="desc" class="form-label">Fecha de contrato</label><br>
+                        <input type="date" id="fechaContrato" class="input-bonito" name="fechaContrato" value="<%= empleado.fechaContrato %>">
+                    </div>
+                </div>
+                <div class="text-center row mt-4 fields">
+                    <div class="col">
+                        <label for="desc" class="form-label">Fecha de nacimiento</label><br>
+                        <input type="date" id="fechaNacimiento" class="input-bonito" name="fechaNacimiento" value="<%= empleado.fechaNacimiento %>">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Correo</label><br>
+                        <input type="text" id="correo" class="input-bonito" name="correo" value="<%= empleado.correo %>">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Dirección</label><br>
+                        <input type="text" id="direccion" class="input-bonito" name="direccion" value="<%= empleado.direccion %>">
+                    </div>
+                    <div class="col">
+                        <label for="totalCost" class="form-label">Telefono</label><br>
+                        <input type="text" id="telefono" class="input-bonito" name="telefono" value="<%= empleado.telefono %>">
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col text-center">
+                        <button type="button" class="cancel-btn" onclick="opcion('ocultar'), registrar()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="acept-btn">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
