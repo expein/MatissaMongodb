@@ -1,5 +1,6 @@
 <%- layout('./layouts/main.ejs') %>
     <link rel="stylesheet" href="../style/ventas.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         function verDetallesVenta() {
@@ -42,11 +43,16 @@
         <div class="row mt-5">
             <div class="col-3">
                 <div class="form-floating search">
-                    <input type="text" class="form-control rounded-pill" id="BuscarVenta" placeholder="">
+                    <select class="form-select rounded-pill" id="SelectorBusqueda">
+                        <option value="idVenta">ID</option>
+                        <option value="fechaServicio">Fecha</option>
+                    </select><br>
+                    <input type="date" class="form-control rounded-pill" id="BuscarVenta" placeholder="">
                     <label for="inputBuscarVenta" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
                         Buscar venta</label>
                 </div>
             </div>
+            
             <div class="col-3 " id="botonGenerarReporte">
                 <a href="/reporteVentas" class="reporte-crear rounded-pill text-start" id="botonGenerarReporte" style="background-color: 444444;">
                     <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de ventas</p>
@@ -91,7 +97,7 @@
                             <td>
                                 <%= obj.idCita %>
                             </td>
-                            <td>
+                            <td class="fechaServicio">
                                 <%= obj.fechaVentaServicio %>
                             </td>
                             <td>
@@ -143,25 +149,33 @@
 
     <script>
         document.getElementById("BuscarVenta").addEventListener("input", function () {
-            // Obtiene el valor ingresado por el usuario en el campo de búsqueda
-            const textoABuscar = this.value.trim().toLowerCase(); // Convierte el texto a minúsculas y elimina espacios en blanco
-
-            // Obtén todas las celdas de la primera columna con la clase "idVenta"
-            const celdasID = document.querySelectorAll(".filaVenta .idVenta");
-
-            // Itera sobre las celdas de ID y muestra u oculta según el texto coincida o no
-            celdasID.forEach(celda => {
-                const contenidoCelda = celda.textContent.toLowerCase();
-
-                // Si el contenido de la celda contiene el texto buscado, muestra la fila correspondiente; de lo contrario, ocúltala
-                const fila = celda.closest(".filaVenta");
-                if (contenidoCelda.includes(textoABuscar)) {
-                    fila.style.display = "table-row"; // Muestra la fila
-                } else {
-                    fila.style.display = "none"; // Oculta la fila
+            const textoABuscar = this.value.trim().toLowerCase(); // Valor de búsqueda
+            const columnaABuscar = document.getElementById("SelectorBusqueda").value; // Columna seleccionada
+        
+            const filas = document.querySelectorAll(".table tbody .filaVenta");
+        
+            filas.forEach(fila => {
+                const celda = fila.querySelector("." + columnaABuscar);
+        
+                if (celda) {
+                    let contenidoCelda = celda.textContent.trim().toLowerCase();
+        
+                    if (columnaABuscar === "fechaServicio") {
+                        // Formatea la fecha al formato 'YYYY-MM-DD'
+                        const fecha = new Date(contenidoCelda);
+                        const anio = fecha.getFullYear();
+                        const mes = (fecha.getMonth() + 1).toString().padStart(2, "0"); // Ajusta el mes a 2 dígitos
+                        const dia = fecha.getDate().toString().padStart(2, "0"); // Ajusta el día a 2 dígitos
+                        contenidoCelda = `${anio}-${mes}-${dia}`;
+                    }
+        
+                    if (contenidoCelda.includes(textoABuscar)) {
+                        fila.style.display = "table-row"; // Muestra la fila si hay coincidencia
+                    } else {
+                        fila.style.display = "none"; // Oculta la fila si no hay coincidencia
+                    }
                 }
             });
         });
-
-
+        
     </script>
