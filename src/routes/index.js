@@ -661,6 +661,64 @@ router.get('/detallesVeSer', isAuthenticated, async (req, res, next) => {
         res.status(500).send('Error de datos')
     }
 })
+router.get('/actualizarEstado', isAuthenticated, async (req, res, next) => {
+    try {
+        const idVenta = req.query.idVenta; // Obtén el ID de la venta de los parámetros de la URL
+        const nuevoEstado = req.query.estado; // Obtén el nuevo estado desde el cuerpo de la solicitud POST
+
+        // Realiza la actualización del estado de la venta en la base de datos
+        const ventaActualizada = await Ventas.findByIdAndUpdate(idVenta, { isEnabled: nuevoEstado }, { new: true });
+
+        if (!ventaActualizada) {
+            return res.status(404).send('Venta no encontrada' + idVenta + '-' + nuevoEstado);
+        }
+
+        // Respuesta exitosa
+        res.status(200).json({ mensaje: 'Estado de venta actualizado con éxito', venta: ventaActualizada });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error de datos');
+    }
+});
+const PDFDocument = require('pdfkit');
+
+router.get("/reporteVentas", isAuthenticated, async (req, res) => {
+    try {
+        // Realiza la consulta a la base de datos para obtener los datos de ventas
+        const Ventas = await Venta.find({}).exec();
+
+        // Crea un nuevo documento PDF
+        const doc = new PDFDocument();
+
+        // Establece los encabezados de la respuesta
+        res.setHeader("Content-type", "application/pdf");
+        res.setHeader(
+            "Content-Disposition",
+            'Inline; filename = "Reporte-ventas"'
+        );
+
+        // Pipe (envía) el documento PDF como respuesta
+        doc.pipe(res);
+
+        // Agrega contenido al documento PDF
+        doc.fontSize(16).text("Reporte de Ventas", { align: "center" });
+        doc.moveDown();
+
+        Ventas.forEach((Venta) => {
+            doc.text(`ID: ${Venta.id}`);
+            doc.text(`Fecha de Servicio: ${Venta.fechaVentaServicio}`);
+            doc.text(`Costo Total: ${Venta.costoTotalCita}`);
+            doc.text(`Estado: ${Venta.estadoVentaServicio}`);
+            doc.moveDown();
+        });
+
+        // Finaliza el documento PDF
+        doc.end();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error de datos");
+    }
+});
 
 
 

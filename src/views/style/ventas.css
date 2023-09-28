@@ -96,6 +96,7 @@
 
 .input-bonito {
     height: 38px;
+    border-radius: 100px;
 }
 
 .fields input{

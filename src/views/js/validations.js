@@ -174,8 +174,12 @@ function validarVentaServicio(){
     let estadoVentaServicio = document.getElementById("estadoVentaServicio").value;
 
     if (formaPagoServicio == "" ||idServicio == "" || idCliente == "" || idCita == "" || costoTotalCita == "" || fechaVentaServicio == "") {
-        alert("Hay campos sin completar");
-        return false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'faltan campos por llenar',
+        footer: '<a href="">Why do I have this issue?</a>'
+      })
     }else if (formaPagoServicio == "noSelect"){
         alert("Elegir forma de pago");
         return false;
@@ -183,10 +187,11 @@ function validarVentaServicio(){
         alert("Elegir estado de la venta");
         return false;
     }else {
-      confir = confirm("¿Desea crear la Venta ?");
+      confir = Swal.fire('Venta exitosa!', '', 'success', 'Cool');
       return confir;
   }
-    }
+   }
+    
 
 
 function validarVentaPedido(){

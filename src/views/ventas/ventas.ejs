@@ -5,8 +5,36 @@
         function verDetallesVenta() {
             window.open('http://localhost:3000/detallesVeSer/', 'detallesVenta', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=700,height=600,left = 390,top = 50')
         }
-    </script>
+        function createRequest(idVenta, estado) {
+            const id = idVenta.getAttribute("data-id");
+            const url = '/actualizarEstado?estado=' + estado + '&idVenta=' + id;
+            console.log(url)
+            const options = {
+                method: 'GET',
+            };
 
+            fetch(url, options)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text(); // Lee el cuerpo de la respuesta
+
+                        //throw new Error('Error en la solicitud: ' + response);
+                    } Swal.fire(
+                        'Actualizacion Exitosa!',
+                        '',
+                        'success'
+                    )
+                    return response.text(); // Lee el cuerpo de la respuesta
+                })
+                .then(data => {
+                    console.log('Respuesta del servidor:', data);
+                })
+                .catch(error => {
+                    console.error('123 Error:', error);
+                });
+        }
+
+    </script>
     <div class="container-fluid ventaHead">
         <h1>Ventas</h1>
     </div>
@@ -14,17 +42,17 @@
         <div class="row mt-5">
             <div class="col-3">
                 <div class="form-floating search">
-                    <input type="text" class="form-control rounded-pill" id="floatingInputInvalid" placeholder="">
-                    <label for="floatingInputInvalid" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" class="form-control rounded-pill" id="BuscarVenta" placeholder="">
+                    <label for="inputBuscarVenta" class="label-buscar"><i class="fa-solid fa-magnifying-glass"></i>
                         Buscar venta</label>
                 </div>
             </div>
             <div class="col-3">
-                <button class="reporte-crear rounded-pill text-start">
-                    <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de
-                        ventas</p>
-                </button>
+                <a href="/reporteVentas" class="reporte-crear rounded-pill text-start" id="botonGenerarReporte">
+                    <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de ventas</p>
+                </a>
             </div>
+            
             <div class="col-3">
                 <button class="reporte-crear rounded-pill text-start"
                     onclick="window.location.href='/create-venta-servicio'">
@@ -56,8 +84,8 @@
             <tbody>
                 <% id=1; %>
                     <% ventas.forEach(obj=> { %>
-                        <tr>
-                            <td>
+                        <tr class="filaVenta">
+                            <td class="idVenta">
                                 <%= id %>
                             </td>
                             <td>
@@ -80,9 +108,15 @@
                                             <i class="fa-solid fa-eye ver" style="color: #3cc3bd;"></i>
                                         </a>
                                     </div>
-                                    <div><label class="switch"><input type="checkbox" checked><span
-                                                class="slider round"></span></label></div>
-                                </div>
+                                    <div>
+                                        <label class="switch">
+                                            <input type="checkbox" data-id="<%= obj.id %>"
+                                                onchange="createRequest(this,this.checked)" <% if (obj.isEnabled) { %>
+                                            checked <% } %>>
+                                                <span class="slider round"></span>
+                                        </label>
+                                    </div>
+
                             </td>
                         </tr>
                         <% id++; %>
@@ -106,3 +140,60 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("BuscarVenta").addEventListener("input", function () {
+            // Obtiene el valor ingresado por el usuario en el campo de búsqueda
+            const textoABuscar = this.value.trim().toLowerCase(); // Convierte el texto a minúsculas y elimina espacios en blanco
+
+            // Obtén todas las celdas de la primera columna con la clase "idVenta"
+            const celdasID = document.querySelectorAll(".filaVenta .idVenta");
+
+            // Itera sobre las celdas de ID y muestra u oculta según el texto coincida o no
+            celdasID.forEach(celda => {
+                const contenidoCelda = celda.textContent.toLowerCase();
+
+                // Si el contenido de la celda contiene el texto buscado, muestra la fila correspondiente; de lo contrario, ocúltala
+                const fila = celda.closest(".filaVenta");
+                if (contenidoCelda.includes(textoABuscar)) {
+                    fila.style.display = "table-row"; // Muestra la fila
+                } else {
+                    fila.style.display = "none"; // Oculta la fila
+                }
+            });
+        });
+        // Obtén una referencia al botón
+        const botonGenerarReporte = document.querySelector('.reporte-crear');
+
+        // Agrega un controlador de eventos al botón
+        botonGenerarReporte.addEventListener('click', function () {
+            // Realiza una solicitud GET al servidor
+            fetch('/reporteVentas', { // Asegúrate de que la URL coincida con la del punto de enlace en tu servidor
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/pdf' // Indica que esperas una respuesta en formato PDF
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud: ' + response.status);
+                    }
+
+                    // Abre el PDF en una nueva ventana o pestaña del navegador
+                    response.blob().then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'Reporte-ventas.pdf'; // Establece un nombre de archivo
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+    </script>

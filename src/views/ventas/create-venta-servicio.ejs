@@ -37,23 +37,42 @@
             // Función para obtener los detalles de venta
             function getDetalleVenta() {
                 var elemento = document.getElementById("valorServicio");
-                return {
-                    detalleVenta: document.getElementById("codigoDetalle").value,
-                    idEmpleado: document.getElementById("idEmpleadoS").value,
-                    idServicio: document.getElementById("idServicioS").value,
-                    nombreEmpleado: document.getElementById("nombreEmpleado").value,
-                    costoServicio: parseFloat(elemento.value),
+                var nombreEmpleadoSelect = document.getElementById("idEmpleadoS");
+                var nombreServicioSelect = document.getElementById("idServicioS");
 
-                };
+                var nombreEmpleado = nombreEmpleadoSelect.options[nombreEmpleadoSelect.selectedIndex].text;
+                var nombreServicio = nombreServicioSelect.options[nombreServicioSelect.selectedIndex].text;
+
+                var detalleVenta = document.getElementById("codigoDetalle").value
+                var idEmpleado = nombreEmpleadoSelect.value
+                var idServicio = nombreServicioSelect.value
+                var costoServicio = parseFloat(elemento.value)
+
+                document.getElementById("detalleVentaInput").value = detalleVenta;
+                document.getElementById("nombreEmpleadoInput").value = nombreEmpleado
+                document.getElementById("nombreServicioInput").value = nombreServicio
+                document.getElementById("costoServicioInput").value = costoServicio
+
+                duplicateDetails(detalleVenta, nombreEmpleado, nombreServicio, costoServicio)
+                return {
+                    detalleVenta,
+                    idEmpleado,
+                    idServicio,
+                    nombreEmpleado, // Guarda el nombre seleccionado
+                    nombreServicio, // Guarda el nombre seleccionado
+                    costoServicio,
+
+                }
+                // Asigna los valores del objeto a los inputs
+
 
             }
-
 
             // Función para agregar detalles de venta al array
             function agregarDetalleVenta() {
                 const detalleVenta = getDetalleVenta();
                 servicesAdded.push(detalleVenta);
-                loadDetallesOnDiv(detalleVenta);
+                //loadDetallesOnDiv(detalleVenta);
 
                 // Asegúrate de que el elemento con id "costoTotalCita" existe en el DOM.
                 let costoTotal = document.getElementById("costoTotalCita");
@@ -66,51 +85,66 @@
                 }
 
                 console.log(servicesAdded);
-
-                // Aquí puedes agregar lógica para actualizar la interfaz de usuario si es necesario.
-            }
-            function loadDetallesOnDiv(detalleVenta) {
-                let divDetalles = document.getElementById('divDetalles');
-                divDetalles.innerHTML += '<br><span>' + '"+detalleVenta.nombreEmpleado"' + '</span>';
             }
 
             // Función para crear la solicitud y enviarla al servidor
             function createRequest() {
-                const request = {
-                    nombreEmpleado: document.getElementById("nombreEmpleado").value,
-                    nombreCliente: document.getElementById("nombreCliente").value,
-                    idCita: document.getElementById("idCita").value,
-                    costoTotalCita: document.getElementById("costoTotalCita").value,
-                    fechaVentaServicio: document.getElementById("fechaVentaServicio").value,
-                    formaPagoServicio: document.getElementById("formaPago").value,
-                    estadoVentaServicio: document.getElementById("estadoVentaServicio").value,
-                    detallesVenta: servicesAdded,
-                };
-                console.log(request);
-                const url = '/createVenta';
+                const nombreEmpleado = document.getElementById("nombreEmpleado").value;
+                const nombreCliente = document.getElementById("nombreCliente").value;
+                const idCita = document.getElementById("idCita").value;
+                const costoTotalCita = document.getElementById("costoTotalCita").value;
+                const fechaVentaServicio = document.getElementById("fechaVentaServicio").value;
+                const formaPagoServicio = document.getElementById("formaPago").value;
+                const estadoVentaServicio = document.getElementById("estadoVentaServicio").value;
 
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(request)
-                };
+                if (
+                    nombreEmpleado === "" ||
+                    nombreCliente === "" ||
+                    idCita === "" ||
+                    costoTotalCita === "" ||
+                    fechaVentaServicio === "" ||
+                    formaPagoServicio === "" ||
+                    estadoVentaServicio === ""
+                ) {
+                    Swal.fire('Por favor, complete todos los campos antes de registrar la venta', '', 'error');
+                } else {
+                    // Todos los campos están llenos, proceder con la solicitud
+                    const request = {
+                        nombreEmpleado,
+                        nombreCliente,
+                        idCita,
+                        costoTotalCita,
+                        fechaVentaServicio,
+                        formaPagoServicio,
+                        estadoVentaServicio,
+                        detallesVenta: servicesAdded,
+                    };
+                    console.log(request);
+                    const url = '/createVenta';
 
-                fetch(url, options)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error en la solicitud: ' + response.status);
-                        }
-                        Swal.fire('Venta exitosa!', '', 'success', 'Cool');
-                    })
-                    .then(data => {
-                        console.log('Respuesta del servidor:', data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(request)
+                    };
+
+                    fetch(url, options)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error en la solicitud: ' + response.status);
+                            }
+                        })
+                        .then(data => {
+                            console.log('Respuesta del servidor:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
             }
+
 
 
             function valueInputCliente(sel, idInput) {
@@ -131,8 +165,6 @@
 
 
         </script>
-
-
         <% let idVenta; %>
             <% if (venta) { %>
                 <% idVenta=venta.idVenta + 1; %>
@@ -140,7 +172,7 @@
                         <% idVenta=1; %>
                             <% }; %>
                                 <div class=" row create-body ">
-                                    <form action="/createVentaSer" method="post"
+                                    <form action="/createVenta" method="post"
                                         onsubmit=" return validarVentaServicio();">
                                         <div class="container-fluid">
                                             <div class="text-center row mt-4 fields">
@@ -247,7 +279,8 @@
                                             <div class="modal-dialog" style="max-width: 800px;">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar
+                                                            dellates de servicios
                                                         </h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -263,7 +296,8 @@
                                                                             Venta</label><br>
                                                                         <input type="text" name="detalleVenta"
                                                                             class="input-bonito codigo-detalle-venta"
-                                                                            value="1" id="codigoDetalle" disabled>
+                                                                            value="<%= id %>" id="codigoDetalle"
+                                                                            disabled>
                                                                     </div>
                                                                     <div class="col">
                                                                         <label for="idEmpleado"
@@ -302,8 +336,42 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            onclick="agregarDetalleVenta()"
+                                                            id="mostrarDetalleButton" onclick="agregarDetalleVenta()"
                                                             data-bs-dismiss="modal">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="detallesVentaS">
+                                            <div id="cantidadDetalleS" class="text-center row mt-4 fields"
+                                                style="display: none;">
+                                                <div class="text-center row  fields" id="formDetalleVentaS">
+                                                    <div class="col">
+                                                        <label for="codigoDetalle" class="form-label">Detalle de
+                                                            Venta</label><br>
+                                                        <input type="text" name="detalleVenta"
+                                                            class="input-bonito codigo-detalle-venta"
+                                                            id="detalleVentaInput" readonly>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Nombre Empleado</label>
+                                                        <input type="text" name="nombreEmpleado" class="input-bonito"
+                                                            id="nombreEmpleadoInput" readonly>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">Nombre Servicio</label><br>
+                                                        <input type="text" name="nombreServicio" class="input-bonito"
+                                                            id="nombreServicioInput" readonly>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="">Costo Servicio</label><br>
+                                                        <input type="text" name="costoServicio" class="input-bonito"
+                                                            id="costoServicioInput" readonly>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -340,41 +408,59 @@
                                                 var mostrarDetalleButton = document.getElementById("mostrarDetalleButton");
                                                 var cantidadDetalleDiv = document.getElementById("cantidadDetalle");
 
+                                                function duplicateDetails(detalleVentaValue, nombreEmpleadoValue, nombreServicioValue, costoServicioValue) {
+                                                    var contenedor = document.getElementById("detallesVentaS");
 
-                                                function duplicate() {
-                                                    // Obtén una referencia al div original
-                                                    const divOriginal = document.getElementById('detallesVenta');
+                                                    // Creamos una copia del fragmento de HTML
+                                                    var fragmentoHTML = document.createElement("div");
+                                                    fragmentoHTML.innerHTML = `
+                                                    <div class="text-center mt-4 row fields" id="formDetalleVentaS">
+                                                        <div class="col">
+                                                            <label for="">ID Detalle Servicio</label>
+                                                            <input class="input-bonito" type="text" id="input1" readonly value="">
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="">Nombre Empleado</label>
+                                                            <input class="input-bonito" type="text" id="input2" readonly value="">
+                                                        </div>
+                                                        <div class="col">
+                                                            <label >Nombre Servicio</label> <br>
+                                                            <input class="input-bonito" type="text" id="input3" readonly value="">
+                                                        </div>
+                                                        <div class="col">
+                                                            <label >Costo Servicio</label> <br>
+                                                            <input class="input-bonito" type="text" id="input4" readonly value="">
+                                                        </div>
+                                                    </div>
+                                                    `;
 
-                                                    // Duplica el div original
-                                                    const divDuplicado = divOriginal.cloneNode(true);
+                                                    // Asignamos valores a los elementos input en la copia
+                                                    var input1 = fragmentoHTML.querySelector("#input1");
+                                                    var input2 = fragmentoHTML.querySelector("#input2");
+                                                    var input3 = fragmentoHTML.querySelector("#input3");
+                                                    var input4 = fragmentoHTML.querySelector("#input4");
 
-                                                    // Modifica los IDs de los inputs dentro del div duplicado
-                                                    const inputsDuplicados = divDuplicado.querySelectorAll('input');
-                                                    inputsDuplicados.forEach((input, index) => {
-                                                        const nuevoID = input.id + '_' + index; // Genera IDs únicos basados en el índice
-                                                        input.id = nuevoID;
-                                                    });
+                                                    input1.value = detalleVentaValue;
+                                                    input2.value = nombreEmpleadoValue;
+                                                    input3.value = nombreServicioValue;
+                                                    input4.value = costoServicioValue;
 
-                                                    // Agrega el div duplicado al documento
-                                                    document.body.appendChild(divDuplicado);
+                                                    // Agregamos la copia al contenedor
+                                                    contenedor.appendChild(fragmentoHTML);
                                                 }
-
-
                                                 const mostrarCamposDetalleVenta = () => {
                                                     // Clona el elemento div que contiene los campos
-                                                    const cantidadDetalleDiv = document.getElementById("cantidadDetalle");
-                                                    const formDetalleVenta = document.getElementById('formDetalleVenta');
+                                                    const cantidadDetalleDiv = document.getElementById("cantidadDetalleS");
+                                                    const formDetalleVenta = document.getElementById('formDetalleVentaS');
                                                     const nuevoFormClonado = formDetalleVenta.cloneNode(true);
 
                                                     codigoDetalleSum += 1
-
-                                                    cantidadDetalleDiv.value = codigoDetalleSum;
 
                                                     console.log(formDetalleVenta)
 
                                                     let formClonado = formDetalleVenta.cloneNode(true)
 
-                                                    detallesVenta.appendChild(formClonado)
+                                                    formDetalleVenta.appendChild(formClonado)
 
                                                     formClonado.id = 'formClonado' + codigoDetalleSum
 
@@ -398,7 +484,7 @@
                                                     });
 
                                                 };
-                                                // Obtén todos los elementos con la clase "input-numerico"
+
                                                 function sumar(value) {
                                                     //const elementosNumericos = document.querySelectorAll('.sumar');
                                                     // Inicializa una variable para almacenar la suma

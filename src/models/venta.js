@@ -8,9 +8,11 @@ const detalleVentaSchema = new mongoose.Schema({
     idServicio: String,
     costoServicio: Number,
     nombreEmpleado: String,
+    nombreServicio: String,
 });
 
 const ventaSchema = new mongoose.Schema({
+    nombreServicio:String,
     nombreEmpleado: String,
     nombreCliente: String,
     idCita: String,
@@ -19,6 +21,7 @@ const ventaSchema = new mongoose.Schema({
     fechaVentaServicio: Date,
     formaPagoServicio: String,
     estadoVentaServicio: String,
+    isEnabled: { type: Boolean, default: true },
     detallesVenta: [detalleVentaSchema], // Campo que almacena los detalles de venta como un array
 });
 
