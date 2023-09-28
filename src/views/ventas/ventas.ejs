@@ -47,8 +47,8 @@
                         Buscar venta</label>
                 </div>
             </div>
-            <div class="col-3">
-                <a href="/reporteVentas" class="reporte-crear rounded-pill text-start" id="botonGenerarReporte">
+            <div class="col-3 " id="botonGenerarReporte">
+                <a href="/reporteVentas" class="reporte-crear rounded-pill text-start" id="botonGenerarReporte" style="background-color: 444444;">
                     <p class="rounded-pill"><i class="fa-solid fa-download icon-generar-reporte"></i> Generar reporte de ventas</p>
                 </a>
             </div>
@@ -161,38 +161,6 @@
                     fila.style.display = "none"; // Oculta la fila
                 }
             });
-        });
-        // Obtén una referencia al botón
-        const botonGenerarReporte = document.querySelector('.reporte-crear');
-
-        // Agrega un controlador de eventos al botón
-        botonGenerarReporte.addEventListener('click', function () {
-            // Realiza una solicitud GET al servidor
-            fetch('/reporteVentas', { // Asegúrate de que la URL coincida con la del punto de enlace en tu servidor
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/pdf' // Indica que esperas una respuesta en formato PDF
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la solicitud: ' + response.status);
-                    }
-
-                    // Abre el PDF en una nueva ventana o pestaña del navegador
-                    response.blob().then(blob => {
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'Reporte-ventas.pdf'; // Establece un nombre de archivo
-                        document.body.appendChild(a);
-                        a.click();
-                        window.URL.revokeObjectURL(url);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
         });
 
 
